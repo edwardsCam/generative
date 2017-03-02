@@ -1,0 +1,22 @@
+{
+	"name": "generative",
+	"description": "",
+	"main": "index.js",
+	"authors": [
+		"Cameron Edwards"
+	],
+	"license": "MIT",
+	"homepage": "",
+	"ignore": [
+		"**/.*",
+		"node_modules",
+		"bower_components",
+		"test",
+		"tests"
+	],
+	"dependencies": {
+		"jquery": null,
+		"lodash": null,
+		"three.js": null
+	}
+}

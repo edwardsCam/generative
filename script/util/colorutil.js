@@ -1,0 +1,9 @@
+var Color = {
+	palette: [
+		0x1a1913,
+		0x503815,
+		0xac420d,
+		0xff8105,
+		0xb1bcc3
+	]
+};
