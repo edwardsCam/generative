@@ -11,20 +11,12 @@ var DrawUtil = (function() {
 		app.scene.add(new THREE.Line(geometry, material));
 	}
 
-	function makeMeshLine(x1, y1, x2, y2, width) {
+	function makeMeshLine(geometry, material, taperFn) {
 		var line = new MeshLine();
-		line.setGeometry(makeGeometry(x1, y1, x2, y2)
-			/*, function(p) {
-						return 1;
-					}*/
-		);
-		var mesh = new THREE.Mesh(line.geometry, new MeshLineMaterial({
-			resolution: new THREE.Vector2(window.innerWidth, window.innerHeight),
-			lineWidth: width,
-			sizeAttenuation: 1,
-			color: new THREE.Color(Color.palette[1])
-		}));
-		app.scene.add(mesh);
+		line.setGeometry(geometry, taperFn || function() {
+			return 1;
+		});
+		app.scene.add(new THREE.Mesh(line.geometry, material));
 	}
 
 	function makeGeometry(x1, y1, x2, y2) {

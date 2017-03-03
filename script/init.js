@@ -14,7 +14,7 @@ var app = (function() {
 		scene.add(new THREE.AmbientLight(Color.palette[1], 0.4));
 		geometry.dynamic = true;
 		renderer.setSize(window.innerWidth, window.innerHeight);
-		renderer.setClearColor(Color.palette[4], 1);
+		renderer.setClearColor(Color.palette[0], 1);
 		camera.position.set(0, 0, 10);
 
 		this.render = function() {

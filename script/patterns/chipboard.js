@@ -1,9 +1,9 @@
-var chipboard = (function() {
+var pattern_chipboard = (function() {
 
 	var b = 4;
-	var minSize = 0.15;
-	var minLineWidth = 0.02;
-	var maxLineWidth = 0.2;
+	var minSize = 0.05;
+	var minLineWidth = 0.015;
+	var maxLineWidth = 0.09;
 	var lineWidthSub = (maxLineWidth - minLineWidth) * minSize * 2;
 	var timeoutTime = 0;
 
@@ -27,12 +27,18 @@ var chipboard = (function() {
 		line(c_x, min_y, c_x, max_y, w);
 		line(min_x, c_y, max_x, c_y, w);
 
-		setTimeout(function() {
+		if (timeoutTime) {
+			setTimeout(drawAll, timeoutTime);
+		} else {
+			drawAll();
+		}
+
+		function drawAll() {
 			botLeft();
 			botRight();
 			topLeft();
 			topRight();
-		}, timeoutTime);
+		}
 
 		function botLeft() {
 			draw(
@@ -79,7 +85,15 @@ var chipboard = (function() {
 	}
 
 	function line(x1, y1, x2, y2, w) {
-		return DrawUtil.makeMeshLine(x1, y1, x2, y2, w);
+		var geometry = new THREE.Geometry();
+		geometry.vertices.push(new THREE.Vector3(x1, y1, 0));
+		geometry.vertices.push(new THREE.Vector3(x2, y2, 0));
+		return DrawUtil.makeMeshLine(geometry, new MeshLineMaterial({
+			resolution: Util.resolution(),
+			lineWidth: w,
+			sizeAttenuation: 1,
+			color: new THREE.Color(Color.palette[1])
+		}));
 	}
 
 })();

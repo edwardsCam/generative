@@ -18,6 +18,6 @@ window.addEventListener('load', function() {
 	}
 
 	function init() {
-		chipboard.init();
+		pattern_snake.init();
 	}
 });
