@@ -17,6 +17,7 @@
 	"dependencies": {
 		"jquery": null,
 		"lodash": null,
-		"three.js": null
+		"three.js": null,
+		"THREE.MeshLine": null
 	}
 }

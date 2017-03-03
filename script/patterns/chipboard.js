@@ -1,12 +1,11 @@
 var chipboard = (function() {
 
 	var b = 4;
-	var minSize = 0.1;
-
-	var material = new THREE.LineBasicMaterial({
-		color: Color.palette[0]
-	});
-	var line = Util.makeLine.bind(null, material);
+	var minSize = 0.15;
+	var minLineWidth = 0.02;
+	var maxLineWidth = 0.2;
+	var lineWidthSub = (maxLineWidth - minLineWidth) * minSize * 2;
+	var timeoutTime = 0;
 
 	return {
 		init: init
@@ -14,30 +13,33 @@ var chipboard = (function() {
 
 	function init() {
 		square();
-
-		var c_x = Math.randomInRange(-3, 3),
-			c_y = Math.randomInRange(-3, 3);
-		draw(c_x, c_y, -b, -b, b, b);
+		draw(
+			Math.randomInRange(-b, b),
+			Math.randomInRange(-b, b), -b, -b, b, b,
+			maxLineWidth - lineWidthSub
+		);
 	}
 
-	function draw(c_x, c_y, min_x, min_y, max_x, max_y) {
+	function draw(c_x, c_y, min_x, min_y, max_x, max_y, w) {
 		if (Util.diff(min_x, max_x) < minSize || Util.diff(min_y, max_y) < minSize) return;
+		if (w < minLineWidth) w = minLineWidth;
 
-		line(c_x, min_y, c_x, max_y);
-		line(min_x, c_y, max_x, c_y);
+		line(c_x, min_y, c_x, max_y, w);
+		line(min_x, c_y, max_x, c_y, w);
 
 		setTimeout(function() {
 			botLeft();
 			botRight();
 			topLeft();
 			topRight();
-		}, 100);
+		}, timeoutTime);
 
 		function botLeft() {
 			draw(
 				Math.randomInRange(min_x, c_x),
 				Math.randomInRange(min_y, c_y),
-				min_x, min_y, c_x, c_y
+				min_x, min_y, c_x, c_y,
+				w - lineWidthSub
 			);
 		}
 
@@ -45,7 +47,8 @@ var chipboard = (function() {
 			draw(
 				Math.randomInRange(c_x, max_x),
 				Math.randomInRange(min_y, c_y),
-				c_x, min_y, max_x, c_y
+				c_x, min_y, max_x, c_y,
+				w - lineWidthSub
 			);
 		}
 
@@ -53,7 +56,8 @@ var chipboard = (function() {
 			draw(
 				Math.randomInRange(min_x, c_x),
 				Math.randomInRange(c_y, max_y),
-				min_x, c_y, c_x, max_y
+				min_x, c_y, c_x, max_y,
+				w - lineWidthSub
 			);
 		}
 
@@ -61,15 +65,21 @@ var chipboard = (function() {
 			draw(
 				Math.randomInRange(c_x, max_x),
 				Math.randomInRange(c_y, max_y),
-				c_x, c_y, max_x, max_y
+				c_x, c_y, max_x, max_y,
+				w - lineWidthSub
 			);
 		}
 	}
 
 	function square() {
-		line(-b, -b, -b, b);
-		line(-b, b, b, b);
-		line(b, b, b, -b);
-		line(b, -b, -b, -b);
+		line(-b, -b, -b, b, maxLineWidth);
+		line(-b, b, b, b, maxLineWidth);
+		line(b, b, b, -b, maxLineWidth);
+		line(b, -b, -b, -b, maxLineWidth);
 	}
+
+	function line(x1, y1, x2, y2, w) {
+		return DrawUtil.makeMeshLine(x1, y1, x2, y2, w);
+	}
+
 })();
