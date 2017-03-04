@@ -18,6 +18,6 @@ window.addEventListener('load', function() {
 	}
 
 	function init() {
-		pattern_snake.init();
+		pattern_roots.init();
 	}
 });

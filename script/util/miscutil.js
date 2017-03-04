@@ -1,9 +1,12 @@
-var Util = (function() {
+var Util = (function () {
 
 	return {
 		diff: diff,
 		inBound: inBound,
-		resolution: resolutionFn
+		resolution: resolutionFn,
+		centerVector: centerVector,
+		vec2toVec3: vec2toVec3,
+		vec2Equals: vec2Equals
 	};
 
 	function diff(x, y) {
@@ -16,5 +19,17 @@ var Util = (function() {
 
 	function resolutionFn() {
 		return new THREE.Vector2(window.innerWidth, window.innerHeight);
+	}
+
+	function centerVector() {
+		return new THREE.Vector3();
+	}
+
+	function vec2toVec3(vec2, z) {
+		return new THREE.Vector3(vec2.x, vec2.y, z);
+	}
+
+	function vec2Equals(p1, p2) {
+		return p1.x === p2.x && p1.y === p2.y;
 	}
 })();

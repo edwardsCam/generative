@@ -15,7 +15,7 @@ var pattern_snake = (function() {
 	}
 
 	function Snake() {
-		this.draw = function drawFn() {
+		this.draw = function() {
 			DrawUtil.makeMeshLine(buildGeometry(), new MeshLineMaterial({
 				resolution: Util.resolution(),
 				lineWidth: 1,
