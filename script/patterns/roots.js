@@ -92,17 +92,17 @@ var pattern_roots = (function () {
 			var cursor = p1;
 			while (stepInfo.numSteps--) {
 				var prev = cursor;
-				cursor = Math.coordWithAngleAndDistance(cursor, stepInfo.theta, stepInfo.stepSize);
-				if (isInvalidPoint(cursor)) {
+				cursor = Math.coordWithAngleAndDistance(prev, stepInfo.theta, stepInfo.stepSize);
+				if (!isValidPoint(cursor)) {
 					return centerInCell(prev);
 				}
 			}
 			return centerInCell(p2);
 
-			function isInvalidPoint(p) {
-				if (!inBounds(p)) return true;
+			function isValidPoint(p) {
+				if (!inBounds(p)) return false;
 				var c = getOrdinalPosition(p);
-				return c[0] != start[0] && c[1] != start[1] && grid[c[0]][c[1]];
+				return (c[0] == start[0] && c[1] == start[1]) || !grid[c[0]][c[1]];
 			}
 		}
 
