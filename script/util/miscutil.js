@@ -6,7 +6,8 @@ var Util = (function () {
 		resolution: resolutionFn,
 		centerVector: centerVector,
 		vec2toVec3: vec2toVec3,
-		vec2Equals: vec2Equals
+		vec2Equals: vec2Equals,
+		middleOfList: middleOfList
 	};
 
 	function diff(x, y) {
@@ -31,5 +32,12 @@ var Util = (function () {
 
 	function vec2Equals(p1, p2) {
 		return p1.x === p2.x && p1.y === p2.y;
+	}
+
+	function middleOfList(list) {
+		if (list && list.length) {
+			return list[Math.floor(list.length / 2)];
+		}
+		return null;
 	}
 })();
