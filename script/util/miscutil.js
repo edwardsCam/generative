@@ -7,7 +7,8 @@ var Util = (function () {
 		centerVector: centerVector,
 		vec2toVec3: vec2toVec3,
 		vec2Equals: vec2Equals,
-		middleOfList: middleOfList
+		middleOfList: middleOfList,
+		PriorityQueue: PriorityQueue
 	};
 
 	function diff(x, y) {
@@ -39,5 +40,70 @@ var Util = (function () {
 			return list[Math.floor(list.length / 2)];
 		}
 		return null;
+	}
+
+	function PriorityQueue() {
+		if (!(this instanceof PriorityQueue)) return new PriorityQueue();
+		var dat = [];
+
+		this.push = function (item) {
+			dat.push(item);
+			bubbleUp();
+		};
+		this.pop = function () {
+			if (!this.has()) return null;
+			var ret = dat.shift();
+			bubbleDown();
+			return ret;
+		};
+		this.has = function () {
+			return dat.length > 0;
+		};
+
+		function bubbleUp() {
+			var i = dat.length - 1;
+			while (i > 0) {
+				var j = i >>> 1;
+				if (isHigherPriority(i, j)) {
+					swap(i, j);
+					i = j;
+				} else break;
+			}
+		}
+
+		function bubbleDown() {
+			var i = 0,
+				last = dat.length - 1;
+			while (true) {
+				var left = (i << 1) + 1,
+					right = left + 1,
+					min = i;
+				if (left <= last && isHigherPriority(left, min)) {
+					min = left;
+				}
+				if (right <= last && isHigherPriority(right, min)) {
+					min = right;
+				}
+				if (i === min) {
+					break;
+				} else {
+					swap(i, min);
+					i = min;
+				}
+			}
+		}
+
+		function swap(i1, i2) {
+			var tmp = dat[i1];
+			dat[i1] = dat[i2];
+			dat[i2] = tmp;
+		}
+
+		/**
+			Fitness function
+		*/
+		function isHigherPriority(i1, i2) {
+			return dat[i1].p > dat[i2].p;
+		}
 	}
 })();
