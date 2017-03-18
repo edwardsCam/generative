@@ -42,9 +42,10 @@ var Util = (function () {
 		return null;
 	}
 
-	function PriorityQueue() {
-		if (!(this instanceof PriorityQueue)) return new PriorityQueue();
+	function PriorityQueue(priorityProp) {
+		if (!(this instanceof PriorityQueue)) return new PriorityQueue(priorityProp);
 		var dat = [];
+		priorityProp = priorityProp || '';
 
 		this.push = function (item) {
 			dat.push(item);
@@ -103,7 +104,7 @@ var Util = (function () {
 			Fitness function
 		*/
 		function isHigherPriority(i1, i2) {
-			return dat[i1].p > dat[i2].p;
+			return _.get(dat[i1], priorityProp) > _.get(dat[i2], priorityProp);
 		}
 	}
 })();

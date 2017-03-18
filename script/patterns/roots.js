@@ -29,7 +29,7 @@ var pattern_roots = (function () {
 	}
 
 	function Roots(initPoint, initAngle) {
-		var q = new Util.PriorityQueue();
+		var q = new Util.PriorityQueue('p');
 		initPoint = initPoint || Util.centerVector();
 		initAngle = initAngle || 0;
 		var geoms = buildGeometries();
