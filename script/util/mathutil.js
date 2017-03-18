@@ -149,3 +149,10 @@ Math.coordWithAngleAndDistance = function(start, angle, distance) {
 Math.mod = function(val, mod) {
 	return val % mod;
 };
+
+/**
+    50% chance of returning true
+*/
+Math.coinToss = function() {
+    return Math.random() > 0.5;
+};
