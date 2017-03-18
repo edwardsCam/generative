@@ -50,7 +50,7 @@ var pattern_roots = (function () {
 			function drawOneLine(line) {
 				DrawUtil.makeMeshLine(line, new MeshLineMaterial({
 					resolution: Util.resolution(),
-					lineWidth: 1,
+					lineWidth: line.initLineWidth,
 					sizeAttenuation: 1,
 					color: new THREE.Color(Color.palette[1])
 				}), taper);
@@ -59,7 +59,6 @@ var pattern_roots = (function () {
 
 		function buildGeometries() {
 			var geoms = [buildLine(initPoint, initAngle, 1)];
-
 			while (q.has() && hasEmptySpaces()) {
 				var n = q.pop();
 				var nextLine = buildLine(n.point, n.angle, n.p);
@@ -69,6 +68,8 @@ var pattern_roots = (function () {
 		}
 
 		function buildLine(root, startAngle, p) {
+            var g = new THREE.Geometry();
+            g.initLineWidth = p;
 			root = centerInCell(root);
 			var verts = [root];
 			var cursor = nextPoint(root, p, startAngle)
@@ -77,14 +78,15 @@ var pattern_roots = (function () {
 				verts.push(cursor);
 				cursor = nextPoint(cursor, p, startAngle);
 				if (cursor != null) {
+                    var newAngle = Math.coinToss() ? startAngle + Math.PI / 2 : startAngle - Math.PI / 2;
 					q.push({
 						point: cursor,
-						angle: startAngle + Math.PI / 2,
+						angle: newAngle,
 						p: p
 					});
 				}
 			}
-			var g = new THREE.Geometry();
+
 			g.vertices = verts;
 			return g;
 		}
