@@ -48,6 +48,7 @@ var Util = (function () {
 		priorityProp = priorityProp || '';
 
 		this.push = function (item) {
+			if (!item) return;
 			dat.push(item);
 			bubbleUp();
 		};
