@@ -1,6 +1,6 @@
-window.addEventListener('load', function() {
+window.addEventListener('load', function () {
 	init();
-	goThrottled(100);
+	go();
 
 	function animate() {
 		app.render();
