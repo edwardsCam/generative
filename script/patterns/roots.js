@@ -14,18 +14,22 @@ var pattern_roots = (function () {
 	var squareSize = bound * 2 / resolution;
 	var grid = buildGrid(resolution);
 
+	var decayRate = 0.05;
+	var pmin = 0.1;
+
 	return {
 		init: init
 	};
 
 	function init() {
-		DrawUtil.drawGrid(bound, resolution, 0x0000ff);
 		var master = new Roots();
-		fillPoints();
+		//drawGrid();
+		//fillPoints();
 		master.draw();
 	}
 
 	function Roots(initPoint, initAngle) {
+		var q = new Util.PriorityQueue();
 		initPoint = initPoint || Util.centerVector();
 		initAngle = initAngle || 0;
 		var geoms = buildGeometries();
@@ -42,7 +46,12 @@ var pattern_roots = (function () {
 
 		function buildGeometries() {
 			var geoms = [buildLine(initPoint, initAngle, 1)];
-			// todo
+
+			while (q.has() && hasEmptySpaces()) {
+				var n = q.pop();
+				var nextLine = buildLine(n.point, n.angle, n.p);
+				geoms.push(nextLine);
+			}
 			return geoms;
 		}
 
@@ -51,12 +60,20 @@ var pattern_roots = (function () {
 			var verts = [root];
 			var cursor = nextPoint(root, p, startAngle)
 			while (inBounds(cursor)) {
+				p = Math.max(p - decayRate, pmin);
 				verts.push(cursor);
-				cursor = nextPoint(cursor, p, startAngle)
+				cursor = nextPoint(cursor, p, startAngle);
+				if (cursor != null) {
+					q.push({
+						point: cursor,
+						angle: startAngle + Math.PI / 2,
+						p: p
+					});
+				}
 			}
-			var geometry = new THREE.Geometry();
-			geometry.vertices = verts;
-			return geometry;
+			var g = new THREE.Geometry();
+			g.vertices = verts;
+			return g;
 		}
 
 		function nextPoint(startPoint, p, startAngle) {
@@ -144,8 +161,8 @@ var pattern_roots = (function () {
 		}
 
 		function taper(p) {
-			return squareSize / 2;
-			//return Math.interpolate([0, 1], [maxLineWidth, minLineWidth], p);
+			//	return squareSize / 2;
+			return Math.interpolate([0, 1], [maxLineWidth, minLineWidth], p);
 		}
 	}
 
@@ -199,6 +216,10 @@ var pattern_roots = (function () {
 		}
 	}
 
+	function drawGrid() {
+		DrawUtil.drawGrid(bound, resolution, 0x0000ff);
+	}
+
 	function buildGrid(res) {
 		var g = [];
 		for (var i = 0; i < res; i++) {
@@ -208,5 +229,13 @@ var pattern_roots = (function () {
 			}
 		}
 		return g;
+	}
+
+	function hasEmptySpaces() {
+		return grid.some(function (r) {
+			return r.some(function (c) {
+				return c === true;
+			});
+		});
 	}
 })();
