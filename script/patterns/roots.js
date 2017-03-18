@@ -22,7 +22,7 @@ var pattern_roots = (function () {
 	};
 
 	function init() {
-		var master = new Roots(new THREE.Vector3(-bound * 0.75, -bound * 0.75), Math.PI / 4);
+		var master = new Roots();
 		//drawGrid();
 		//fillPoints();
 		master.draw();
@@ -173,7 +173,7 @@ var pattern_roots = (function () {
 	}
 
 	function inBounds(point) {
-		return point != null && point.x >= -bound && point.x <= bound && point.y >= -bound && point.y <= bound;
+		return point != null && Math.distance(point, Util.centerVector()) <= bound;
 	}
 
 	/**
