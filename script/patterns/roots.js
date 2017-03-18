@@ -10,7 +10,7 @@ var pattern_roots = (function () {
 	var maxAngle = Math.PI * 0.9;
 
 	var bound = 4;
-	var resolution = 20;
+	var resolution = 100;
 	var squareSize = bound * 2 / resolution;
 	var grid = buildGrid(resolution);
 
@@ -33,15 +33,28 @@ var pattern_roots = (function () {
 		initPoint = initPoint || Util.centerVector();
 		initAngle = initAngle || 0;
 		var geoms = buildGeometries();
-		this.draw = function () {
-			geoms.forEach(function (line) {
+		this.draw = function (drawTimeout) {
+			if (drawTimeout) {
+				(function drawWithTimeout(i) {
+					setTimeout(function () {
+						drawOneLine(geoms[i]);
+						if (i < geoms.length - 1) {
+							drawWithTimeout(i + 1);
+						}
+					}, drawTimeout);
+				})(0);
+			} else {
+				geoms.forEach(drawOneLine);
+			}
+
+			function drawOneLine(line) {
 				DrawUtil.makeMeshLine(line, new MeshLineMaterial({
 					resolution: Util.resolution(),
 					lineWidth: 1,
 					sizeAttenuation: 1,
 					color: new THREE.Color(Color.palette[1])
 				}), taper);
-			});
+			}
 		};
 
 		function buildGeometries() {
