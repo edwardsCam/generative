@@ -1,4 +1,10 @@
 Math.usingDegrees = false;
+Math.PI_2 = Math.PI * 2;
+Math.PI_half = Math.PI / 2;
+
+Math.avg = function (a, b) {
+	return (a + b) / 2;
+};
 
 // degrees to radians
 Math.toRadians = function (d) {
@@ -125,6 +131,35 @@ Math.interpolate = function (domain, range, value) {
 	return Math.bound(min, max, result);
 };
 
+
+/**
+	interpolateSmooth:
+		Sinusoidal interpolation between a domain and a range.
+		Essentially the same as Math.interpolate, but with a softer transition.
+
+        Like this:             rather than this:
+                 ___
+               /                  /
+             /                   /
+        ___/                    /
+*/
+Math.interpolateSmooth = function (domain, range, value) {
+	var x1 = domain[0],
+		x2 = domain[1],
+		y1 = range[0],
+		y2 = range[1];
+	if (value > x2) return y2;
+	if (value < x1) return y1;
+	if (x1 === x2) return y1;
+
+	var period = Math.PI / (x2 - x1),
+		sinArg = (period * (value - x1)) - Math.PI_half,
+		result = Math.interpolate([-1, 1], [y1, y2], Math.sin(sinArg)),
+		min = Math.min(y1, y2),
+		max = Math.max(y1, y2);
+	return Math.bound(min, max, result);
+};
+
 Math.randomInRange = function (min, max, round) {
 	var result = min + Math.random() * (max - min);;
 	return round ? Math.floor(result) : result;
@@ -155,8 +190,4 @@ Math.mod = function (val, mod) {
 */
 Math.coinToss = function () {
 	return Math.random() > 0.5;
-};
-
-Math.avg = function (a, b) {
-	return (a + b) / 2;
 };

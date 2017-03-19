@@ -35,8 +35,8 @@ var pattern_infinity_cycle = (function () {
 		};
 
 		function adjust() {
-			var width = Math.interpolate([0, 15], [4, 2], app.time.curr),
-				height = Math.interpolate([0, 15], [1, 4], app.time.curr);
+			var width = Math.interpolateSmooth([0, 15], [4, 2], app.time.curr),
+				height = Math.interpolateSmooth([0, 15], [1, 4], app.time.curr);
 			for (var i = 0; i < n; i++) {
 				var j = app.time.curr * rotateSpeed + i;
 				var p = i * 3;
