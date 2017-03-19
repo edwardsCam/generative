@@ -3,6 +3,9 @@ window.addEventListener('load', function () {
 	go();
 
 	function animate() {
+		var delta = app.time.delta();
+		clockTick(delta)
+		pattern_infinity_cycle.animate(delta);
 		app.render();
 	}
 
@@ -18,6 +21,10 @@ window.addEventListener('load', function () {
 	}
 
 	function init() {
-		pattern_roots.init();
+		pattern_infinity_cycle.init();
+	}
+
+	function clockTick(d) {
+		app.time.curr += d;
 	}
 });

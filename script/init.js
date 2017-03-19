@@ -1,4 +1,4 @@
-var app = (function() {
+var app = (function () {
 	return new App();
 
 	function App() {
@@ -6,10 +6,17 @@ var app = (function() {
 		var renderer = new THREE.WebGLRenderer();
 		var scene = new THREE.Scene();
 		var geometry = new THREE.Geometry();
+		var clock = new THREE.Clock();
 		this.scene = scene;
 		this.camera = camera;
 		this.renderer = renderer;
 		this.geometry = geometry;
+		this.time = {
+			curr: 0,
+			delta: function () {
+				return clock.getDelta();
+			}
+		};
 
 		scene.add(new THREE.AmbientLight(Color.palette[1], 0.4));
 		geometry.dynamic = true;
@@ -17,7 +24,7 @@ var app = (function() {
 		renderer.setClearColor(Color.palette[0], 1);
 		camera.position.set(0, 0, 10);
 
-		this.render = function() {
+		this.render = function () {
 			renderer.render(scene, camera);
 		};
 
