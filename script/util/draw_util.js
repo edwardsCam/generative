@@ -1,4 +1,4 @@
-var DrawUtil = (function() {
+var DrawUtil = (function () {
 
 	return {
 		makeLine: makeLine,
@@ -46,7 +46,7 @@ var DrawUtil = (function() {
 
 	function makeMeshLine(geometry, material, taperFn) {
 		var line = new MeshLine();
-		line.setGeometry(geometry, taperFn || function() {
+		line.setGeometry(geometry, taperFn || function () {
 			return 1;
 		});
 		app.scene.add(new THREE.Mesh(line.geometry, material));

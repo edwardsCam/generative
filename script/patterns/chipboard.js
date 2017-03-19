@@ -1,4 +1,4 @@
-var pattern_chipboard = (function() {
+var pattern_chipboard = (function () {
 
 	var b = 4;
 	var minSize = 0.05;

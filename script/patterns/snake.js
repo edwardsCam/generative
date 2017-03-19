@@ -1,4 +1,4 @@
-var pattern_snake = (function() {
+var pattern_snake = (function () {
 
 	var minLineWidth = 0.01;
 	var maxLineWidth = 0.75;
@@ -15,7 +15,7 @@ var pattern_snake = (function() {
 	}
 
 	function Snake() {
-		this.draw = function() {
+		this.draw = function () {
 			DrawUtil.makeMeshLine(buildGeometry(), new MeshLineMaterial({
 				resolution: Util.resolution(),
 				lineWidth: 1,
