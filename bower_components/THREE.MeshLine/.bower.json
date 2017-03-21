@@ -1,0 +1,14 @@
+{
+  "name": "THREE.MeshLine",
+  "homepage": "https://github.com/spite/THREE.MeshLine",
+  "version": "1.0.3",
+  "_release": "1.0.3",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.0.3",
+    "commit": "da9a840716c7a5758567f71813ab3e7de8bfbae4"
+  },
+  "_source": "https://github.com/spite/THREE.MeshLine.git",
+  "_target": "*",
+  "_originalSource": "THREE.MeshLine"
+}
