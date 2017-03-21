@@ -1,16 +1,12 @@
 var pattern_infinity_cycle = (function () {
 
-	var MAX_POINTS, n, infinityCycle, addPeriod, rotateSpeed, timeBuff;
+	var n, infinityCycle, timeBuff;
 
 	return {
-		init: function () {
+		init: function (props) {
 			n = 0;
-			addPeriod = 0.2;
-			addAccelerate = 0.001;
-			rotateSpeed = 0.15;
-			MAX_POINTS = 600;
 			timeBuff = 0;
-			infinityCycle = new InfinityCycle();
+			infinityCycle = new InfinityCycle(props);
 		},
 		animate: function (d) {
 			timeBuff += d;
@@ -18,30 +14,32 @@ var pattern_infinity_cycle = (function () {
 		}
 	};
 
-	function InfinityCycle() {
-		var points = new Float32Array(MAX_POINTS * 3),
+	function InfinityCycle(props) {
+		var points = new Float32Array(props.maxPoints * 3),
 			g = new THREE.BufferGeometry();
 		g.addAttribute('position', new THREE.BufferAttribute(points, 3));
 		app.scene.add(new THREE.Line(g, new THREE.LineBasicMaterial({
 			color: 'black'
 		})));
 		this.animate = function () {
-			if (timeBuff > addPeriod) {
-				timeBuff -= addPeriod;
-				addPeriod -= addAccelerate;
+			if (timeBuff > props.newPointDelay) {
+				timeBuff -= Math.max(props.newPointDelay, 0);
+				props.newPointDelay -= props.newPointAcceleration;
 				g.setDrawRange(0, ++n);
 			}
 			adjust();
 		};
 
 		function adjust() {
-			var width = Math.interpolateSmooth([0, 15], [4, 2], app.time.curr),
-				height = Math.interpolateSmooth([0, 15], [1, 4], app.time.curr);
+			var vert = props.vertical;
+			var timeDomain = [0, props.growthTime];
+			var width = Math.interpolateSmooth(timeDomain, vert ? [4, 2] : [2, 5], app.time.curr),
+				height = Math.interpolateSmooth(timeDomain, vert ? [1, 4] : [4, 3], app.time.curr);
 			for (var i = 0; i < n; i++) {
-				var j = app.time.curr * rotateSpeed + i;
+				var j = app.time.curr * props.rotateSpeed + i;
 				var p = i * 3;
-				points[p] = width * Math.sin(2.5 * j);
-				points[p + 1] = height * Math.sin(j);
+				points[p] = width * Math.sin((vert ? props.likeWhoa : 1) * j);
+				points[p + 1] = height * Math.sin((vert ? 1 : props.likeWhoa) * j);
 			}
 			g.attributes.position.needsUpdate = true;
 		}

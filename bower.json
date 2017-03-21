@@ -15,9 +15,9 @@
 		"tests"
 	],
 	"dependencies": {
-		"jquery": null,
 		"lodash": null,
 		"three.js": null,
-		"THREE.MeshLine": null
+		"THREE.MeshLine": null,
+		"dat.gui": "dat.gui.js#^0.6.3"
 	}
 }
