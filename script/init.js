@@ -152,8 +152,7 @@ var app = (function () {
 				return {
 					maxPoints: 600,
 					rotateSpeed: 0.15,
-					newPointDelay: 0.2,
-					newPointAcceleration: 0.0005,
+					newPointDelay: 0.125,
 					growthTime: 15,
 					vertical: true,
 					likeWhoa: 2.5
@@ -189,12 +188,11 @@ var app = (function () {
 
 			function _custom_options_InfinityCycle() {
 				return {
-					maxPoints: bound(50, 2000, 10),
-					rotateSpeed: bound(0.05, 2, 0.05),
-					newPointDelay: bound(0, 0.5, 0.05),
-					newPointAcceleration: bound(0, 0.005, 0.0005),
+					maxPoints: bound(20, 1500, 5),
+					rotateSpeed: bound(0.02, 1, 0.02),
+					newPointDelay: bound(0, 0.2, 0.02),
 					growthTime: bound(0, 60, 5),
-					likeWhoa: bound(0, 10, 0.25)
+					likeWhoa: bound(0, 5, 0.25)
 				};
 			}
 
