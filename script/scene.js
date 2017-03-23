@@ -7,15 +7,13 @@ window.addEventListener('load', function () {
 
 		var delta = app.time.delta();
 		clockTick(delta);
-		if (app.activePattern.animate) {
-			app.activePattern.animate(delta);
-		}
 		if (app.activePattern.isStatic) {
-			if (!app.activePattern.isDrawn) {
+			if (!app.activePattern.isDrawn()) {
+				app.activePattern.animate(delta);
 				app.render();
-				app.activePattern.isDrawn = true;
 			}
 		} else {
+			app.activePattern.animate(delta);
 			app.render();
 		}
 	}

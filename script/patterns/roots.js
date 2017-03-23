@@ -2,22 +2,31 @@ var pattern_roots = (function () {
 
 	var bound = 4;
 	var grid;
+	var roots;
 
 	return {
 		init: init,
-		isStatic: true
+		isStatic: true,
+		animate: function () {
+			roots.complete = true;
+		},
+		isDrawn: function () {
+			return roots.complete;
+		}
 	};
 
 	function init(props) {
 		grid = buildGrid(props.resolution);
-		var master = new Roots(props);
+		roots = new Roots(props);
 		//drawGrid();
 		//fillPoints();
-		master.draw();
+		roots.draw();
 	}
 
 	function Roots(props) {
+		var rootsObj = this;
 		this.draw = drawFn;
+		this.complete = false;
 
 		var resolution = props.resolution;
 		var squareSize = bound * 2 / resolution;

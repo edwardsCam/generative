@@ -1,13 +1,11 @@
 var app = (function () {
 	var patterns = [{
-			name: 'Roots',
-			ctrl: pattern_roots
-		},
-		{
-			name: 'Infinity Cycle',
-			ctrl: pattern_infinity_cycle
-		}
-	];
+		name: 'Roots',
+		ctrl: pattern_roots
+	}, {
+		name: 'Infinity Cycle',
+		ctrl: pattern_infinity_cycle
+	}];
 	return new App();
 
 	function App() {
@@ -28,7 +26,6 @@ var app = (function () {
 		};
 		this.activePattern = null;
 
-		this.scene.add(new THREE.AmbientLight(Color.palette[1], 0.4));
 		geometry.dynamic = true;
 		renderer.setSize(window.innerWidth, window.innerHeight);
 		renderer.setClearColor(Color.palette[0], 1);
@@ -52,6 +49,15 @@ var app = (function () {
 		function resetTime() {
 			clock = new THREE.Clock();
 			appObj.time.curr = 0;
+		}
+
+		function destroy() {
+			while (appObj.scene.children.length) {
+				var c = appObj.scene.children[0];
+				c.geometry.dispose();
+				c.material.dispose();
+				appObj.scene.remove(c);
+			}
 		}
 
 		function initGUI() {
@@ -98,11 +104,8 @@ var app = (function () {
 				if (!newPattern) return;
 
 				resetTime();
-				appObj.scene = new THREE.Scene();
+				destroy();
 
-				if (appObj.activePattern) {
-					appObj.activePattern.isDrawn = false;
-				}
 				appObj.activePattern = newPattern.ctrl;
 				if (_.get(appObj, 'activePattern.init')) {
 					appObj.activePattern.init(customOptions[selectedPatternName]);
