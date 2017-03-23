@@ -1,13 +1,14 @@
 var app = (function () {
 	var patterns = [{
-			name: 'Roots',
-			ctrl: pattern_roots
-		},
-		{
-			name: 'Infinity Cycle',
-			ctrl: pattern_infinity_cycle
-		}
-	];
+		name: 'Roots',
+		ctrl: pattern_roots
+	}, {
+		name: 'Infinity Cycle',
+		ctrl: pattern_infinity_cycle
+	}, {
+		name: 'Chipboard',
+		ctrl: pattern_chipboard
+	}];
 	return new App();
 
 	function App() {
@@ -28,7 +29,6 @@ var app = (function () {
 		};
 		this.activePattern = null;
 
-		this.scene.add(new THREE.AmbientLight(Color.palette[1], 0.4));
 		geometry.dynamic = true;
 		renderer.setSize(window.innerWidth, window.innerHeight);
 		renderer.setClearColor(Color.palette[0], 1);
@@ -47,11 +47,21 @@ var app = (function () {
 			camera.aspect = window.innerWidth / window.innerHeight;
 			camera.updateProjectionMatrix();
 			renderer.setSize(window.innerWidth, window.innerHeight);
+			appObj.render();
 		}
 
 		function resetTime() {
 			clock = new THREE.Clock();
 			appObj.time.curr = 0;
+		}
+
+		function destroy() {
+			while (appObj.scene.children.length) {
+				var c = appObj.scene.children[0];
+				c.geometry.dispose();
+				c.material.dispose();
+				appObj.scene.remove(c);
+			}
 		}
 
 		function initGUI() {
@@ -98,11 +108,8 @@ var app = (function () {
 				if (!newPattern) return;
 
 				resetTime();
-				appObj.scene = new THREE.Scene();
+				destroy();
 
-				if (appObj.activePattern) {
-					appObj.activePattern.isDrawn = false;
-				}
 				appObj.activePattern = newPattern.ctrl;
 				if (_.get(appObj, 'activePattern.init')) {
 					appObj.activePattern.init(customOptions[selectedPatternName]);
@@ -113,9 +120,11 @@ var app = (function () {
 				return {
 					'Roots': _default_values_Roots(),
 					'Infinity Cycle': _default_values_InfinityCycle(),
+					'Chipboard': _default_values_Chipboard(),
 					'__meta__': {
 						'Roots': _custom_options_Roots(),
-						'Infinity Cycle': _custom_options_InfinityCycle()
+						'Infinity Cycle': _custom_options_InfinityCycle(),
+						'Chipboard': _custom_options_Chipboard()
 					}
 				};
 			}
@@ -133,7 +142,9 @@ var app = (function () {
 					maxAngle: 100,
 					decayRate: 0.04,
 					minimumDecay: 0.2,
-					resolution: 75
+					drawTime: 0.02,
+					resolution: 80,
+					showGrid: false
 				};
 			}
 
@@ -141,11 +152,19 @@ var app = (function () {
 				return {
 					maxPoints: 600,
 					rotateSpeed: 0.15,
-					newPointDelay: 0.2,
-					newPointAcceleration: 0.0005,
+					newPointDelay: 0.125,
 					growthTime: 15,
 					vertical: true,
 					likeWhoa: 2.5
+				};
+			}
+
+			function _default_values_Chipboard() {
+				return {
+					minBlankSpace: 0.15,
+					minLineWidth: 0.015,
+					maxLineWidth: 0.1,
+					drawTime: 0.05
 				};
 			}
 
@@ -157,23 +176,32 @@ var app = (function () {
 					minLineLength: bound(0.05, 1, 0.05),
 					maxLineLength: bound(0.1, 2, 0.05),
 					minLineWidth: bound(0.01, 0.5, 0.01),
-					maxLineWidth: bound(0.05, 1, 0.01),
+					maxLineWidth: bound(0.05, 0.5, 0.01),
 					minAngle: bound(5, 90),
 					maxAngle: bound(10, 175),
-					decayRate: bound(0.01, 0.1, 0.01),
+					decayRate: bound(0, 0.2, 0.01),
 					minimumDecay: bound(0, 0.5, 0.05),
-					resolution: bound(20, 200, 5)
+					drawTime: bound(0, 0.04, 0.001),
+					resolution: bound(20, 300, 10)
 				};
 			}
 
 			function _custom_options_InfinityCycle() {
 				return {
-					maxPoints: bound(50, 2000, 10),
-					rotateSpeed: bound(0.05, 2, 0.05),
-					newPointDelay: bound(0, 0.5, 0.05),
-					newPointAcceleration: bound(0, 0.005, 0.0005),
+					maxPoints: bound(20, 1500, 5),
+					rotateSpeed: bound(0.02, 1, 0.02),
+					newPointDelay: bound(0, 0.2, 0.02),
 					growthTime: bound(0, 60, 5),
-					likeWhoa: bound(0, 10, 0.25)
+					likeWhoa: bound(0, 5, 0.25)
+				};
+			}
+
+			function _custom_options_Chipboard() {
+				return {
+					minBlankSpace: bound(0.05, 0.5, 0.0125),
+					minLineWidth: bound(0.01, 0.1, 0.01),
+					maxLineWidth: bound(0.02, 0.3, 0.02),
+					drawTime: bound(0, 0.1, 0.00125)
 				};
 			}
 
@@ -181,6 +209,7 @@ var app = (function () {
 				return {
 					bound: [min, max, (step == null ? 1 : step)]
 				};
+
 			}
 		}
 	}

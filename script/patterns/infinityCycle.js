@@ -15,18 +15,19 @@ var pattern_infinity_cycle = (function () {
 	};
 
 	function InfinityCycle(props) {
-		var points = new Float32Array(props.maxPoints * 3),
+		var points = new Float32Array(6000), // max points of 2000, *3 for xyz
 			g = new THREE.BufferGeometry();
 		g.addAttribute('position', new THREE.BufferAttribute(points, 3));
 		app.scene.add(new THREE.Line(g, new THREE.LineBasicMaterial({
 			color: 'black'
 		})));
 		this.animate = function () {
-			if (timeBuff > props.newPointDelay) {
-				timeBuff -= Math.max(props.newPointDelay, 0);
-				props.newPointDelay -= props.newPointAcceleration;
-				g.setDrawRange(0, ++n);
+			n = Math.min(n, props.maxPoints);
+			while (n < props.maxPoints && timeBuff > props.newPointDelay) {
+				timeBuff -= props.newPointDelay;
+				n++;
 			}
+			g.setDrawRange(0, n);
 			adjust();
 		};
 

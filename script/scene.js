@@ -7,17 +7,18 @@ window.addEventListener('load', function () {
 
 		var delta = app.time.delta();
 		clockTick(delta);
-		if (app.activePattern.animate) {
-			app.activePattern.animate(delta);
-		}
 		if (app.activePattern.isStatic) {
-			if (!app.activePattern.isDrawn) {
-				app.render();
-				app.activePattern.isDrawn = true;
+			if (!app.activePattern.isDrawn()) {
+				rend(delta);
 			}
 		} else {
-			app.render();
+			rend(delta);
 		}
+	}
+
+	function rend(delta) {
+		app.activePattern.animate(delta);
+		app.render();
 	}
 
 	// renders the view every frame
