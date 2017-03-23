@@ -5,6 +5,9 @@ var app = (function () {
 	}, {
 		name: 'Infinity Cycle',
 		ctrl: pattern_infinity_cycle
+	}, {
+		name: 'Chipboard',
+		ctrl: pattern_chipboard
 	}];
 	return new App();
 
@@ -116,9 +119,11 @@ var app = (function () {
 				return {
 					'Roots': _default_values_Roots(),
 					'Infinity Cycle': _default_values_InfinityCycle(),
+					'Chipboard': _default_values_Chipboard(),
 					'__meta__': {
 						'Roots': _custom_options_Roots(),
-						'Infinity Cycle': _custom_options_InfinityCycle()
+						'Infinity Cycle': _custom_options_InfinityCycle(),
+						'Chipboard': _custom_options_Chipboard()
 					}
 				};
 			}
@@ -152,6 +157,15 @@ var app = (function () {
 				};
 			}
 
+			function _default_values_Chipboard() {
+				return {
+					minBlankSpace: 0.15,
+					minLineWidth: 0.015,
+					maxLineWidth: 0.1,
+					drawTime: 0.05
+				};
+			}
+
 			function _custom_options_Roots() {
 				return {
 					startX: bound(-3, 3, 0.25),
@@ -180,10 +194,20 @@ var app = (function () {
 				};
 			}
 
+			function _custom_options_Chipboard() {
+				return {
+					minBlankSpace: bound(0.05, 1, 0.05),
+					minLineWidth: bound(0.01, 0.1, 0.01),
+					maxLineWidth: bound(0.02, 0.3, 0.02),
+					drawTime: bound(0, 0.1, 0.0025)
+				};
+			}
+
 			function bound(min, max, step) {
 				return {
 					bound: [min, max, (step == null ? 1 : step)]
 				};
+
 			}
 		}
 	}
