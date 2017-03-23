@@ -47,6 +47,7 @@ var app = (function () {
 			camera.aspect = window.innerWidth / window.innerHeight;
 			camera.updateProjectionMatrix();
 			renderer.setSize(window.innerWidth, window.innerHeight);
+			appObj.render();
 		}
 
 		function resetTime() {
@@ -141,7 +142,9 @@ var app = (function () {
 					maxAngle: 100,
 					decayRate: 0.04,
 					minimumDecay: 0.2,
-					resolution: 75
+					drawTime: 0.02,
+					resolution: 80,
+					showGrid: false
 				};
 			}
 
@@ -174,12 +177,13 @@ var app = (function () {
 					minLineLength: bound(0.05, 1, 0.05),
 					maxLineLength: bound(0.1, 2, 0.05),
 					minLineWidth: bound(0.01, 0.5, 0.01),
-					maxLineWidth: bound(0.05, 1, 0.01),
+					maxLineWidth: bound(0.05, 0.5, 0.01),
 					minAngle: bound(5, 90),
 					maxAngle: bound(10, 175),
-					decayRate: bound(0.01, 0.1, 0.01),
+					decayRate: bound(0, 0.2, 0.01),
 					minimumDecay: bound(0, 0.5, 0.05),
-					resolution: bound(20, 200, 5)
+					drawTime: bound(0, 0.04, 0.001),
+					resolution: bound(20, 300, 10)
 				};
 			}
 
@@ -196,10 +200,10 @@ var app = (function () {
 
 			function _custom_options_Chipboard() {
 				return {
-					minBlankSpace: bound(0.05, 1, 0.05),
+					minBlankSpace: bound(0.05, 0.5, 0.0125),
 					minLineWidth: bound(0.01, 0.1, 0.01),
 					maxLineWidth: bound(0.02, 0.3, 0.02),
-					drawTime: bound(0, 0.1, 0.0025)
+					drawTime: bound(0, 0.1, 0.00125)
 				};
 			}
 

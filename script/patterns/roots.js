@@ -3,12 +3,14 @@ var pattern_roots = (function () {
 	var bound = 4;
 	var grid;
 	var roots;
+	var timeBuff = 0;
 
 	return {
 		init: init,
 		isStatic: true,
-		animate: function () {
-			roots.complete = true;
+		animate: function (d) {
+			timeBuff += d;
+			roots.draw();
 		},
 		isDrawn: function () {
 			return roots.complete;
@@ -16,17 +18,20 @@ var pattern_roots = (function () {
 	};
 
 	function init(props) {
+		timeBuff = 0;
 		grid = buildGrid(props.resolution);
 		roots = new Roots(props);
-		//drawGrid();
-		//fillPoints();
-		roots.draw();
+		if (props.showGrid) {
+			drawGrid(props.resolution);
+		}
+		//roots.fillPoints();
 	}
 
 	function Roots(props) {
 		var rootsObj = this;
 		this.draw = drawFn;
 		this.complete = false;
+		this.fillPoints = fillPoints;
 
 		var resolution = props.resolution;
 		var squareSize = bound * 2 / resolution;
@@ -34,24 +39,24 @@ var pattern_roots = (function () {
 		var q = new Util.PriorityQueue('p');
 		var initPoint = new THREE.Vector3(props.startX, props.startY);
 		var initAngle = Math.toRadians(props.startAngle);
-		var geoms = [buildLine(initPoint, initAngle, 1)];
+		var geoms = [
+			buildLine(initPoint, initAngle, 1)
+		];
 		while (q.has() && hasEmptySpaces()) {
 			var n = q.pop();
 			geoms.push(buildLine(n.point, n.angle, n.p));
 		}
 
-		function drawFn(drawTimeout) {
-			if (drawTimeout) {
-				(function drawWithTimeout(i) {
-					setTimeout(function () {
-						drawOneLine(geoms[i]);
-						if (i < geoms.length - 1) {
-							drawWithTimeout(i + 1);
-						}
-					}, drawTimeout);
-				})(0);
+		var drawCursor = 0;
+
+		function drawFn() {
+			if (drawCursor < geoms.length) {
+				while (drawCursor < geoms.length && timeBuff > props.drawTime) {
+					timeBuff -= props.drawTime;
+					drawOneLine(geoms[drawCursor++]);
+				}
 			} else {
-				geoms.forEach(drawOneLine);
+				rootsObj.complete = true;
 			}
 
 			function drawOneLine(line) {
@@ -216,10 +221,6 @@ var pattern_roots = (function () {
 			}
 		}
 
-		function drawGrid() {
-			DrawUtil.drawGrid(bound, resolution, 0x0000ff);
-		}
-
 		function getStepInfo(p1, p2) {
 			var stepSize = squareSize / resolution;
 			return {
@@ -232,6 +233,10 @@ var pattern_roots = (function () {
 
 	function inBounds(point) {
 		return point != null && Math.distance(point, Util.centerVector()) <= bound;
+	}
+
+	function drawGrid(resolution) {
+		DrawUtil.drawGrid(bound, resolution, 0x0000ff);
 	}
 
 	function buildGrid(res) {

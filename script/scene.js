@@ -9,13 +9,16 @@ window.addEventListener('load', function () {
 		clockTick(delta);
 		if (app.activePattern.isStatic) {
 			if (!app.activePattern.isDrawn()) {
-				app.activePattern.animate(delta);
-				app.render();
+				rend(delta);
 			}
 		} else {
-			app.activePattern.animate(delta);
-			app.render();
+			rend(delta);
 		}
+	}
+
+	function rend(delta) {
+		app.activePattern.animate(delta);
+		app.render();
 	}
 
 	// renders the view every frame
