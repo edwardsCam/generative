@@ -1,6 +1,6 @@
 var pattern_infinity_cycle = (function () {
 
-	var n, infinityCycle, timeBuff;
+	var n, timeBuff, infinityCycle;
 
 	return {
 		init: function (props) {
@@ -32,15 +32,16 @@ var pattern_infinity_cycle = (function () {
 		};
 
 		function adjust() {
-			var vert = props.vertical;
-			var timeDomain = [0, props.growthTime];
-			var width = Math.interpolateSmooth(timeDomain, vert ? [4, 2] : [2, 5], app.time.curr),
-				height = Math.interpolateSmooth(timeDomain, vert ? [1, 4] : [4, 3], app.time.curr);
+			var t = app.time.curr,
+				isVert = props.vertical,
+				timeDomain = [0, props.growthTime],
+				width = Math.interpolateSmooth(timeDomain, isVert ? [4, 2] : [2, 5], t),
+				height = Math.interpolateSmooth(timeDomain, isVert ? [1, 4] : [4, 3], t);
 			for (var i = 0; i < n; i++) {
-				var j = app.time.curr * props.rotateSpeed + i;
+				var j = t * props.rotateSpeed + i;
 				var p = i * 3;
-				points[p] = width * Math.sin((vert ? props.likeWhoa : 1) * j);
-				points[p + 1] = height * Math.sin((vert ? 1 : props.likeWhoa) * j);
+				points[p] = width * Math.sin((isVert ? props.likeWhoa : 1) * j);
+				points[p + 1] = height * Math.sin((isVert ? 1 : props.likeWhoa) * j);
 			}
 			g.attributes.position.needsUpdate = true;
 		}

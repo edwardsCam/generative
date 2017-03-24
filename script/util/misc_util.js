@@ -1,30 +1,21 @@
+/**
+	miscUtil:
+		Various utility functions and classes.
+*/
+
 var Util = (function () {
 
 	return {
-		diff: diff,
-		inBound: inBound,
 		resolution: resolutionFn,
-		centerVector: centerVector,
+		centerVector: new THREE.Vector3(),
 		vec2toVec3: vec2toVec3,
 		vec2Equals: vec2Equals,
 		middleOfList: middleOfList,
 		PriorityQueue: PriorityQueue
 	};
 
-	function diff(x, y) {
-		return Math.abs(x - y);
-	}
-
-	function inBound(x, min, max) {
-		return x >= min && x <= max;
-	}
-
 	function resolutionFn() {
 		return new THREE.Vector2(window.innerWidth, window.innerHeight);
-	}
-
-	function centerVector() {
-		return new THREE.Vector3();
 	}
 
 	function vec2toVec3(vec2, z) {
@@ -36,7 +27,7 @@ var Util = (function () {
 	}
 
 	function middleOfList(list) {
-		if (list && list.length) {
+		if (_.get(list, 'length')) {
 			return list[Math.floor(list.length / 2)];
 		}
 		return null;

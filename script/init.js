@@ -174,7 +174,7 @@ var app = (function () {
 					startY: bound(-3, 3, 0.25),
 					startAngle: bound(0, 360, 5),
 					minLineLength: bound(0.05, 1, 0.05),
-					maxLineLength: bound(0.1, 2, 0.05),
+					maxLineLength: bound(0.1, 1, 0.05),
 					minLineWidth: bound(0.01, 0.5, 0.01),
 					maxLineWidth: bound(0.05, 0.5, 0.01),
 					minAngle: bound(5, 90),
