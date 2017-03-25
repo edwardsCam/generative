@@ -1,8 +1,8 @@
 var pattern_chipboard = (function () {
 
-	var b = 4;
-	var chipboard;
-	var timeBuff = 0;
+	var b = 4,
+		timeBuff,
+		chipboard;
 
 	return {
 		init: function (props) {
@@ -22,7 +22,7 @@ var pattern_chipboard = (function () {
 		},
 		isStatic: true,
 		isDrawn: function () {
-			return chipboard.complete;
+			return chipboard.isComplete;
 		}
 	};
 
@@ -32,28 +32,11 @@ var pattern_chipboard = (function () {
 		this.create = create;
 		this.createBoundary = createBoundary;
 		this.draw = draw;
-		this.complete = false;
-
-		function draw() {
-			if (drawCursor < lines.length) {
-				while (drawCursor < lines.length && timeBuff > props.drawTime) {
-					timeBuff -= props.drawTime;
-					var geom = lines[drawCursor++];
-					DrawUtil.makeMeshLine(geom, new MeshLineMaterial({
-						resolution: Util.resolution(),
-						lineWidth: geom.lineWidth,
-						sizeAttenuation: 1,
-						color: new THREE.Color(Color.palette[1])
-					}));
-				}
-			} else {
-				this.complete = true;
-			}
-		}
+		this.isComplete = false;
 
 		function create(c_x, c_y, min_x, min_y, max_x, max_y, w) {
-			var dx = Util.diff(min_x, max_x),
-				dy = Util.diff(min_y, max_y);
+			var dx = Math.diff(min_x, max_x),
+				dy = Math.diff(min_y, max_y);
 			if (dx < props.minBlankSpace || dy < props.minBlankSpace) return;
 			if (w < props.minLineWidth) w = props.minLineWidth;
 
@@ -103,20 +86,34 @@ var pattern_chipboard = (function () {
 		}
 
 		function createBoundary() {
-			lines = _.concat(lines, [
-				line(-b, -b, -b, b, props.maxLineWidth),
-				line(-b, b, b, b, props.maxLineWidth),
-				line(b, b, b, -b, props.maxLineWidth),
-				line(b, -b, -b, -b, props.maxLineWidth)
-			]);
+			lines.push(line(-b, -b, -b, b, props.maxLineWidth));
+			lines.push(line(-b, b, b, b, props.maxLineWidth));
+			lines.push(line(b, b, b, -b, props.maxLineWidth));
+			lines.push(line(b, -b, -b, -b, props.maxLineWidth));
 		}
 
 		function line(x1, y1, x2, y2, w) {
-			var geometry = new THREE.Geometry();
-			geometry.vertices.push(new THREE.Vector3(x1, y1, 0));
-			geometry.vertices.push(new THREE.Vector3(x2, y2, 0));
-			geometry.lineWidth = w;
-			return geometry;
+			var geom = DrawUtil.makeGeometry(x1, y1, x2, y2);
+			geom.lineWidth = w;
+			return geom;
+		}
+
+		function draw() {
+			if (drawCursor < lines.length) {
+				while (drawCursor < lines.length && timeBuff > props.drawTime) {
+					timeBuff -= props.drawTime;
+					var geom = lines[drawCursor++];
+					var m = new MeshLineMaterial({
+						resolution: Util.resolution(),
+						lineWidth: geom.lineWidth,
+						sizeAttenuation: 1,
+						color: new THREE.Color(Color.palette[1])
+					});
+					DrawUtil.makeMeshLine(geom, m);
+				}
+			} else {
+				this.isComplete = true;
+			}
 		}
 	}
 })();

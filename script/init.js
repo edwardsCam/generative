@@ -154,6 +154,7 @@ var app = (function () {
 					rotateSpeed: 0.15,
 					newPointDelay: 0.125,
 					growthTime: 15,
+					pointDistance: 0.5,
 					vertical: true,
 					likeWhoa: 2.5
 				};
@@ -174,7 +175,7 @@ var app = (function () {
 					startY: bound(-3, 3, 0.25),
 					startAngle: bound(0, 360, 5),
 					minLineLength: bound(0.05, 1, 0.05),
-					maxLineLength: bound(0.1, 2, 0.05),
+					maxLineLength: bound(0.1, 1, 0.05),
 					minLineWidth: bound(0.01, 0.5, 0.01),
 					maxLineWidth: bound(0.05, 0.5, 0.01),
 					minAngle: bound(5, 90),
@@ -192,6 +193,7 @@ var app = (function () {
 					rotateSpeed: bound(0.02, 1, 0.02),
 					newPointDelay: bound(0, 0.2, 0.02),
 					growthTime: bound(0, 60, 5),
+					pointDistance: bound(0.1, 1, 0.025),
 					likeWhoa: bound(0, 5, 0.25)
 				};
 			}

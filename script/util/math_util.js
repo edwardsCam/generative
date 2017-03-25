@@ -1,3 +1,8 @@
+/**
+	mathUtil:
+		Extensions to the Math class.
+*/
+
 Math.usingDegrees = false;
 Math.PI_2 = Math.PI * 2;
 Math.PI_half = Math.PI / 2;
@@ -6,42 +11,40 @@ Math.avg = function (a, b) {
 	return (a + b) / 2;
 };
 
-// degrees to radians
+
+/**
+	toRadians:
+		Given degrees, return radians.
+*/
 Math.toRadians = function (d) {
 	return d * Math.PI / 180;
 };
 
-// radians to degrees
+/**
+	toDegrees:
+		Given radians, return degrees.
+*/
 Math.toDegrees = function (r) {
 	return r * 180 / Math.PI;
 };
 
-Math.degreeSystem = function (theta) {
-	return Math.usingDegrees ? Math.toDegrees(theta) : theta;
-};
-
-// given an angle from origin, find the coordinate at the given radius
+/**
+	coordsFromTheta:
+		Given an angle (from origin), return the coordinate at the given radius.
+*/
 Math.coordsFromTheta = function (theta, radius) {
-	if (Math.usingDegrees) theta = Math.toRadians(theta);
 	return {
 		x: Math.cos(theta) * radius,
 		y: Math.sin(theta) * radius
 	};
 };
 
-Math.bound = function (min, max, value) {
-	if (value <= min) {
-		return min;
-	} else if (value >= max) {
-		return max;
-	} else {
-		return value;
-	}
-};
-
-// given a coordinate, get its angle from origin
+/**
+	thetaFromCoord:
+		Given a coordinate, return its angle from origin.
+*/
 Math.thetaFromCoord = function (x, y) {
-	if (y === undefined) {
+	if (y === undefined) { // handle different argument signatures
 		if (_.isArray(x)) {
 			y = x[1];
 			x = x[0];
@@ -50,8 +53,7 @@ Math.thetaFromCoord = function (x, y) {
 			x = x.x;
 		}
 	}
-	var theta = Math.PI + Math.atan2(-y, -x);
-	return Math.degreeSystem(theta);
+	return Math.PI + Math.atan2(-y, -x);
 	/*
 	    Thetas:
 	            90 (pi/2)
@@ -80,6 +82,20 @@ Math.thetaFromTwoPoints = function (p1, p2) {
 };
 
 /**
+	bound:
+		Return the given value, constrained by a min and max.
+*/
+Math.bound = function (min, max, value) {
+	if (value <= min) {
+		return min;
+	} else if (value >= max) {
+		return max;
+	} else {
+		return value;
+	}
+};
+
+/**
     distance:
         Gets the distance between two points.
 */
@@ -89,7 +105,10 @@ Math.distance = function (p1, p2) {
 	return Math.sqrt(dy * dy + dx * dx);
 };
 
-// normalizes a screen position to [-1, 1]
+/**
+	normalizeScreenPos:
+		Normalizes a screen position to [-1, 1]
+*/
 Math.normalizeScreenPos = function (x, y) {
 	return {
 		x: (x / window.innerWidth) * 2 - 1,
@@ -97,7 +116,10 @@ Math.normalizeScreenPos = function (x, y) {
 	};
 };
 
-// denormalizes a screen position from [-1, 1] to [0, (width or height)]
+/**
+	denormalizeScreenPos:
+		Denormalizes a screen position from [-1, 1] to [0, (width or height)]
+*/
 Math.denormalizeScreenPos = function (x, y) {
 	return {
 		x: (x + 1) * window.innerWidth / 2,
@@ -160,6 +182,12 @@ Math.interpolateSmooth = function (domain, range, value) {
 	return Math.bound(min, max, result);
 };
 
+/**
+	randomInRange:
+		Given a min and max, return a random within that range.
+
+	@param {boolean} round - if true, return an integer (truncated)
+*/
 Math.randomInRange = function (min, max, round) {
 	var result = min + Math.random() * (max - min);;
 	return round ? Math.floor(result) : result;
@@ -181,13 +209,18 @@ Math.coordWithAngleAndDistance = function (start, angle, distance) {
 	return new THREE.Vector2(start.x + xdist, start.y + ydist);
 };
 
-Math.mod = function (val, mod) {
-	return val % mod;
-};
-
 /**
-    50% chance of returning true
+	coinToss:
+		50% chance of returning true
 */
 Math.coinToss = function () {
 	return Math.random() > 0.5;
+};
+
+/**
+	diff:
+		Returns the absolute difference between two numbers.
+*/
+Math.diff = function (x, y) {
+	return Math.abs(x - y);
 };

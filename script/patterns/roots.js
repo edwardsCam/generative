@@ -24,14 +24,14 @@ var pattern_roots = (function () {
 		if (props.showGrid) {
 			drawGrid(props.resolution);
 		}
-		//roots.fillPoints();
+		//roots.fillGridSquares();
 	}
 
 	function Roots(props) {
 		var rootsObj = this;
 		this.draw = drawFn;
 		this.complete = false;
-		this.fillPoints = fillPoints;
+		this.fillGridSquares = fillGridSquares;
 
 		var resolution = props.resolution;
 		var squareSize = bound * 2 / resolution;
@@ -70,7 +70,8 @@ var pattern_roots = (function () {
 		}
 
 		/**
-			Constructs a single geometry, which represents a single branch path.
+			buildLine:
+				Constructs a single geometry, which represents a single branch path.
 		*/
 		function buildLine(root, startAngle, p) {
 			var g = new THREE.Geometry();
@@ -98,8 +99,9 @@ var pattern_roots = (function () {
 		}
 
 		/**
-			Returns the next point, given a starting position and angle.
-			Mark the grid squares along the way.
+			nextPoint:
+				Returns the next point, given a starting position and angle.
+				Mark the grid squares along the way.
 		*/
 		function nextPoint(startPoint, startAngle, p) {
 			var len = Math.interpolate([0, 1], [props.minLineLength, props.maxLineLength], p);
@@ -144,7 +146,11 @@ var pattern_roots = (function () {
 		}
 
 		/**
-			Similar to Bresenham's algorithm
+			markLine:
+				Given a line of two points, mark every square that the line crosses through.
+				Do this by incrementally (according to the resolution) stepping through the line's trajectory and marking each square it enters.
+
+				see Bresenham's algorithm
 		*/
 		function markLine(line) {
 			var p0 = centerInCell(line[0]),
@@ -167,12 +173,17 @@ var pattern_roots = (function () {
 			}
 		}
 
+		/**
+			taper:
+				This determines how thick a line is at any given point, based on the point's progess from the start of the line to the end of the line.
+		*/
 		function taper(p) {
 			return Math.interpolate([0, 1], [props.maxLineWidth, props.minLineWidth], p);
 		}
 
 		/**
-		    Given an ordinal position, return the corresponding cartesian location.
+			getCartesianCoord:
+		    	Given an ordinal position, return the corresponding cartesian location.
 
 		    example: [0, 1] => (0.5, 1.5)
 		*/
@@ -181,7 +192,8 @@ var pattern_roots = (function () {
 		}
 
 		/**
-		    Given a cartesian coordinate, return the corresponding ordinal position.
+			getOrdinalPosition:
+		    	Given a cartesian coordinate, return the corresponding ordinal position.
 
 		    example: (0.5, 1.5) => [0, 1]
 		*/
@@ -196,7 +208,8 @@ var pattern_roots = (function () {
 		}
 
 		/**
-		    Given a coordinate, adjust it so it's exactly in the center of its cell.
+			centerInCell:
+		    	Given a coordinate, adjust it so it's exactly in the center of its cell.
 		*/
 		function centerInCell(point) {
 			var cell = getOrdinalPosition(point);
@@ -209,7 +222,11 @@ var pattern_roots = (function () {
 			}
 		}
 
-		function fillPoints() {
+		/**
+			fillGridSquares:
+				Color every square that is populated by a root line.
+		*/
+		function fillGridSquares() {
 			for (var r = 0; r < resolution; r++) {
 				for (var c = 0; c < resolution; c++) {
 					if (grid[r][c]) {
@@ -221,6 +238,9 @@ var pattern_roots = (function () {
 			}
 		}
 
+		/**
+			A convenience package, info relevant for incrementally stepping from one point to another.
+		*/
 		function getStepInfo(p1, p2) {
 			var stepSize = squareSize / resolution;
 			return {
@@ -232,7 +252,7 @@ var pattern_roots = (function () {
 	}
 
 	function inBounds(point) {
-		return point != null && Math.distance(point, Util.centerVector()) <= bound;
+		return point != null && Math.distance(point, Util.centerVector) <= bound;
 	}
 
 	function drawGrid(resolution) {
@@ -250,6 +270,10 @@ var pattern_roots = (function () {
 		return g;
 	}
 
+	/**
+		hasEmptySpaces:
+			Returns true if there exists a single square that has not been populated.
+	*/
 	function hasEmptySpaces() {
 		return grid.some(function (r) {
 			return r.some(function (c) {
