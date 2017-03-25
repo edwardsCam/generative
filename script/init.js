@@ -154,6 +154,7 @@ var app = (function () {
 					rotateSpeed: 0.15,
 					newPointDelay: 0.125,
 					growthTime: 15,
+					pointDistance: 0.5,
 					vertical: true,
 					likeWhoa: 2.5
 				};
@@ -192,6 +193,7 @@ var app = (function () {
 					rotateSpeed: bound(0.02, 1, 0.02),
 					newPointDelay: bound(0, 0.2, 0.02),
 					growthTime: bound(0, 60, 5),
+					pointDistance: bound(0.1, 1, 0.025),
 					likeWhoa: bound(0, 5, 0.25)
 				};
 			}

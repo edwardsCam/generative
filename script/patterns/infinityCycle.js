@@ -38,7 +38,8 @@ var pattern_infinity_cycle = (function () {
 				width = Math.interpolateSmooth(timeDomain, isVert ? [4, 2] : [2, 5], t),
 				height = Math.interpolateSmooth(timeDomain, isVert ? [1, 4] : [4, 3], t);
 			for (var i = 0; i < n; i++) {
-				var j = t * props.rotateSpeed + i;
+				var j = t * props.rotateSpeed + (i * props.pointDistance
+);
 				var p = i * 3;
 				points[p] = width * Math.sin((isVert ? props.likeWhoa : 1) * j);
 				points[p + 1] = height * Math.sin((isVert ? 1 : props.likeWhoa) * j);
