@@ -165,7 +165,8 @@ var app = (function () {
 					minBlankSpace: 0.15,
 					minLineWidth: 0.015,
 					maxLineWidth: 0.1,
-					drawTime: 0.05
+					drawTime: 0.05,
+					randomness: 1
 				};
 			}
 
@@ -203,7 +204,8 @@ var app = (function () {
 					minBlankSpace: bound(0.05, 0.5, 0.0125),
 					minLineWidth: bound(0.01, 0.1, 0.01),
 					maxLineWidth: bound(0.02, 0.3, 0.02),
-					drawTime: bound(0, 0.1, 0.00125)
+					drawTime: bound(0, 0.1, 0.00125),
+					randomness: bound(0, 1, 0.05)
 				};
 			}
 
