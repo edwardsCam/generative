@@ -190,11 +190,11 @@ var app = (function () {
 
 			function _custom_options_InfinityCycle() {
 				return {
-					maxPoints: bound(20, 1500, 5),
+					maxPoints: bound(20, 5000, 10),
 					rotateSpeed: bound(0.02, 1, 0.02),
 					newPointDelay: bound(0, 0.2, 0.02),
 					growthTime: bound(0, 60, 5),
-					pointDistance: bound(0.1, 1, 0.025),
+					pointDistance: bound(0.25, 1, 0.01),
 					likeWhoa: bound(0, 5, 0.25)
 				};
 			}
