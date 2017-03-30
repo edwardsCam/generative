@@ -6,15 +6,15 @@
 var Util = (function () {
 
 	return {
-		resolution: resolutionFn,
 		centerVector: new THREE.Vector3(),
-		vec2toVec3: vec2toVec3,
-		vec2Equals: vec2Equals,
-		middleOfList: middleOfList,
-		PriorityQueue: PriorityQueue
+		resolution,
+		vec2toVec3,
+		vec2Equals,
+		middleOfList,
+		PriorityQueue
 	};
 
-	function resolutionFn() {
+	function resolution() {
 		return new THREE.Vector2(window.innerWidth, window.innerHeight);
 	}
 

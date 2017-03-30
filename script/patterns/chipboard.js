@@ -5,7 +5,7 @@ var pattern_chipboard = (function () {
 		chipboard;
 
 	return {
-		init: function (props) {
+		init(props) {
 			timeBuff = 0;
 			props.lineWidthSub = (props.maxLineWidth - props.minLineWidth) * props.minBlankSpace * 2;
 			chipboard = new Chipboard(props);
@@ -16,12 +16,12 @@ var pattern_chipboard = (function () {
 				props.maxLineWidth - props.lineWidthSub
 			);
 		},
-		animate: function (d) {
+		animate(d) {
 			timeBuff += d;
 			chipboard.draw();
 		},
 		isStatic: true,
-		isDrawn: function () {
+		isDrawn() {
 			return chipboard.isComplete;
 		}
 	};

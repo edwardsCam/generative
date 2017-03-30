@@ -3,12 +3,12 @@ var pattern_infinity_cycle = (function () {
 	var n, timeBuff, infinityCycle;
 
 	return {
-		init: function (props) {
+		init(props) {
 			n = 0;
 			timeBuff = 0;
 			infinityCycle = new InfinityCycle(props);
 		},
-		animate: function (d) {
+		animate(d) {
 			timeBuff += d;
 			infinityCycle.animate();
 		}
@@ -37,7 +37,7 @@ var pattern_infinity_cycle = (function () {
 				timeDomain = [0, props.growthTime],
 				width = Math.interpolateSmooth(timeDomain, isVert ? [4, 2] : [2, 5], t),
 				height = Math.interpolateSmooth(timeDomain, isVert ? [1, 4] : [4, 3], t);
-			for (var i = 0; i < n; i++) {
+			for (let i = 0; i < n; i++) {
 				var j = t * props.rotateSpeed + (i * props.pointDistance);
 				var p = i * 3;
 				points[p] = width * Math.sin((isVert ? props.likeWhoa : 1) * j);

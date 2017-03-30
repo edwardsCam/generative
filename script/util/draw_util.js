@@ -6,12 +6,12 @@
 var DrawUtil = (function () {
 
 	return {
-		makeLine: makeLine,
-		makeMeshLine: makeMeshLine,
-		makePoint: makePoint,
-		makeSquare: makeSquare,
-		makeGeometry: makeGeometry,
-		drawGrid: drawGrid
+		makeLine,
+		makeMeshLine,
+		makePoint,
+		makeSquare,
+		makeGeometry,
+		drawGrid
 	};
 
 	/**
@@ -75,8 +75,8 @@ var DrawUtil = (function () {
 
 	function makePoint(x, y) {
 		return {
-			x: x,
-			y: y
+			x,
+			y
 		};
 	}
 
@@ -88,7 +88,7 @@ var DrawUtil = (function () {
 		var m = new THREE.LineBasicMaterial({
 			color: c
 		});
-		for (var i = 0; i <= resolution; i++) {
+		for (let i = 0; i <= resolution; i++) {
 			var j = Math.interpolate([0, resolution], [-bound, bound], i);
 			makeLine(m, j, -bound, j, bound);
 			makeLine(m, -bound, j, bound, j);
