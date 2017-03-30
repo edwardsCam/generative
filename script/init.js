@@ -1,14 +1,4 @@
 var app = (function () {
-	var patterns = [{
-		name: 'Roots',
-		ctrl: pattern_roots
-	}, {
-		name: 'Infinity Cycle',
-		ctrl: pattern_infinity_cycle
-	}, {
-		name: 'Chipboard',
-		ctrl: pattern_chipboard
-	}];
 	return new App();
 
 	function App() {
@@ -58,13 +48,18 @@ var app = (function () {
 		function destroy() {
 			while (appObj.scene.children.length) {
 				var c = appObj.scene.children[0];
-				c.geometry.dispose();
-				c.material.dispose();
+				_.result(c, 'geometry.dispose');
+				_.result(c, 'material.dispose');
 				appObj.scene.remove(c);
 			}
 		}
 
 		function initGUI() {
+			var patterns = [
+				patConfig('Roots', pattern_roots),
+				patConfig('Infinity Cycle', pattern_infinity_cycle),
+				patConfig('Chipboard', pattern_chipboard)
+			];
 			var selectedPatternName;
 			var defaultOptions = {
 				Pattern: '',
@@ -74,11 +69,11 @@ var app = (function () {
 			var customOptions = defaultValues();
 
 			var gui = new dat.GUI();
-			gui.add(defaultOptions, 'Pattern', _.map(patterns, 'name')).onChange(function (newVal) {
+			gui.add(defaultOptions, 'Pattern', _.map(patterns, 'name')).onChange(newVal => {
 				customOptions = defaultValues();
 				selectedPatternName = newVal;
 
-				curPatternCtrls.forEach(function (ctrl) {
+				curPatternCtrls.forEach(ctrl => {
 					try {
 						gui.remove(ctrl);
 					} catch (e) {
@@ -87,7 +82,7 @@ var app = (function () {
 					}
 				});
 				var selPatternOpts = _.get(customOptions, selectedPatternName);
-				curPatternCtrls = _.map(selPatternOpts, function (val, prop) {
+				curPatternCtrls = _.map(selPatternOpts, (val, prop) => {
 					var ctrl = gui.add(selPatternOpts, prop, val);
 					var refinedOpts = _.get(customOptions.__meta__, selectedPatternName);
 					if (refinedOpts) {
@@ -114,6 +109,13 @@ var app = (function () {
 				if (_.get(appObj, 'activePattern.init')) {
 					appObj.activePattern.init(customOptions[selectedPatternName]);
 				}
+			}
+
+			function patConfig(name, ctrl) {
+				return {
+					name,
+					ctrl
+				};
 			}
 
 			function defaultValues() {
@@ -152,7 +154,7 @@ var app = (function () {
 				return {
 					maxPoints: 600,
 					rotateSpeed: 0.15,
-					newPointDelay: 0.125,
+					drawTime: 0.125,
 					growthTime: 15,
 					pointDistance: 0.5,
 					vertical: true,
@@ -165,7 +167,8 @@ var app = (function () {
 					minBlankSpace: 0.15,
 					minLineWidth: 0.015,
 					maxLineWidth: 0.1,
-					drawTime: 0.05
+					drawTime: 0.05,
+					randomness: 1
 				};
 			}
 
@@ -182,18 +185,18 @@ var app = (function () {
 					maxAngle: bound(10, 175),
 					decayRate: bound(0, 0.2, 0.01),
 					minimumDecay: bound(0, 0.5, 0.05),
-					drawTime: bound(0, 0.04, 0.001),
+					drawTime: bound(0.001, 0.04, 0.001),
 					resolution: bound(20, 300, 10)
 				};
 			}
 
 			function _custom_options_InfinityCycle() {
 				return {
-					maxPoints: bound(20, 1500, 5),
+					maxPoints: bound(20, 5000, 10),
 					rotateSpeed: bound(0.02, 1, 0.02),
-					newPointDelay: bound(0, 0.2, 0.02),
+					drawTime: bound(0, 0.2, 0.02),
 					growthTime: bound(0, 60, 5),
-					pointDistance: bound(0.1, 1, 0.025),
+					pointDistance: bound(0.25, 1, 0.01),
 					likeWhoa: bound(0, 5, 0.25)
 				};
 			}
@@ -203,7 +206,8 @@ var app = (function () {
 					minBlankSpace: bound(0.05, 0.5, 0.0125),
 					minLineWidth: bound(0.01, 0.1, 0.01),
 					maxLineWidth: bound(0.02, 0.3, 0.02),
-					drawTime: bound(0, 0.1, 0.00125)
+					drawTime: bound(0.00125, 0.1, 0.00125),
+					randomness: bound(0, 1, 0.05)
 				};
 			}
 
@@ -211,7 +215,6 @@ var app = (function () {
 				return {
 					bound: [min, max, (step == null ? 1 : step)]
 				};
-
 			}
 		}
 	}

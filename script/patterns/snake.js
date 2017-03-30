@@ -7,12 +7,10 @@ var pattern_snake = (function () {
 	var range = 3;
 
 	return {
-		init: init
+		init() {
+			(new Snake()).draw();
+		}
 	};
-
-	function init() {
-		(new Snake()).draw();
-	}
 
 	function Snake() {
 		this.draw = function () {

@@ -5,23 +5,23 @@ var pattern_chipboard = (function () {
 		chipboard;
 
 	return {
-		init: function (props) {
+		init(props) {
 			timeBuff = 0;
 			props.lineWidthSub = (props.maxLineWidth - props.minLineWidth) * props.minBlankSpace * 2;
 			chipboard = new Chipboard(props);
 			chipboard.createBoundary();
 			chipboard.create(
-				Math.randomInRange(-b, b),
-				Math.randomInRange(-b, b), -b, -b, b, b,
+				randInRange(-b, b, props.randomness),
+				randInRange(-b, b, props.randomness), -b, -b, b, b,
 				props.maxLineWidth - props.lineWidthSub
 			);
 		},
-		animate: function (d) {
+		animate(d) {
 			timeBuff += d;
 			chipboard.draw();
 		},
 		isStatic: true,
-		isDrawn: function () {
+		isDrawn() {
 			return chipboard.isComplete;
 		}
 	};
@@ -50,8 +50,8 @@ var pattern_chipboard = (function () {
 
 			function botLeft() {
 				create(
-					Math.randomInRange(min_x, c_x),
-					Math.randomInRange(min_y, c_y),
+					randInRange(min_x, c_x, props.randomness),
+					randInRange(min_y, c_y, props.randomness),
 					min_x, min_y, c_x, c_y,
 					w - props.lineWidthSub
 				);
@@ -59,8 +59,8 @@ var pattern_chipboard = (function () {
 
 			function botRight() {
 				create(
-					Math.randomInRange(c_x, max_x),
-					Math.randomInRange(min_y, c_y),
+					randInRange(c_x, max_x, props.randomness),
+					randInRange(min_y, c_y, props.randomness),
 					c_x, min_y, max_x, c_y,
 					w - props.lineWidthSub
 				);
@@ -68,8 +68,8 @@ var pattern_chipboard = (function () {
 
 			function topLeft() {
 				create(
-					Math.randomInRange(min_x, c_x),
-					Math.randomInRange(c_y, max_y),
+					randInRange(min_x, c_x, props.randomness),
+					randInRange(c_y, max_y, props.randomness),
 					min_x, c_y, c_x, max_y,
 					w - props.lineWidthSub
 				);
@@ -77,8 +77,8 @@ var pattern_chipboard = (function () {
 
 			function topRight() {
 				create(
-					Math.randomInRange(c_x, max_x),
-					Math.randomInRange(c_y, max_y),
+					randInRange(c_x, max_x, props.randomness),
+					randInRange(c_y, max_y, props.randomness),
 					c_x, c_y, max_x, max_y,
 					w - props.lineWidthSub
 				);
@@ -115,5 +115,12 @@ var pattern_chipboard = (function () {
 				this.isComplete = true;
 			}
 		}
+	}
+
+	function randInRange(min, max, randomness) {
+		var middle = (min + max) / 2;
+		min = Math.interpolate([0, 1], [middle, min], randomness);
+		max = Math.interpolate([0, 1], [middle, max], randomness);
+		return Math.randomInRange(min, max);
 	}
 })();

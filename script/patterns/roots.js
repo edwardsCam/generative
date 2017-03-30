@@ -6,13 +6,13 @@ var pattern_roots = (function () {
 	var timeBuff = 0;
 
 	return {
-		init: init,
+		init,
 		isStatic: true,
-		animate: function (d) {
+		animate(d) {
 			timeBuff += d;
 			roots.draw();
 		},
-		isDrawn: function () {
+		isDrawn() {
 			return roots.complete;
 		}
 	};
@@ -91,9 +91,9 @@ var pattern_roots = (function () {
 				if (point == null) return null;
 				var da = Math.randomInRange(Math.PI * 0.25, Math.PI * 0.75);
 				return {
-					point: point,
+					point,
 					angle: Math.coinToss() ? angle + da : angle - da,
-					p: p
+					p
 				};
 			}
 		}
@@ -126,12 +126,16 @@ var pattern_roots = (function () {
 		function extendTo(p1, p2) {
 			p1 = centerInCell(p1);
 			p2 = centerInCell(p2);
-			var stepInfo = getStepInfo(p1, p2);
+			var {
+				numSteps,
+				stepSize,
+				theta
+			} = getStepInfo(p1, p2);
 			var start = getOrdinalPosition(p1);
 			var cursor = p1;
-			while (stepInfo.numSteps--) {
+			while (numSteps--) {
 				var prev = cursor;
-				cursor = Math.coordWithAngleAndDistance(prev, stepInfo.theta, stepInfo.stepSize);
+				cursor = Math.coordWithAngleAndDistance(prev, theta, stepSize);
 				if (!isValidPoint(cursor)) {
 					return centerInCell(prev);
 				}
@@ -156,10 +160,14 @@ var pattern_roots = (function () {
 			var p0 = centerInCell(line[0]),
 				p1 = centerInCell(line[1]);
 			markPoint(p0);
-			var stepInfo = getStepInfo(p0, p1);
+			var {
+				numSteps,
+				stepSize,
+				theta
+			} = getStepInfo(p0, p1);
 			var cursor = p0;
-			while (stepInfo.numSteps--) {
-				cursor = Math.coordWithAngleAndDistance(cursor, stepInfo.theta, stepInfo.stepSize);
+			while (numSteps--) {
+				cursor = Math.coordWithAngleAndDistance(cursor, theta, stepSize);
 				markPoint(cursor);
 			}
 
@@ -227,8 +235,8 @@ var pattern_roots = (function () {
 				Color every square that is populated by a root line.
 		*/
 		function fillGridSquares() {
-			for (var r = 0; r < resolution; r++) {
-				for (var c = 0; c < resolution; c++) {
+			for (let r = 0; r < resolution; r++) {
+				for (let c = 0; c < resolution; c++) {
 					if (grid[r][c]) {
 						var x = getCartesianCoord(c),
 							y = getCartesianCoord(r);
@@ -261,9 +269,9 @@ var pattern_roots = (function () {
 
 	function buildGrid(res) {
 		var g = [];
-		for (var i = 0; i < res; i++) {
+		for (let i = 0; i < res; i++) {
 			g.push([]);
-			for (var j = 0; j < res; j++) {
+			for (let j = 0; j < res; j++) {
 				g[i].push(false);
 			}
 		}
