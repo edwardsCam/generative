@@ -12,6 +12,10 @@ select option {
 	color: black !important;
 }
 
+.has-slider {
+	line-height: normal !important;
+}
+
 #info-glyph {
 	position: absolute;
 	top: 0;
