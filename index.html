@@ -5,15 +5,18 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>Generative</title>
 	<link rel="stylesheet" type="text/css" href="style/style.css">
+	<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
 </head>
 
 <body>
 
 	<!-- INCLUDES -->
+	<script src="bower_components/jquery/dist/jquery.js"></script>
 	<script src="bower_components/lodash/dist/lodash.js"></script>
 	<script src="bower_components/three.js/three.js"></script>
 	<script src="bower_components/THREE.MeshLine/src/THREE.MeshLine.js"></script>
-	<script src="bower_components/dat.gui/build/dat.gui.js"></script>
+	<script src="bower_components/dat.gui/dat.gui.js"></script>
+	<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 
 	<!-- UTILS -->
 	<script src="script/util/misc_util.js"></script>
@@ -32,6 +35,19 @@
 
 	<!-- LOAD SCENE AND ANIMATE -->
 	<script src="script/scene.js"></script>
+
+	<button id='view-source' class='btn btn-default' onclick='window.open("https://github.com/edwardsCam/generative/tree/master/script")'>
+		View Source
+	</button>
+	<span id='info-glyph' class='glyphicon glyphicon-info-sign' data-toggle='collapse' data-target='#info-panel'></span>
+	<span id='info-panel' class='collapse panel panel-primary'>
+		<p>Select a pattern and hit draw! You can tweak parameters as you go.</p>
+		<p>Every pattern has a 'drawTime' property, which controls how quickly new data-points are added (in ms).</p>
+		<br>
+		<button class='btn btn-info' onclick='window.open("https://github.com/edwardsCam")'>
+			Cameron Edwards
+		</button>
+	</span>
 
 </body>
 

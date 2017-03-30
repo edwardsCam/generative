@@ -23,8 +23,8 @@ var pattern_infinity_cycle = (function () {
 		})));
 		this.animate = function () {
 			n = Math.min(n, props.maxPoints);
-			while (n < props.maxPoints && timeBuff > props.newPointDelay) {
-				timeBuff -= props.newPointDelay;
+			while (n < props.maxPoints && timeBuff > props.drawTime) {
+				timeBuff -= props.drawTime;
 				n++;
 			}
 			g.setDrawRange(0, n);
