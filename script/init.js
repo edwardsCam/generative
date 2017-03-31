@@ -58,11 +58,11 @@ var app = (function () {
 				DRAW: drawFn
 			};
 			var curPatternCtrls = [];
-			var customOptions = defaultValues();
+			var customValues = getInitialValues();
 
 			var gui = new dat.GUI();
 			gui.add(defaultOptions, 'Pattern', _.map(patterns, 'name')).onChange(newVal => {
-				customOptions = defaultValues();
+				customValues = getInitialValues();
 				selectedPatternName = newVal;
 
 				curPatternCtrls.forEach(ctrl => {
@@ -73,10 +73,10 @@ var app = (function () {
 						console.log(e);
 					}
 				});
-				var selPatternOpts = _.get(customOptions, selectedPatternName);
+				var selPatternOpts = _.get(customValues, selectedPatternName);
 				curPatternCtrls = _.map(selPatternOpts, (val, prop) => {
 					var ctrl = gui.add(selPatternOpts, prop, val);
-					var refinedOpts = _.get(customOptions.__meta__, selectedPatternName);
+					var refinedOpts = _.get(customValues.__meta__, selectedPatternName);
 					if (refinedOpts) {
 						var bound = _.get(refinedOpts, prop + '.bound');
 						if (bound) {
@@ -99,7 +99,7 @@ var app = (function () {
 
 				self.activePattern = newPattern.ctrl;
 				if (_.get(self, 'activePattern.init')) {
-					self.activePattern.init(customOptions[selectedPatternName]);
+					self.activePattern.init(customValues[selectedPatternName]);
 				}
 			}
 
@@ -110,11 +110,11 @@ var app = (function () {
 				};
 			}
 
-			function defaultValues() {
+			function getInitialValues() {
 				return {
-					'Roots': _default_values_Roots(),
-					'Infinity Cycle': _default_values_InfinityCycle(),
-					'Chipboard': _default_values_Chipboard(),
+					'Roots': _initial_values_Roots(),
+					'Infinity Cycle': _initial_values_InfinityCycle(),
+					'Chipboard': _initial_values_Chipboard(),
 					'__meta__': {
 						'Roots': _custom_options_Roots(),
 						'Infinity Cycle': _custom_options_InfinityCycle(),
@@ -123,7 +123,7 @@ var app = (function () {
 				};
 			}
 
-			function _default_values_Roots() {
+			function _initial_values_Roots() {
 				return {
 					startX: 0.0,
 					startY: 0.0,
@@ -142,7 +142,7 @@ var app = (function () {
 				};
 			}
 
-			function _default_values_InfinityCycle() {
+			function _initial_values_InfinityCycle() {
 				return {
 					maxPoints: 600,
 					rotateSpeed: 0.15,
@@ -154,7 +154,7 @@ var app = (function () {
 				};
 			}
 
-			function _default_values_Chipboard() {
+			function _initial_values_Chipboard() {
 				return {
 					minBlankSpace: 0.15,
 					minLineWidth: 0.015,
