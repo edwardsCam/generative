@@ -2,55 +2,47 @@ var app = (function () {
 	return new App();
 
 	function App() {
-		var appObj = this;
-		var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-		var renderer = new THREE.WebGLRenderer();
-		var geometry = new THREE.Geometry();
-		var clock = new THREE.Clock();
-		this.scene = new THREE.Scene();
-		this.camera = camera;
-		this.renderer = renderer;
-		this.geometry = geometry;
-		this.time = {
+		var self = this;
+		self.scene = new THREE.Scene();
+		self.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+		self.renderer = new THREE.WebGLRenderer();
+		self.clock = new THREE.Clock();
+		self.time = {
 			curr: 0,
 			delta: function () {
-				return clock.getDelta();
+				return self.clock.getDelta();
 			}
 		};
-		this.activePattern = null;
+		self.activePattern = null;
 
-		geometry.dynamic = true;
-		renderer.setSize(window.innerWidth, window.innerHeight);
-		renderer.setClearColor(Color.palette[0], 1);
-		camera.position.set(0, 0, 10);
+		self.renderer.setSize(window.innerWidth, window.innerHeight);
+		self.renderer.setClearColor(Color.palette[0], 1);
+		self.camera.position.set(0, 0, 10);
 
-		this.render = function () {
-			renderer.render(appObj.scene, camera);
+		self.render = function () {
+			self.renderer.render(self.scene, self.camera);
 		};
-
-		document.body.appendChild(this.renderer.domElement);
-		window.addEventListener('resize', resizeWindow, false);
+		document.body.appendChild(self.renderer.domElement);
+		window.addEventListener('resize', function (e) {
+			self.camera.aspect = window.innerWidth / window.innerHeight;
+			self.camera.updateProjectionMatrix();
+			self.renderer.setSize(window.innerWidth, window.innerHeight);
+			self.render();
+		}, false);
 
 		initGUI();
 
-		function resizeWindow(e) {
-			camera.aspect = window.innerWidth / window.innerHeight;
-			camera.updateProjectionMatrix();
-			renderer.setSize(window.innerWidth, window.innerHeight);
-			appObj.render();
-		}
-
 		function resetTime() {
-			clock = new THREE.Clock();
-			appObj.time.curr = 0;
+			self.clock = new THREE.Clock();
+			self.time.curr = 0;
 		}
 
 		function destroy() {
-			while (appObj.scene.children.length) {
-				var c = appObj.scene.children[0];
+			while (self.scene.children.length) {
+				var c = self.scene.children[0];
 				_.result(c, 'geometry.dispose');
 				_.result(c, 'material.dispose');
-				appObj.scene.remove(c);
+				self.scene.remove(c);
 			}
 		}
 
@@ -105,9 +97,9 @@ var app = (function () {
 				resetTime();
 				destroy();
 
-				appObj.activePattern = newPattern.ctrl;
-				if (_.get(appObj, 'activePattern.init')) {
-					appObj.activePattern.init(customOptions[selectedPatternName]);
+				self.activePattern = newPattern.ctrl;
+				if (_.get(self, 'activePattern.init')) {
+					self.activePattern.init(customOptions[selectedPatternName]);
 				}
 			}
 
