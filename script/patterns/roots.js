@@ -64,7 +64,7 @@ var pattern_roots = (function () {
 					resolution: Util.resolution(),
 					lineWidth: line.initLineWidth,
 					sizeAttenuation: 1,
-					color: new THREE.Color(Color.palette[1])
+					color: Color.buildFromProps(props)
 				}), taper);
 			}
 		}

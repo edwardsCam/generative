@@ -107,7 +107,7 @@ var pattern_chipboard = (function () {
 						resolution: Util.resolution(),
 						lineWidth: geom.lineWidth,
 						sizeAttenuation: 1,
-						color: new THREE.Color(Color.palette[1])
+						color: Color.buildFromProps(props)
 					});
 					DrawUtil.makeMeshLine(geom, m);
 				}

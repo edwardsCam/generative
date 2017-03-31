@@ -15,12 +15,13 @@ var pattern_infinity_cycle = (function () {
 	};
 
 	function InfinityCycle(props) {
-		var points = new Float32Array(15000), // max points of 2000, *3 for xyz
+		var points = new Float32Array(15000), // max points of 5000, *3 for xyz
 			g = new THREE.BufferGeometry();
 		g.addAttribute('position', new THREE.BufferAttribute(points, 3));
-		app.scene.add(new THREE.Line(g, new THREE.LineBasicMaterial({
-			color: 'black'
-		})));
+		var line = new THREE.Line(g, new THREE.LineBasicMaterial({
+			color: Color.buildFromProps(props)
+		}));
+		app.scene.add(line);
 		this.animate = function () {
 			n = Math.min(n, props.maxPoints);
 			while (n < props.maxPoints && timeBuff > props.drawTime) {
@@ -29,6 +30,8 @@ var pattern_infinity_cycle = (function () {
 			}
 			g.setDrawRange(0, n);
 			adjust();
+			line.material.color = Color.buildFromProps(props);
+			line.material.needsUpdate = true;
 		};
 
 		function adjust() {

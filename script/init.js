@@ -2,55 +2,47 @@ var app = (function () {
 	return new App();
 
 	function App() {
-		var appObj = this;
-		var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-		var renderer = new THREE.WebGLRenderer();
-		var geometry = new THREE.Geometry();
-		var clock = new THREE.Clock();
-		this.scene = new THREE.Scene();
-		this.camera = camera;
-		this.renderer = renderer;
-		this.geometry = geometry;
-		this.time = {
+		var self = this;
+		self.scene = new THREE.Scene();
+		self.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+		self.renderer = new THREE.WebGLRenderer();
+		self.clock = new THREE.Clock();
+		self.time = {
 			curr: 0,
 			delta: function () {
-				return clock.getDelta();
+				return self.clock.getDelta();
 			}
 		};
-		this.activePattern = null;
+		self.activePattern = null;
 
-		geometry.dynamic = true;
-		renderer.setSize(window.innerWidth, window.innerHeight);
-		renderer.setClearColor(Color.palette[0], 1);
-		camera.position.set(0, 0, 10);
+		self.renderer.setSize(window.innerWidth, window.innerHeight);
+		self.renderer.setClearColor(Color.palette[0], 1);
+		self.camera.position.set(0, 0, 10);
 
-		this.render = function () {
-			renderer.render(appObj.scene, camera);
+		self.render = function () {
+			self.renderer.render(self.scene, self.camera);
 		};
-
-		document.body.appendChild(this.renderer.domElement);
-		window.addEventListener('resize', resizeWindow, false);
+		document.body.appendChild(self.renderer.domElement);
+		window.addEventListener('resize', function (e) {
+			self.camera.aspect = window.innerWidth / window.innerHeight;
+			self.camera.updateProjectionMatrix();
+			self.renderer.setSize(window.innerWidth, window.innerHeight);
+			self.render();
+		}, false);
 
 		initGUI();
 
-		function resizeWindow(e) {
-			camera.aspect = window.innerWidth / window.innerHeight;
-			camera.updateProjectionMatrix();
-			renderer.setSize(window.innerWidth, window.innerHeight);
-			appObj.render();
-		}
-
 		function resetTime() {
-			clock = new THREE.Clock();
-			appObj.time.curr = 0;
+			self.clock = new THREE.Clock();
+			self.time.curr = 0;
 		}
 
 		function destroy() {
-			while (appObj.scene.children.length) {
-				var c = appObj.scene.children[0];
+			while (self.scene.children.length) {
+				var c = self.scene.children[0];
 				_.result(c, 'geometry.dispose');
 				_.result(c, 'material.dispose');
-				appObj.scene.remove(c);
+				self.scene.remove(c);
 			}
 		}
 
@@ -66,11 +58,11 @@ var app = (function () {
 				DRAW: drawFn
 			};
 			var curPatternCtrls = [];
-			var customOptions = defaultValues();
+			var customValues = getInitialValues();
 
 			var gui = new dat.GUI();
 			gui.add(defaultOptions, 'Pattern', _.map(patterns, 'name')).onChange(newVal => {
-				customOptions = defaultValues();
+				customValues = getInitialValues();
 				selectedPatternName = newVal;
 
 				curPatternCtrls.forEach(ctrl => {
@@ -81,10 +73,10 @@ var app = (function () {
 						console.log(e);
 					}
 				});
-				var selPatternOpts = _.get(customOptions, selectedPatternName);
+				var selPatternOpts = _.get(customValues, selectedPatternName);
 				curPatternCtrls = _.map(selPatternOpts, (val, prop) => {
 					var ctrl = gui.add(selPatternOpts, prop, val);
-					var refinedOpts = _.get(customOptions.__meta__, selectedPatternName);
+					var refinedOpts = _.get(customValues.__meta__, selectedPatternName);
 					if (refinedOpts) {
 						var bound = _.get(refinedOpts, prop + '.bound');
 						if (bound) {
@@ -105,9 +97,9 @@ var app = (function () {
 				resetTime();
 				destroy();
 
-				appObj.activePattern = newPattern.ctrl;
-				if (_.get(appObj, 'activePattern.init')) {
-					appObj.activePattern.init(customOptions[selectedPatternName]);
+				self.activePattern = newPattern.ctrl;
+				if (_.get(self, 'activePattern.init')) {
+					self.activePattern.init(customValues[selectedPatternName]);
 				}
 			}
 
@@ -118,11 +110,11 @@ var app = (function () {
 				};
 			}
 
-			function defaultValues() {
+			function getInitialValues() {
 				return {
-					'Roots': _default_values_Roots(),
-					'Infinity Cycle': _default_values_InfinityCycle(),
-					'Chipboard': _default_values_Chipboard(),
+					'Roots': _initial_values_Roots(),
+					'Infinity Cycle': _initial_values_InfinityCycle(),
+					'Chipboard': _initial_values_Chipboard(),
 					'__meta__': {
 						'Roots': _custom_options_Roots(),
 						'Infinity Cycle': _custom_options_InfinityCycle(),
@@ -131,8 +123,16 @@ var app = (function () {
 				};
 			}
 
-			function _default_values_Roots() {
+			function _initial_values_common() {
 				return {
+					red: 0,
+					green: 0,
+					blue: 0
+				};
+			}
+
+			function _initial_values_Roots() {
+				return _.assign({
 					startX: 0.0,
 					startY: 0.0,
 					startAngle: 0,
@@ -147,11 +147,11 @@ var app = (function () {
 					drawTime: 0.02,
 					resolution: 80,
 					showGrid: false
-				};
+				}, _initial_values_common());
 			}
 
-			function _default_values_InfinityCycle() {
-				return {
+			function _initial_values_InfinityCycle() {
+				return _.assign({
 					maxPoints: 600,
 					rotateSpeed: 0.15,
 					drawTime: 0.125,
@@ -159,21 +159,29 @@ var app = (function () {
 					pointDistance: 0.5,
 					vertical: true,
 					likeWhoa: 2.5
-				};
+				}, _initial_values_common());
 			}
 
-			function _default_values_Chipboard() {
-				return {
+			function _initial_values_Chipboard() {
+				return _.assign({
 					minBlankSpace: 0.15,
 					minLineWidth: 0.015,
 					maxLineWidth: 0.1,
 					drawTime: 0.05,
 					randomness: 1
-				};
+				}, _initial_values_common());
+			}
+
+			function _custom_options_common() {
+				return {
+					red: bound(0, 1, 1 / 256),
+					green: bound(0, 1, 1 / 256),
+					blue: bound(0, 1, 1 / 256)
+				}
 			}
 
 			function _custom_options_Roots() {
-				return {
+				return _.assign({
 					startX: bound(-3, 3, 0.25),
 					startY: bound(-3, 3, 0.25),
 					startAngle: bound(0, 360, 5),
@@ -187,28 +195,28 @@ var app = (function () {
 					minimumDecay: bound(0, 0.5, 0.05),
 					drawTime: bound(0.001, 0.04, 0.001),
 					resolution: bound(20, 300, 10)
-				};
+				}, _custom_options_common());
 			}
 
 			function _custom_options_InfinityCycle() {
-				return {
+				return _.assign({
 					maxPoints: bound(20, 5000, 10),
 					rotateSpeed: bound(0.02, 1, 0.02),
 					drawTime: bound(0, 0.2, 0.02),
 					growthTime: bound(0, 60, 5),
 					pointDistance: bound(0.25, 1, 0.01),
 					likeWhoa: bound(0, 5, 0.25)
-				};
+				}, _custom_options_common());
 			}
 
 			function _custom_options_Chipboard() {
-				return {
+				return _.assign({
 					minBlankSpace: bound(0.05, 0.5, 0.0125),
 					minLineWidth: bound(0.01, 0.1, 0.01),
 					maxLineWidth: bound(0.02, 0.3, 0.02),
 					drawTime: bound(0.00125, 0.1, 0.00125),
 					randomness: bound(0, 1, 0.05)
-				};
+				}, _custom_options_common());
 			}
 
 			function bound(min, max, step) {
