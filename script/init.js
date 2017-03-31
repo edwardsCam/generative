@@ -123,8 +123,16 @@ var app = (function () {
 				};
 			}
 
-			function _initial_values_Roots() {
+			function _initial_values_common() {
 				return {
+					red: 0,
+					green: 0,
+					blue: 0
+				};
+			}
+
+			function _initial_values_Roots() {
+				return _.assign({
 					startX: 0.0,
 					startY: 0.0,
 					startAngle: 0,
@@ -139,11 +147,11 @@ var app = (function () {
 					drawTime: 0.02,
 					resolution: 80,
 					showGrid: false
-				};
+				}, _initial_values_common());
 			}
 
 			function _initial_values_InfinityCycle() {
-				return {
+				return _.assign({
 					maxPoints: 600,
 					rotateSpeed: 0.15,
 					drawTime: 0.125,
@@ -151,21 +159,29 @@ var app = (function () {
 					pointDistance: 0.5,
 					vertical: true,
 					likeWhoa: 2.5
-				};
+				}, _initial_values_common());
 			}
 
 			function _initial_values_Chipboard() {
-				return {
+				return _.assign({
 					minBlankSpace: 0.15,
 					minLineWidth: 0.015,
 					maxLineWidth: 0.1,
 					drawTime: 0.05,
 					randomness: 1
-				};
+				}, _initial_values_common());
+			}
+
+			function _custom_options_common() {
+				return {
+					red: bound(0, 1, 1 / 256),
+					green: bound(0, 1, 1 / 256),
+					blue: bound(0, 1, 1 / 256)
+				}
 			}
 
 			function _custom_options_Roots() {
-				return {
+				return _.assign({
 					startX: bound(-3, 3, 0.25),
 					startY: bound(-3, 3, 0.25),
 					startAngle: bound(0, 360, 5),
@@ -179,28 +195,28 @@ var app = (function () {
 					minimumDecay: bound(0, 0.5, 0.05),
 					drawTime: bound(0.001, 0.04, 0.001),
 					resolution: bound(20, 300, 10)
-				};
+				}, _custom_options_common());
 			}
 
 			function _custom_options_InfinityCycle() {
-				return {
+				return _.assign({
 					maxPoints: bound(20, 5000, 10),
 					rotateSpeed: bound(0.02, 1, 0.02),
 					drawTime: bound(0, 0.2, 0.02),
 					growthTime: bound(0, 60, 5),
 					pointDistance: bound(0.25, 1, 0.01),
 					likeWhoa: bound(0, 5, 0.25)
-				};
+				}, _custom_options_common());
 			}
 
 			function _custom_options_Chipboard() {
-				return {
+				return _.assign({
 					minBlankSpace: bound(0.05, 0.5, 0.0125),
 					minLineWidth: bound(0.01, 0.1, 0.01),
 					maxLineWidth: bound(0.02, 0.3, 0.02),
 					drawTime: bound(0.00125, 0.1, 0.00125),
 					randomness: bound(0, 1, 0.05)
-				};
+				}, _custom_options_common());
 			}
 
 			function bound(min, max, step) {
