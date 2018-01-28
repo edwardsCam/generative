@@ -1,0 +1,78 @@
+body {
+  margin: 0;
+}
+
+.app > div {
+  height: 100%;
+}
+.tray {
+  position: absolute;
+  top: 0;
+  width: 0px;
+  transition: width 0.4s, right 0.2s;
+  display: inline-flex;
+  background-color: rgba(26, 25, 19, 0.8);
+}
+.tray.open {
+  width: 300px;
+  transition: width 0.4s, right 0.2s;
+}
+
+.tray-left {
+  left: 0;
+}
+.tray-left > .hover-icon {
+  margin-left: auto;
+  margin-right: 0;
+  border-bottom-right-radius: 50px;
+  border-top-right-radius: 50px;
+  left: 0;
+}
+.tray-left.open > .hover-icon {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 50px;
+  border-top-left-radius: 50px;
+}
+
+.tray-right {
+  right: 25px;
+}
+.tray-right.open {
+  right: 0;
+}
+.tray-right > .hover-icon {
+  margin-left: 0;
+  margin-right: auto;
+  border-bottom-left-radius: 50px;
+  border-top-left-radius: 50px;
+}
+.tray-right > .hover-icon:hover {
+  right: 10px;
+}
+.tray-right.open > .hover-icon:hover {
+  right: 0;
+}
+.tray-right.open > .hover-icon {
+  margin-left: 0;
+  margin-right: auto;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  border-bottom-right-radius: 50px;
+  border-top-right-radius: 50px;
+}
+
+.hover-icon {
+  position: relative;
+  min-width: 25px;
+  min-height: 50px;
+  margin-top: auto;
+  margin-bottom: auto;
+  background-color: rgba(135, 160, 139, 0.75);
+  transition: border-radius 0.4s, background-color 0.1s, min-width 0.1s, min-height 0.1s;
+}
+.hover-icon:hover {
+  min-width: 35px;
+  min-height: 60px;
+  background-color: rgb(135, 160, 139);
+}

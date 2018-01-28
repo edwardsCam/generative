@@ -1,57 +1,17 @@
 <!doctype html>
 <html>
 
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>Generative</title>
-	<link rel="stylesheet" type="text/css" href="style/style.css">
-	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-</head>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title> Generative </title>
+    <link rel="stylesheet" type="text/css" href="style/main.css">
+  </head>
 
-<body>
+  <body>
+    <div id='root'>
 
-	<!-- INCLUDES -->
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous">
-	</script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/84/three.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.3/dat.gui.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous">
-	</script>
-	<script src="bower_components/THREE.MeshLine/src/THREE.MeshLine.js"></script>
-
-
-	<!-- UTILS -->
-	<script src="script/util/misc_util.js"></script>
-	<script src="script/util/math_util.js"></script>
-	<script src="script/util/color_util.js"></script>
-	<script src="script/util/draw_util.js"></script>
-
-	<!-- PATTERNS -->
-	<script src="script/patterns/chipboard.js"></script>
-	<script src="script/patterns/snake.js"></script>
-	<script src="script/patterns/roots.js"></script>
-	<script src="script/patterns/infinityCycle.js"></script>
-
-	<!-- INIT GLOBALS -->
-	<script src="script/init.js"></script>
-
-	<!-- LOAD SCENE AND ANIMATE -->
-	<script src="script/scene.js"></script>
-
-	<button id='view-source' class='btn btn-default' onclick='window.open("https://github.com/edwardsCam/generative/tree/master/script")'>
-		View Source
-	</button>
-	<span id='info-glyph' class='glyphicon glyphicon-info-sign' data-toggle='collapse' data-target='#info-panel'></span>
-	<span id='info-panel' class='collapse panel panel-primary'>
-		<p>Select a pattern and hit draw! You can tweak parameters as you go.</p>
-		<p>Every pattern has a 'drawTime' property, which controls how quickly new data-points are added (in ms).</p>
-		<br>
-		<button class='btn btn-info' onclick='window.open("https://github.com/edwardsCam")'>
-			Cameron Edwards
-		</button>
-	</span>
-
-</body>
+    </div>
+    <script src='build/main.bundle.js' /></script>
+  </body>
 
 </html>
