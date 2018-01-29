@@ -23,11 +23,18 @@ export default class Slider extends React.Component {
     this.setValue = this.setValue.bind(this);
     this.changeInput = this.changeInput.bind(this);
     this.onFocus = this.onFocus.bind(this);
+    this.handleKeypress = this.handleKeypress.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
     const inputValue = this.tempInputValue == null ? `${nextProps.value}` : this.tempInputValue;
     this.setState({ inputValue });
+
+    if (nextProps.isFocused) {
+      document.addEventListener('keypress', this.handleKeypress);
+    } else {
+      document.removeEventListener('keypress', this.handleKeypress);
+    }
   }
 
   componentDidMount() {
@@ -37,6 +44,7 @@ export default class Slider extends React.Component {
   componentWillUnmount() {
     this.stopDragging();
     document.removeEventListener('mouseup', this.stopDragging);
+    document.removeEventListener('keypress', this.handleKeypress);
   }
 
   render() {
@@ -71,8 +79,10 @@ export default class Slider extends React.Component {
   }
 
   renderValue() {
+    const { config, value } = this.props;
+    const percentage = percentWithinRange(config.min, config.max, value) * 100;
     return (
-      <div className='slider-value' style={{ width: `${this.percentage()}%` }}>
+      <div className='slider-value' style={{ width: `${percentage}%` }}>
         {this.props.value}
       </div>
     );
@@ -88,7 +98,7 @@ export default class Slider extends React.Component {
     }
     const val = Number(inputValue);
     if (!isNaN(val)) {
-      this.saveValue(val);
+      this.handleValueChange(val);
     }
   }
 
@@ -119,10 +129,10 @@ export default class Slider extends React.Component {
 
     const { min, max } = this.props.config;
     const value = valueFromPercent(min, max, percent)
-    this.saveValue(value);
+    this.handleValueChange(value);
   }
 
-  saveValue(value) {
+  handleValueChange(value) {
     const { min, max, step, prop } = this.props.config;
     const smoothedValue = smoothToStep(value, step);
     this.props.onChange(
@@ -132,8 +142,22 @@ export default class Slider extends React.Component {
     this.props.setFocused(prop);
   }
 
-  percentage() {
-    const { config, value } = this.props;
-    return percentWithinRange(config.min, config.max, value) * 100;
+  handleKeypress(e) {
+    const { key, shiftKey, ctrlKey } = e;
+    let delta = 0;
+    if (key === '[' || key === '{') {
+      delta = -this.props.config.step;
+    } else if (key === ']' || key === '}') {
+      delta = this.props.config.step;
+    }
+    if (delta) {
+      if (shiftKey) {
+        delta *= 5;
+      }
+      if (ctrlKey) {
+        delta *= 10;
+      }
+      this.handleValueChange(this.props.value + delta);
+    }
   }
 }

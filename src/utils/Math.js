@@ -217,7 +217,7 @@ function valueFromPercent(min, max, percent) {
 
 function smoothToStep(value, step) {
   if (!step) return value;
-  return step * Math.floor(value / step);
+  return step * Math.round(value / step);
 }
 
 export {

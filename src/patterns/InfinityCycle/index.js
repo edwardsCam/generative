@@ -48,7 +48,7 @@ export default function InfinityCycle(scene, initialProps) {
       { domain, range: isVert ? [1, 4] : [4, 3], value: time }
     );
     for (let i = 0; i < numPoints; i++) {
-      const j = time * rotateSpeed + (i * pointDistance);
+      const j = time * rotateSpeed - (i * pointDistance);
       points[i * 3] = width * Math.sin((isVert ? likeWhoa : 1) * j);
       points[i * 3 + 1] = height * Math.sin((isVert ? 1 : likeWhoa) * j);
     }
