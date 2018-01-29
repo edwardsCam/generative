@@ -9,10 +9,6 @@ export default class PatternTray extends React.Component {
     onClickExpander: func.isRequired,
   };
 
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <Tray side='left' isOpen={this.props.isOpen} >

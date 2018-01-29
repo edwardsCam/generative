@@ -12,9 +12,11 @@ export default class App extends React.Component {
       propsTrayIsOpen: false,
       activePattern: 'InfinityCycle',
       activePatternProps: require('patterns/InfinityCycle/defaultProps').default,
+      activePatternPropConfig: require('../patterns/InfinityCycle/propConfig').default,
     };
     this.onClickLeftExpander = this.onClickLeftExpander.bind(this);
     this.onClickRightExpander = this.onClickRightExpander.bind(this);
+    this.setPatternProp = this.setPatternProp.bind(this);
   }
 
   render() {
@@ -24,13 +26,16 @@ export default class App extends React.Component {
           pattern={this.state.activePattern}
           patternProps={this.state.activePatternProps}
         />
-        <PatternTray
+        {/*<PatternTray
           isOpen={this.state.patternTrayIsOpen}
           onClickExpander={this.onClickLeftExpander}
-        />
+        />*/}
         <PropsTray
           isOpen={this.state.propsTrayIsOpen}
           onClickExpander={this.onClickRightExpander}
+          props={this.state.activePatternProps}
+          propConfig={this.state.activePatternPropConfig}
+          onChangeProp={this.setPatternProp}
         />
       </div>
     );

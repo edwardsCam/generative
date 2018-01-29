@@ -3,7 +3,7 @@ import {
   BufferGeometry, BufferAttribute,
   Line, LineBasicMaterial,
 } from 'three';
-import { buildFromProps } from 'utils/Color';
+import { buildColorFromProps } from 'utils/Color';
 
 export default function InfinityCycle(scene, initialProps) {
   let numPoints = 0;
@@ -12,7 +12,9 @@ export default function InfinityCycle(scene, initialProps) {
   const points = new Float32Array(15000); // max points of 5000, *3 for xyz
   g.addAttribute('position', new BufferAttribute(points, 3));
 
-  const line = new Line(g, new LineBasicMaterial());
+  const line = new Line(g, new LineBasicMaterial({
+    color: buildColorFromProps(initialProps)
+  }));
   scene.add(line);
 
   return function animate(time, delta, props) {
@@ -34,7 +36,7 @@ export default function InfinityCycle(scene, initialProps) {
     }
 
     g.setDrawRange(0, numPoints);
-    line.material.color = buildFromProps(props);
+    line.material.color = buildColorFromProps(props);
     line.material.needsUpdate = true;
 
     const isVert = vertical;

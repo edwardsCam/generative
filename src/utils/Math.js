@@ -203,8 +203,25 @@ const coinToss = Math.random() > 0.5;
 */
 const diff = (x, y) => Math.abs(x - y);
 
+function percentWithinRange(min, max, value) {
+  const diff = max - min;
+  const result = (value - min) / diff;
+  return clamp(0, 1, result);
+}
+
+function valueFromPercent(min, max, percent) {
+  const diff = max - min;
+  const result = diff * percent + min;
+  return clamp(min, max, result);
+}
+
+function smoothToStep(value, step) {
+  if (!step) return value;
+  return step * Math.floor(value / step);
+}
 
 export {
+  clamp,
   distance,
   toRadians,
   toDegrees,
@@ -217,4 +234,7 @@ export {
   interpolateSmooth,
   randomInRange,
   coordWithAngleAndDistance,
+  percentWithinRange,
+  valueFromPercent,
+  smoothToStep,
 }
