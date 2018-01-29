@@ -1,5 +1,7 @@
 body {
   margin: 0;
+  font-family: Helvetica, sans-serif;
+  user-select: none;
 }
 
 .app > div {
@@ -9,13 +11,13 @@ body {
   position: absolute;
   top: 0;
   width: 0px;
-  transition: width 0.4s, right 0.2s;
+  transition: width 0.4s, right 0.4s;
   display: inline-flex;
-  background-color: rgba(26, 25, 19, 0.8);
+  background-color: rgba(107, 99, 91, 0.8);
 }
 .tray.open {
   width: 300px;
-  transition: width 0.4s, right 0.2s;
+  transition: width 0.4s, right 0.4s;
 }
 
 .tray-left {
@@ -29,10 +31,10 @@ body {
   left: 0;
 }
 .tray-left.open > .hover-icon {
-  border-bottom-right-radius: 0;
-  border-top-right-radius: 0;
-  border-bottom-left-radius: 50px;
-  border-top-left-radius: 50px;
+  left: 25px;
+}
+.tray-left.open > .hover-icon:hover {
+  left: 35px;
 }
 
 .tray-right {
@@ -42,8 +44,6 @@ body {
   right: 0;
 }
 .tray-right > .hover-icon {
-  margin-left: 0;
-  margin-right: auto;
   border-bottom-left-radius: 50px;
   border-top-left-radius: 50px;
 }
@@ -51,15 +51,12 @@ body {
   right: 10px;
 }
 .tray-right.open > .hover-icon:hover {
-  right: 0;
+  right: 35px;
 }
 .tray-right.open > .hover-icon {
   margin-left: 0;
   margin-right: auto;
-  border-bottom-left-radius: 0;
-  border-top-left-radius: 0;
-  border-bottom-right-radius: 50px;
-  border-top-right-radius: 50px;
+  right: 25px;
 }
 
 .hover-icon {
@@ -68,11 +65,52 @@ body {
   min-height: 50px;
   margin-top: auto;
   margin-bottom: auto;
-  background-color: rgba(135, 160, 139, 0.75);
-  transition: border-radius 0.4s, background-color 0.1s, min-width 0.1s, min-height 0.1s;
+  background-color: rgba(107, 99, 91, 0.8);
+  transition: border-radius 0.4s, background-color 0.1s, min-width 0.1s, min-height 0.1s, left 0.1s, right 0.1s;
 }
 .hover-icon:hover {
   min-width: 35px;
   min-height: 60px;
-  background-color: rgb(135, 160, 139);
+  background-color: rgb(107, 99, 91);
+}
+
+.tray-content {
+  width: 100%;
+  overflow-y: scroll;
+  padding-bottom: 20px;
+}
+
+.slider-container {
+  transition: border-color 0.2s;
+  padding: 10px;
+  margin-top: 20px;
+  margin-right: 10px;
+  border: 1px solid rgba(169, 198, 149, 0.3);
+  border-radius: 5px;
+}
+
+.slider-container--focus {
+  border-color: rgb(169, 198, 149);
+}
+
+.slider-container span {
+  color: white;
+}
+
+.slider-container input {
+  margin-left: 5px;
+  background-color: rgba(237, 237, 239, 0.5);
+  border: none;
+  width: 50px;
+}
+
+.slider-container .slider {
+  margin-top: 5px;
+  border: 1px solid #ededef;
+  border-radius: 5px;
+  cursor: ew-resize;
+}
+
+.slider-container .slider-value {
+  background-color: #ededef;
 }
