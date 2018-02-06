@@ -1,6 +1,6 @@
 import { Scene, PerspectiveCamera, WebGLRenderer } from 'three';
 import { palette } from 'utils/Color';
-import { get } from 'lodash';
+import { get, result } from 'lodash';
 
 import InfinityCycle from 'patterns/InfinityCycle';
 
@@ -27,6 +27,7 @@ export default function GenerativeController() {
     render();
   };
   this.setActivePattern = pattern => {
+    this.clearScene();
     switch (pattern.name) {
       case 'Infinity Cycle':
         activePattern = {
@@ -41,6 +42,14 @@ export default function GenerativeController() {
   };
   this.getActivePatternName = () => get(activePattern, 'name', '');
   this.getDomElement = () => renderer.domElement;
+  this.clearScene = () => {
+    while (scene.children.length) {
+      const c = scene.children[0];
+      result(c, 'geometry.dispose');
+      result(c, 'material.dispose');
+      scene.remove(c);
+    }
+  };
 
   window.addEventListener('resize', e => {
     camera.aspect = window.innerWidth / window.innerHeight;

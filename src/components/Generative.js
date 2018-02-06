@@ -28,8 +28,9 @@ export default class Generative extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     const { pattern } = nextProps;
-    if (pattern && this.controller.getActivePatternName() !== pattern.name) {
+    if (pattern && !this.isCurrentPattern(pattern)) {
       this.controller.setActivePattern(pattern);
+      this.localTime = 0;
     }
   }
 
@@ -39,12 +40,14 @@ export default class Generative extends React.Component {
     this.globalTime = nowInSeconds;
 
     const { pattern } = this.props;
-    if (pattern) {
+    if (pattern && this.isCurrentPattern(pattern)) {
       this.localTime += delta;
       this.controller.animateActivePattern(this.localTime, delta, pattern.props);
-    } else if (this.localTime > 0) {
-      this.localTime = 0;
     }
     requestAnimationFrame(this.animate);
+  }
+
+  isCurrentPattern(pattern) {
+    return this.controller.getActivePatternName() === pattern.name;
   }
 }

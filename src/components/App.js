@@ -2,7 +2,7 @@ import React from 'react';
 import Generative from 'components/Generative';
 import PatternTray from 'components/PatternTray';
 import PropsTray from 'components/PropsTray';
-import { get } from 'lodash';
+import { cloneDeep, get } from 'lodash';
 
 export default class App extends React.Component {
 
@@ -62,8 +62,8 @@ export default class App extends React.Component {
         this.setState({
           activePattern: {
             name,
-            props: require('patterns/InfinityCycle/defaultProps').default,
-            propConfig: require('../patterns/InfinityCycle/propConfig').default,
+            props: this.patternDefaultProps('InfinityCycle'),
+            propConfig: this.patternPropConfig('InfinityCycle'),
           }
         });
         break;
@@ -71,5 +71,16 @@ export default class App extends React.Component {
         this.setState({ activePattern: null });
         break;
     }
+  }
+
+  patternDefaultProps(name) {
+    return cloneDeep(
+      require(`patterns/${name}/defaultProps`).default
+    );
+  }
+  patternPropConfig(name) {
+    return cloneDeep(
+      require(`patterns/${name}/propConfig`).default
+    );
   }
 }
