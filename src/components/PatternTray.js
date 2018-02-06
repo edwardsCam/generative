@@ -15,9 +15,11 @@ export default class PatternTray extends React.Component {
         <div className='hover-icon' onClick={this.props.onClickExpander}>
           {/* this.props.isOpen ? '<' : '>' */}
         </div>
-        <div>
-          {/*  TODO  */}
-        </div>
+        {this.props.isOpen && (
+          <div>
+            {/*  TODO  */}
+          </div>
+        )}
       </Tray>
     );
   }

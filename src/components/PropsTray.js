@@ -29,9 +29,11 @@ export default class PropsTray extends React.Component {
         <div className='hover-icon' onClick={this.props.onClickExpander}>
           {/* this.props.isOpen ? '>' : '<' */}
         </div>
-        <div className='tray-content'>
-          {this.props.isOpen && Object.keys(props).map(this.renderControl)}
-        </div>
+        {this.props.isOpen && (
+          <div className='tray-content'>
+            {Object.keys(props).map(this.renderControl)}
+          </div>
+        )}
       </Tray>
     );
   }
