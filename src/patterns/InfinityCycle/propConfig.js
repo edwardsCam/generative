@@ -1,4 +1,4 @@
-import { slider, boolean } from 'utils/PropConfig';
+import { slider, boolean, colorSliders } from 'utils/PropConfig';
 
 const propConfig = {
   maxPoints: slider('maxPoints', 'Num Points', 2, 2000, 1),
@@ -8,10 +8,7 @@ const propConfig = {
   pointDistance: slider('pointDistance', 'Point Distance', 0.1, 1, 0.00001),
   vertical: boolean('vertical', 'Is Vertical?'),
   likeWhoa: slider('likeWhoa', 'Like, Whoaaa', 0, 5, 0.0001),
-
-  red: slider('red', 'Red', 0, 255, 1),
-  green: slider('green', 'Green', 0, 255, 1),
-  blue: slider('blue', 'Blue', 0, 255, 1),
+  ...colorSliders,
 };
 
 export default propConfig;
