@@ -1,7 +1,7 @@
 const defaultProps = {
   maxPoints: 1460,
   rotateSpeed: 0.15,
-  drawTime: 0.125,
+  drawTime: 0.1,
   growthTime: 15,
   pointDistance: 0.5,
   vertical: true,

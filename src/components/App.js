@@ -2,60 +2,74 @@ import React from 'react';
 import Generative from 'components/Generative';
 import PatternTray from 'components/PatternTray';
 import PropsTray from 'components/PropsTray';
+import { get } from 'lodash';
 
 export default class App extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      patternTrayIsOpen: false,
-      propsTrayIsOpen: false,
-      activePattern: 'InfinityCycle',
-      activePatternProps: require('patterns/InfinityCycle/defaultProps').default,
-      activePatternPropConfig: require('../patterns/InfinityCycle/propConfig').default,
+      patternTrayIsOpen: true,
+      propsTrayIsOpen: true,
+      activePattern: null,
     };
     this.onClickLeftExpander = this.onClickLeftExpander.bind(this);
     this.onClickRightExpander = this.onClickRightExpander.bind(this);
     this.setPatternProp = this.setPatternProp.bind(this);
+    this.handleSelectPattern = this.handleSelectPattern.bind(this);
   }
 
   render() {
+    const { activePattern, patternTrayIsOpen, propsTrayIsOpen } = this.state;
     return (
       <div className='app'>
-        <Generative
-          pattern={this.state.activePattern}
-          patternProps={this.state.activePatternProps}
-        />
-        {/*<PatternTray
-          isOpen={this.state.patternTrayIsOpen}
+        <Generative pattern={activePattern} />
+        <PatternTray
+          isOpen={patternTrayIsOpen}
           onClickExpander={this.onClickLeftExpander}
-        />*/}
-        <PropsTray
-          isOpen={this.state.propsTrayIsOpen}
-          onClickExpander={this.onClickRightExpander}
-          props={this.state.activePatternProps}
-          propConfig={this.state.activePatternPropConfig}
-          onChangeProp={this.setPatternProp}
+          onSelectPattern={this.handleSelectPattern}
         />
+        {activePattern && (
+          <PropsTray
+            isOpen={propsTrayIsOpen}
+            onClickExpander={this.onClickRightExpander}
+            pattern={activePattern}
+            onChangeProp={this.setPatternProp}
+          />
+        )}
       </div>
     );
   }
 
   onClickLeftExpander() {
-    this.setState({
-      patternTrayIsOpen: !this.state.patternTrayIsOpen
-    });
+    this.setState({ patternTrayIsOpen: !this.state.patternTrayIsOpen });
   }
-
   onClickRightExpander() {
-    this.setState({
-      propsTrayIsOpen: !this.state.propsTrayIsOpen
-    });
+    this.setState({ propsTrayIsOpen: !this.state.propsTrayIsOpen });
   }
 
   setPatternProp(prop, value) {
-    this.setState({
-      activePatternProps: Object.assign(this.state.activePatternProps, { [prop]: value })
-    });
+    const { activePattern } = this.state;
+    activePattern.props = Object.assign(activePattern.props, { [prop]: value });
+    this.setState({ activePattern });
+  }
+
+  handleSelectPattern = pattern => {
+    const { name } = pattern;
+    if (name === get(this.state, 'activePattern.name')) return;
+    switch (name) {
+      case 'Infinity Cycle':
+        this.setState({
+          activePattern: {
+            name,
+            props: require('patterns/InfinityCycle/defaultProps').default,
+            propConfig: require('../patterns/InfinityCycle/propConfig').default,
+          }
+        });
+        break;
+      default:
+        this.setState({ activePattern: null });
+        break;
+    }
   }
 }

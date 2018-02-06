@@ -8,8 +8,7 @@ export default class PropsTray extends React.Component {
   static propTypes = {
     isOpen: bool.isRequired,
     onClickExpander: func.isRequired,
-    props: object.isRequired,
-    propConfig: object.isRequired,
+    pattern: object,
     onChangeProp: func.isRequired,
   };
 
@@ -23,15 +22,13 @@ export default class PropsTray extends React.Component {
   }
 
   render() {
-    const { props } = this.props;
-    return (
-      <Tray side='right' isOpen={this.props.isOpen} >
-        <div className='hover-icon' onClick={this.props.onClickExpander}>
-          {/* this.props.isOpen ? '>' : '<' */}
-        </div>
-        {this.props.isOpen && (
+    const { pattern, isOpen, onClickExpander } = this.props;
+    return pattern && (
+      <Tray side='right' isOpen={isOpen} >
+        <div className='hover-icon' onClick={onClickExpander} />
+        {isOpen && (
           <div className='tray-content'>
-            {Object.keys(props).map(this.renderControl)}
+            {Object.keys(pattern.props).map(this.renderControl)}
           </div>
         )}
       </Tray>
@@ -39,8 +36,9 @@ export default class PropsTray extends React.Component {
   }
 
   renderControl(prop) {
-    const config = this.props.propConfig[prop];
-    const value = this.props.props[prop];
+    const { pattern } = this.props;
+    const config = pattern.propConfig[prop];
+    const value = pattern.props[prop];
     if (config.type === 'slider') {
       return (
         <Slider

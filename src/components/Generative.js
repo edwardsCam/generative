@@ -1,45 +1,50 @@
 import React from 'react';
-import { object, string } from 'prop-types';
+import { object } from 'prop-types';
 import GenerativeController from 'GenerativeController';
 
 export default class Generative extends React.Component {
 
   static propTypes = {
-    pattern: string,
-    patternProps: object,
-  }
-
-  static defaultProps = {
-    pattern: 'InfinityCycle',
-    patternProps: {},
+    pattern: object,
   }
 
   constructor(props) {
     super(props);
-    this.state = {
-      controller: new GenerativeController(),
-      time: 0,
-    };
-    this.state.controller.setActivePattern(props.pattern, props.patternProps);
     this.animate = this.animate.bind(this);
+    this.controller = new GenerativeController();
+    this.controller.render();
+    this.localTime = 0;
+    this.globalTime = 0;
   }
 
   render() {
-    return (
-      <div ref={me => { this.container = me; }} />
-    );
+    return <div ref={me => { this.container = me; }} />;
   }
 
   componentDidMount() {
-    this.container.appendChild(this.state.controller.getDomElement());
+    this.container.appendChild(this.controller.getDomElement());
     requestAnimationFrame(this.animate);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { pattern } = nextProps;
+    if (pattern && this.controller.getActivePatternName() !== pattern.name) {
+      this.controller.setActivePattern(pattern);
+    }
   }
 
   animate(now) {
     const nowInSeconds = now / 1000;
-    const delta = nowInSeconds - this.state.time;
-    this.setState({ time: nowInSeconds });
-    this.state.controller.animateActivePattern(nowInSeconds, delta, this.props.patternProps);
+    const delta = nowInSeconds - this.globalTime;
+    this.globalTime = nowInSeconds;
+
+    const { pattern } = this.props;
+    if (pattern) {
+      this.localTime += delta;
+      this.controller.animateActivePattern(this.localTime, delta, pattern.props);
+    } else if (this.localTime > 0) {
+      this.localTime = 0;
+    }
     requestAnimationFrame(this.animate);
   }
 }
