@@ -11,9 +11,10 @@ body {
   position: absolute;
   top: 0;
   width: 0px;
-  transition: width 0.4s, right 0.4s;
   display: inline-flex;
   background-color: rgba(107, 99, 91, 0.8);
+  transition: width 0.4s, right 0.4s;
+  transition-timing-function: ease;
 }
 .tray.open {
   width: 300px;
@@ -52,9 +53,11 @@ body {
   top: 45%;
   min-width: 25px;
   min-height: 50px;
+  cursor: pointer;
   background-color: rgba(107, 99, 91, 0.8);
   transition-property: border-radius, right, margin-left, background-color, min-width, min-height, top;
   transition-duration: 0.4s, 0.4s, 0.4s, 0.1s, 0.1s, 0.1s, 0.1s;
+  transition-timing-function: ease;
 }
 .hover-icon:hover {
   min-width: 35px;
@@ -102,4 +105,25 @@ body {
 
 .slider-container .slider-value {
   background-color: #ededef;
+}
+
+.pattern-selector {
+  transition-property: padding, height, font-size, background-color;
+  transition-duration: 0.2s;
+  transition-timing-function: ease;
+  border: 2px solid #ededef;
+  border-radius: 5px;
+  background-color: rgba(169, 198, 149, 0.3);
+  margin: 20px;
+  padding: 25px;
+  text-align: center;
+  height: 140px;
+  cursor: pointer;
+}
+
+.pattern-selector:hover {
+  padding: 15px;
+  height: 160px;
+  font-size: 20px;
+  background-color: rgba(169, 198, 149, 0.6);
 }
