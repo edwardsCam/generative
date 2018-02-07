@@ -5,6 +5,9 @@ const patternManifest = [
   {
     name: 'Roots',
   },
+  {
+    name: 'Chipboard',
+  },
 ];
 
 export default patternManifest;

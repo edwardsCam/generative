@@ -4,6 +4,7 @@ import { get, result } from 'lodash';
 
 import InfinityCycle from 'patterns/InfinityCycle';
 import Roots from 'patterns/Roots';
+import Chipboard from 'patterns/Chipboard';
 
 export default function GenerativeController() {
   const scene = new Scene();
@@ -40,6 +41,12 @@ export default function GenerativeController() {
         activePattern = {
           name: pattern.name,
           animate: new Roots(scene, pattern.props),
+        };
+        break;
+      case 'Chipboard':
+        activePattern = {
+          name: pattern.name,
+          animate: new Chipboard(scene, pattern.props),
         };
         break;
       default:

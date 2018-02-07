@@ -220,6 +220,7 @@ function smoothToStep(value, step) {
 
 export {
   clamp,
+  diff,
   distance,
   toRadians,
   toDegrees,

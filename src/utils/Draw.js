@@ -65,12 +65,15 @@ function makeMeshLine(geometry, materialProps, taperFn = (() => 1)) {
   makeGeometry:
     Returns a geometry of a single line between two points.
 */
-function makeGeometry(x1, y1, x2, y2) {
+function makeGeometry(x1, y1, x2, y2, w) {
   const geometry = new Geometry();
   geometry.vertices = [
     new Vector3(x1, y1),
     new Vector3(x2, y2),
   ];
+  if (w != null) {
+    geometry.lineWidth = w;
+  }
   return geometry;
 }
 

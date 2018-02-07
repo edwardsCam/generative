@@ -76,6 +76,15 @@ export default class App extends React.Component {
           }
         });
         break;
+      case 'Chipboard':
+        this.setState({
+          activePattern: {
+            name,
+            props: this.patternDefaultProps('Chipboard'),
+            propConfig: this.patternPropConfig('Chipboard'),
+          }
+        });
+        break;
       default:
         this.setState({ activePattern: null });
         break;
