@@ -5,7 +5,7 @@ import {
   Vector3, Face3,
   DoubleSide, FaceColors
 } from 'three';
-import { MeshLine } from 'three.meshline';
+import { MeshLine, MeshLineMaterial } from 'three.meshline';
 
 /**
   drawUtil:
@@ -56,10 +56,10 @@ function makeSquare(x0, y0, x1, y1, c) {
   @param {function} taperFn - Returns the line width at a given percentage along the line. This function is called on every point on the line.
         Takes a single argument (p), which is a number from [0, 1], representing the percentage the point is from first -> last.
 */
-function makeMeshLine(geometry, material, taperFn) {
+function makeMeshLine(geometry, materialProps, taperFn) {
   const line = new MeshLine();
-  line.setGeometry(geometry, taperFn || () => 1);
-  return new Mesh(line.geometry, material);
+  line.setGeometry(geometry, taperFn || (() => 1));
+  return new Mesh(line.geometry, new MeshLineMaterial(materialProps));
 }
 
 /**

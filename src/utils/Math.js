@@ -1,3 +1,5 @@
+import { Vector2 } from 'three';
+
 /**
   mathUtil:
     Extensions to the Math class.
@@ -195,7 +197,7 @@ function coordWithAngleAndDistance(start, angle, distance) {
   coinToss:
     50% chance of returning true
 */
-const coinToss = Math.random() > 0.5;
+const coinToss = () => Math.random() > 0.5;
 
 /**
   diff:
@@ -234,6 +236,7 @@ export {
   interpolateSmooth,
   randomInRange,
   coordWithAngleAndDistance,
+  coinToss,
   percentWithinRange,
   valueFromPercent,
   smoothToStep,

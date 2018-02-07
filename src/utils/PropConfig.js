@@ -1,4 +1,4 @@
-const slider = (prop, title, min, max, step) => ({
+const slider = (prop, title, min, max, step = 1) => ({
   prop, title, min, max, step, type: 'slider',
 });
 

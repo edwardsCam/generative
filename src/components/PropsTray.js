@@ -1,5 +1,6 @@
 import React from 'react';
 import { bool, func, object, objectOf } from 'prop-types';
+import { get } from 'lodash';
 import Slider from 'components/ui/Slider';
 import Tray from './Tray.js';
 
@@ -39,7 +40,7 @@ export default class PropsTray extends React.Component {
     const { pattern } = this.props;
     const config = pattern.propConfig[prop];
     const value = pattern.props[prop];
-    if (config.type === 'slider') {
+    if (get(config, 'type') === 'slider') {
       return (
         <Slider
           key={config.prop}

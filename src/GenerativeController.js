@@ -3,6 +3,7 @@ import { palette } from 'utils/Color';
 import { get, result } from 'lodash';
 
 import InfinityCycle from 'patterns/InfinityCycle';
+import Roots from 'patterns/Roots';
 
 export default function GenerativeController() {
   const scene = new Scene();
@@ -33,6 +34,12 @@ export default function GenerativeController() {
         activePattern = {
           name: pattern.name,
           animate: new InfinityCycle(scene, pattern.props),
+        };
+        break;
+      case 'Roots':
+        activePattern = {
+          name: pattern.name,
+          animate: new Roots(scene, pattern.props),
         };
         break;
       default:

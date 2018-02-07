@@ -67,6 +67,15 @@ export default class App extends React.Component {
           }
         });
         break;
+      case 'Roots':
+        this.setState({
+          activePattern: {
+            name,
+            props: this.patternDefaultProps('Roots'),
+            propConfig: this.patternPropConfig('Roots'),
+          }
+        });
+        break;
       default:
         this.setState({ activePattern: null });
         break;

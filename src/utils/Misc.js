@@ -25,9 +25,12 @@ function middleOfList(list) {
   return null;
 }
 
+const centerVector = new Vector2();
+
 export {
   resolution,
   vec2toVec3,
   vec2Equals,
   middleOfList,
+  centerVector,
 }
