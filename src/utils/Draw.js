@@ -6,6 +6,7 @@ import {
   DoubleSide, FaceColors
 } from 'three';
 import { MeshLine, MeshLineMaterial } from 'three.meshline';
+import { interpolate } from 'utils/Math';
 
 /**
   drawUtil:
@@ -40,13 +41,11 @@ function makeSquare(x0, y0, x1, y1, c) {
     new Face3(0, 2, 3),
   ];
 
-  const material = new MeshBasicMaterial({
+  return new Mesh(geo, new MeshBasicMaterial({
     color: 0xff0000,
     side: DoubleSide,
     vertexColors: FaceColors
-  });
-
-  return new Mesh(geo, material);
+  }));
 }
 
 /**
@@ -56,9 +55,9 @@ function makeSquare(x0, y0, x1, y1, c) {
   @param {function} taperFn - Returns the line width at a given percentage along the line. This function is called on every point on the line.
         Takes a single argument (p), which is a number from [0, 1], representing the percentage the point is from first -> last.
 */
-function makeMeshLine(geometry, materialProps, taperFn) {
+function makeMeshLine(geometry, materialProps, taperFn = (() => 1)) {
   const line = new MeshLine();
-  line.setGeometry(geometry, taperFn || (() => 1));
+  line.setGeometry(geometry, taperFn);
   return new Mesh(line.geometry, new MeshLineMaterial(materialProps));
 }
 
@@ -75,21 +74,16 @@ function makeGeometry(x1, y1, x2, y2) {
   return geometry;
 }
 
-const makePoint = (x, y) => ({
-  x,
-  y
-});
+const makePoint = (x, y) => ({ x, y });
 
 /**
   drawGrid:
     Given a bound (distance from origin), and a resolution, draw lines to create a grid.
 */
-function drawGrid(bound, resolution, c) {
-  const m = new LineBasicMaterial({
-    color: c
-  });
+function drawGrid(bound, resolution, color) {
+  const m = new LineBasicMaterial({ color });
   for (let i = 0; i <= resolution; i++) {
-    const j = Math.interpolate([0, resolution], [-bound, bound], i);
+    const j = interpolate([0, resolution], [-bound, bound], i);
     makeLine(m, j, -bound, j, bound);
     makeLine(m, -bound, j, bound, j);
   }

@@ -6,9 +6,7 @@ import getSquareSize from './getSquareSize';
 */
 export default function getStepInfo(p1, p2, bound, resolution) {
   const stepSize = getSquareSize(bound, resolution) / resolution;
-  return {
-    stepSize,
-    theta: thetaFromTwoPoints(p1, p2),
-    numSteps: Math.floor(distance(p1, p2) / stepSize)
-  };
+  const theta = thetaFromTwoPoints(p1, p2);
+  const numSteps = Math.floor(distance(p1, p2) / stepSize);
+  return { stepSize, theta, numSteps };
 }

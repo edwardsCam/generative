@@ -1,6 +1,6 @@
 export default function PriorityQueue(priorityProp) {
   if (!(this instanceof PriorityQueue)) return new PriorityQueue(priorityProp);
-  var dat = [];
+  const dat = [];
   priorityProp = priorityProp || '';
 
   this.push = function (item) {
@@ -10,7 +10,7 @@ export default function PriorityQueue(priorityProp) {
   };
   this.pop = function () {
     if (!this.has()) return null;
-    var ret = dat.shift();
+    const ret = dat.shift();
     bubbleDown();
     return ret;
   };
@@ -19,9 +19,9 @@ export default function PriorityQueue(priorityProp) {
   };
 
   function bubbleUp() {
-    var i = dat.length - 1;
+    let i = dat.length - 1;
     while (i > 0) {
-      var j = i >>> 1;
+      const j = i >>> 1;
       if (isHigherPriority(i, j)) {
         swap(i, j);
         i = j;
@@ -30,12 +30,12 @@ export default function PriorityQueue(priorityProp) {
   }
 
   function bubbleDown() {
-    var i = 0,
-      last = dat.length - 1;
+    let i = 0;
+    const last = dat.length - 1;
     while (true) {
-      var left = (i << 1) + 1,
-        right = left + 1,
-        min = i;
+      const left = (i << 1) + 1;
+      const right = left + 1;
+      let min = i;
       if (left <= last && isHigherPriority(left, min)) {
         min = left;
       }
@@ -52,7 +52,7 @@ export default function PriorityQueue(priorityProp) {
   }
 
   function swap(i1, i2) {
-    var tmp = dat[i1];
+    const tmp = dat[i1];
     dat[i1] = dat[i2];
     dat[i2] = tmp;
   }
@@ -60,7 +60,7 @@ export default function PriorityQueue(priorityProp) {
   /**
     Fitness function
   */
-  function isHigherPriority(i1, i2) {
-    return _.get(dat[i1], priorityProp) > _.get(dat[i2], priorityProp);
-  }
+  const isHigherPriority = (i1, i2) => (
+    _.get(dat[i1], priorityProp) > _.get(dat[i2], priorityProp)
+  )
 }

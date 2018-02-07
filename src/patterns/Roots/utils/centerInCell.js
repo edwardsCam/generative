@@ -8,12 +8,12 @@ import getSquareSize from './getSquareSize';
 export default function centerInCell(point, resolution, bound) {
   const { r, c } = getOrdinalPosition(point, bound, resolution);
 
-  point.x = center(c);
-  point.y = center(r);
+  const squareSize = getSquareSize(bound, resolution);
+  point.x = center(c, squareSize, bound);
+  point.y = center(r, squareSize, bound);
   return point;
-
-  function center(p) {
-    const squareSize = getSquareSize(bound, resolution);
-    return (p * squareSize + (squareSize / 2)) - bound;
-  }
 }
+
+const center = (p, squareSize, bound) => (
+  (p * squareSize + (squareSize / 2)) - bound
+);

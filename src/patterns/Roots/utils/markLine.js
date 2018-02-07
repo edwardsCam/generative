@@ -13,11 +13,7 @@ export default function markLine(line, resolution, bound, grid) {
   const p0 = centerInCell(line[0], resolution, bound);
   const p1 = centerInCell(line[1], resolution, bound);
   markPoint(p0);
-  let {
-    numSteps,
-    stepSize,
-    theta
-  } = getStepInfo(p0, p1, bound, resolution);
+  let { numSteps, stepSize, theta } = getStepInfo(p0, p1, bound, resolution);
   let cursor = p0;
   while (numSteps--) {
     cursor = coordWithAngleAndDistance(cursor, theta, stepSize);

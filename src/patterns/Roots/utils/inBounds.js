@@ -1,6 +1,8 @@
 import { distance } from 'utils/Math';
 import { centerVector } from 'utils/Misc';
 
-export default function inBounds(point, bound) {
-  return point != null && distance(point, centerVector) <= bound;
-}
+const inBounds = (point, bound) => (
+  point != null && distance(point, centerVector) <= bound
+);
+
+export default inBounds;

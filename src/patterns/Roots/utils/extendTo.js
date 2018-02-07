@@ -12,11 +12,7 @@ import inBounds from './inBounds';
 export default function extendTo(p1, p2, resolution, bound, grid) {
   p1 = centerInCell(p1, resolution, bound);
   p2 = centerInCell(p2, resolution, bound);
-  let {
-    numSteps,
-    stepSize,
-    theta
-  } = getStepInfo(p1, p2, bound, resolution);
+  let { numSteps, stepSize, theta } = getStepInfo(p1, p2, bound, resolution);
   const start = getOrdinalPosition(p1, bound, resolution);
   let cursor = p1;
   while (numSteps--) {

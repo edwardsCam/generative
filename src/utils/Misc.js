@@ -6,17 +6,9 @@ import { get } from 'lodash';
     Various utility functions and classes.
 */
 
-function resolution() {
-  return new Vector2(window.innerWidth, window.innerHeight);
-}
-
-function vec2toVec3(vec2, z) {
-  return new Vector3(vec2.x, vec2.y, z);
-}
-
-function vec2Equals(p1, p2) {
-  return p1.x === p2.x && p1.y === p2.y;
-}
+const resolution = () => new Vector2(window.innerWidth, window.innerHeight);
+const vec2toVec3 = (vec2, z) => new Vector3(vec2.x, vec2.y, z);
+const vec2Equals = (p1, p2) => p1.x === p2.x && p1.y === p2.y;
 
 function middleOfList(list) {
   if (get(list, 'length')) {

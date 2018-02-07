@@ -1,3 +1,3 @@
-export default function getSquareSize(bound, resolution) {
-  return bound * 2 / resolution;
-}
+const getSquareSize = (bound, resolution) => bound * 2 / resolution;
+
+export default getSquareSize;
