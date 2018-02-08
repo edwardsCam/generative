@@ -29,17 +29,16 @@ export default class PropsTray extends React.Component {
         <div className='hover-icon' onClick={onClickExpander} />
         {isOpen && (
           <div className='tray-content'>
-            {Object.keys(pattern.props).map(this.renderControl)}
+            {pattern.propConfig.map(this.renderControl)}
           </div>
         )}
       </Tray>
     );
   }
 
-  renderControl(prop) {
+  renderControl(config) {
     const { pattern } = this.props;
-    const config = pattern.propConfig[prop];
-    const value = pattern.props[prop];
+    const value = pattern.props[config.prop];
     if (get(config, 'type') === 'slider') {
       return (
         <Slider

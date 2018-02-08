@@ -6,11 +6,11 @@ const boolean = (prop) => ({
   prop, type: 'boolean',
 });
 
-const colorSliders = {
-  red: slider('red', 'Red', 0, 255),
-  green: slider('green', 'Green', 0, 255),
-  blue: slider('blue', 'Blue', 0, 255),
-};
+const colorSliders = [
+  slider('red', 'Red', 0, 255),
+  slider('green', 'Green', 0, 255),
+  slider('blue', 'Blue', 0, 255),
+];
 
 export {
   slider,
