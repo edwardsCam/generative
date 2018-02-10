@@ -1,6 +1,6 @@
 import React from 'react';
 import { object, func } from 'prop-types';
-import styles from './index.css';
+import styles from './index.scss';
 
 export default class PatternSelector extends React.Component {
 

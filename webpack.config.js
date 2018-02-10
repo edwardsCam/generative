@@ -15,9 +15,9 @@ module.exports = {
         use: 'babel-loader',
       },
       {
-        test: /\.css$/,
+        test: /\.scss$/,
         exclude: /node_modules/,
-        loader: 'style-loader!css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]'
+        loader: 'style-loader!css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!sass-loader'
       }
     ]
   },

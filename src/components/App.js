@@ -3,8 +3,8 @@ import Generative from 'components/Generative';
 import PatternTray from 'components/PatternTray';
 import PropsTray from 'components/PropsTray';
 import { cloneDeep, get } from 'lodash';
-import styles from './App.css';
-import '../../style/main.css'
+import styles from './App.scss';
+import '../main.scss'
 
 export default class App extends React.Component {
 

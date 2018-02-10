@@ -6,37 +6,32 @@
   background-color: rgba(107, 99, 91, 0.8);
   transition: width 0.4s, right 0.4s;
   transition-timing-function: ease;
+  &.open {
+    width: 300px;
+  }
 }
 
-.tray.open {
-  width: 300px;
-}
 .left {
   left: 0;
-}
-.left > .hoverIcon {
-  border-bottom-right-radius: 50px;
-  border-top-right-radius: 50px;
-}
-.left.open > .hoverIcon {
-  margin-left: 300px;
+  & > .hoverIcon {
+    border-bottom-right-radius: 50px;
+    border-top-right-radius: 50px;
+  }
+  &.open > .hoverIcon {
+    margin-left: 300px;
+  }
 }
 
 .right {
-  right: 25px;
-}
-.right.open {
-  right: 0;
-}
-.right > .hoverIcon {
-  border-bottom-left-radius: 50px;
-  border-top-left-radius: 50px;
-}
-.right > .hoverIcon:hover {
-  right: -25px;
-}
-.right.open > .hoverIcon {
-  right: 300px;
+  right: 0px;
+  & > .hoverIcon {
+    right: 0;
+    border-bottom-left-radius: 50px;
+    border-top-left-radius: 50px;
+  }
+  &.open > .hoverIcon {
+    right: 300px;
+  }
 }
 
 .hoverIcon {
@@ -49,12 +44,13 @@
   transition-property: border-radius, right, margin-left, background-color, min-width, min-height, top;
   transition-duration: 0.4s, 0.4s, 0.4s, 0.1s, 0.1s, 0.1s, 0.1s;
   transition-timing-function: ease;
-}
-.hoverIcon:hover {
-  min-width: 35px;
-  min-height: 60px;
-  top: 44%;
-  background-color: rgb(107, 99, 91);
+
+  &:hover {
+    min-width: 35px;
+    min-height: 60px;
+    top: 44%;
+    background-color: rgb(107, 99, 91);
+  }
 }
 
 .content {

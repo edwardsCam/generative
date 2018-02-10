@@ -3,7 +3,7 @@ import { bool, func } from 'prop-types';
 import PatternSelector from 'components/ui/PatternSelector';
 import patternManifest from 'patterns/manifest';
 import Tray from './Tray.js';
-import styles from './Tray.css';
+import styles from './Tray.scss';
 
 export default class PatternTray extends React.Component {
 

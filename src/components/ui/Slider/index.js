@@ -2,7 +2,7 @@ import React from 'react';
 import { bool, func, object, number } from 'prop-types';
 import { percentWithinRange, valueFromPercent, smoothToStep, clamp } from 'utils/Math';
 import classnames from 'classnames';
-import styles from './index.css';
+import styles from './index.scss';
 
 export default class Slider extends React.Component {
 
@@ -49,13 +49,14 @@ export default class Slider extends React.Component {
   }
 
   render() {
+    const { config, isFocused } = this.props;
     const className = classnames(styles.sliderContainer, {
-      [styles.sliderContainerFocus]: this.props.isFocused,
+      [styles.sliderContainerFocus]: isFocused,
     });
     return (
       <div className={className}>
         <div>
-          <span>{this.props.config.title}:</span>
+          <span>{config.title}:</span>
           {this.renderInput()}
         </div>
         <div

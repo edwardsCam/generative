@@ -4,7 +4,7 @@ import { get } from 'lodash';
 import Slider from 'components/ui/Slider';
 import Switcher from 'components/ui/Switcher';
 import Tray from './Tray.js';
-import styles from './Tray.css';
+import styles from './Tray.scss';
 
 export default class PropsTray extends React.Component {
 
