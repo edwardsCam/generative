@@ -2,6 +2,7 @@ import React from 'react';
 import { bool, func, object, number } from 'prop-types';
 import { percentWithinRange, valueFromPercent, smoothToStep, clamp } from 'utils/Math';
 import classnames from 'classnames';
+import styles from './index.css';
 
 export default class Slider extends React.Component {
 
@@ -48,8 +49,8 @@ export default class Slider extends React.Component {
   }
 
   render() {
-    const className = classnames('slider-container', {
-      'slider-container--focus': this.props.isFocused,
+    const className = classnames(styles.sliderContainer, {
+      [styles.sliderContainerFocus]: this.props.isFocused,
     });
     return (
       <div className={className}>
@@ -59,7 +60,7 @@ export default class Slider extends React.Component {
         </div>
         <div
           ref='slider'
-          className='slider'
+          className={styles.slider}
           onMouseDown={this.startDragging}
         >
           {this.renderValue()}
@@ -82,7 +83,7 @@ export default class Slider extends React.Component {
     const { config, value } = this.props;
     const percentage = percentWithinRange(config.min, config.max, value) * 100;
     return (
-      <div className='slider-value' style={{ width: `${percentage}%` }}>
+      <div className={styles.sliderValue} style={{ width: `${percentage}%` }}>
         {this.props.value}
       </div>
     );

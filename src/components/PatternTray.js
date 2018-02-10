@@ -3,6 +3,7 @@ import { bool, func } from 'prop-types';
 import PatternSelector from 'components/ui/PatternSelector';
 import patternManifest from 'patterns/manifest';
 import Tray from './Tray.js';
+import styles from './Tray.css';
 
 export default class PatternTray extends React.Component {
 
@@ -20,9 +21,9 @@ export default class PatternTray extends React.Component {
   render() {
     return (
       <Tray side='left' isOpen={this.props.isOpen} >
-        <div className='hover-icon' onClick={this.props.onClickExpander} />
+        <div className={styles.hoverIcon} onClick={this.props.onClickExpander} />
         {this.props.isOpen && (
-          <div className='tray-content'>
+          <div className={styles.content}>
             { patternManifest.map(this.renderPatternSelector) }
           </div>
         )}

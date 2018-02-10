@@ -1,6 +1,7 @@
 import React from 'react';
 import { string, bool } from 'prop-types';
 import classnames from 'classnames';
+import styles from './Tray.css';
 
 export default class Tray extends React.Component {
 
@@ -10,10 +11,10 @@ export default class Tray extends React.Component {
   }
 
   render() {
-    const className = classnames('tray', {
-      'tray-left': this.props.side === 'left',
-      'tray-right': this.props.side === 'right',
-      'open': this.props.isOpen,
+    const className = classnames(styles.tray, {
+      [styles.left]:  this.props.side === 'left',
+      [styles.right]: this.props.side === 'right',
+      [styles.open]:  this.props.isOpen,
     })
     return (
       <div className={className}>

@@ -4,6 +4,7 @@ import { get } from 'lodash';
 import Slider from 'components/ui/Slider';
 import Switcher from 'components/ui/Switcher';
 import Tray from './Tray.js';
+import styles from './Tray.css';
 
 export default class PropsTray extends React.Component {
 
@@ -27,9 +28,9 @@ export default class PropsTray extends React.Component {
     const { pattern, isOpen, onClickExpander } = this.props;
     return pattern && (
       <Tray side='right' isOpen={isOpen} >
-        <div className='hover-icon' onClick={onClickExpander} />
+        <div className={styles.hoverIcon} onClick={onClickExpander} />
         {isOpen && (
-          <div className='tray-content'>
+          <div className={styles.content}>
             {pattern.propConfig.map(this.renderControl)}
           </div>
         )}

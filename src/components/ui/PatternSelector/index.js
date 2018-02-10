@@ -1,5 +1,6 @@
 import React from 'react';
 import { object, func } from 'prop-types';
+import styles from './index.css';
 
 export default class PatternSelector extends React.Component {
 
@@ -12,7 +13,7 @@ export default class PatternSelector extends React.Component {
     const { pattern } = this.props;
     return (
       <div
-        className='pattern-selector'
+        className={styles.patternSelector}
         onClick={() => this.props.onSelectPattern(pattern)}
       >
         {pattern.name}

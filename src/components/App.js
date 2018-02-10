@@ -3,6 +3,8 @@ import Generative from 'components/Generative';
 import PatternTray from 'components/PatternTray';
 import PropsTray from 'components/PropsTray';
 import { cloneDeep, get } from 'lodash';
+import styles from './App.css';
+import '../../style/main.css'
 
 export default class App extends React.Component {
 
@@ -22,7 +24,7 @@ export default class App extends React.Component {
   render() {
     const { activePattern, patternTrayIsOpen, propsTrayIsOpen } = this.state;
     return (
-      <div className='app'>
+      <div className={styles.app}>
         <Generative pattern={activePattern} />
         <PatternTray
           isOpen={patternTrayIsOpen}
