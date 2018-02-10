@@ -2,8 +2,8 @@ const slider = (prop, title, min, max, step = 1) => ({
   prop, title, min, max, step, type: 'slider',
 });
 
-const boolean = (prop) => ({
-  prop, type: 'boolean',
+const switcher = (prop) => ({
+  prop, type: 'switcher',
 });
 
 const colorSliders = [
@@ -14,6 +14,6 @@ const colorSliders = [
 
 export {
   slider,
-  boolean,
+  switcher,
   colorSliders,
 }

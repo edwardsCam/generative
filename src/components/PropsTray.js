@@ -2,6 +2,7 @@ import React from 'react';
 import { bool, func, object, objectOf } from 'prop-types';
 import { get } from 'lodash';
 import Slider from 'components/ui/Slider';
+import Switcher from 'components/ui/Switcher';
 import Tray from './Tray.js';
 
 export default class PropsTray extends React.Component {
@@ -39,7 +40,8 @@ export default class PropsTray extends React.Component {
   renderControl(config) {
     const { pattern } = this.props;
     const value = pattern.props[config.prop];
-    if (get(config, 'type') === 'slider') {
+    const type = get(config, 'type');
+    if (type === 'slider') {
       return (
         <Slider
           key={config.prop}
@@ -50,6 +52,11 @@ export default class PropsTray extends React.Component {
           setFocused={this.setFocused}
         />
       );
+    } else if (type === 'switcher') {
+      // TODO
+      // return (
+      //   <Switcher />
+      // );
     }
     return null;
   }
