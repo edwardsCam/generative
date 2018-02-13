@@ -1,11 +1,11 @@
 .tray {
+  background-color: rgba(107, 99, 91, 0.8);
+  display: inline-flex;
   position: absolute;
   top: 0;
-  width: 0px;
-  display: inline-flex;
-  background-color: rgba(107, 99, 91, 0.8);
-  transition: width 0.4s, right 0.4s;
   transition-timing-function: ease;
+  transition: width 0.4s, right 0.4s;
+  width: 0px;
   &.open {
     width: 300px;
   }
@@ -25,9 +25,9 @@
 .right {
   right: 0px;
   & > .hoverIcon {
-    right: 0;
     border-bottom-left-radius: 50px;
     border-top-left-radius: 50px;
+    right: 0;
   }
   &.open > .hoverIcon {
     right: 300px;
@@ -35,28 +35,28 @@
 }
 
 .hoverIcon {
-  position: absolute;
-  top: 45%;
-  min-width: 25px;
-  min-height: 50px;
-  cursor: pointer;
   background-color: rgba(107, 99, 91, 0.8);
   border: none;
-  transition-property: border-radius, right, margin-left, background-color, min-width, min-height, top;
+  cursor: pointer;
+  min-height: 50px;
+  min-width: 25px;
+  position: absolute;
+  top: 45%;
   transition-duration: 0.4s, 0.4s, 0.4s, 0.1s, 0.1s, 0.1s, 0.1s;
+  transition-property: border-radius, right, margin-left, background-color, min-width, min-height, top;
   transition-timing-function: ease;
 
   &:hover,
   &:focus {
-    min-width: 35px;
-    min-height: 60px;
-    top: 44%;
     background-color: rgb(107, 99, 91);
+    min-height: 60px;
+    min-width: 35px;
+    top: 44%;
   }
 }
 
 .content {
-  width: 100%;
   overflow-y: auto;
   padding-bottom: 20px;
+  width: 100%;
 }
