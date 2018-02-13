@@ -12,12 +12,12 @@ export default class PatternSelector extends React.Component {
   render() {
     const { pattern } = this.props;
     return (
-      <div
+      <button
         className={styles.patternSelector}
         onClick={() => this.props.onSelectPattern(pattern)}
       >
         {pattern.name}
-      </div>
+      </button>
     );
   }
 }

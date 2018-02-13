@@ -41,11 +41,13 @@
   min-height: 50px;
   cursor: pointer;
   background-color: rgba(107, 99, 91, 0.8);
+  border: none;
   transition-property: border-radius, right, margin-left, background-color, min-width, min-height, top;
   transition-duration: 0.4s, 0.4s, 0.4s, 0.1s, 0.1s, 0.1s, 0.1s;
   transition-timing-function: ease;
 
-  &:hover {
+  &:hover,
+  &:focus {
     min-width: 35px;
     min-height: 60px;
     top: 44%;

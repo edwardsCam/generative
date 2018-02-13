@@ -28,7 +28,7 @@ export default class PropsTray extends React.Component {
     const { pattern, isOpen, onClickExpander } = this.props;
     return pattern && (
       <Tray side='right' isOpen={isOpen} >
-        <div className={styles.hoverIcon} onClick={onClickExpander} />
+        <button className={styles.hoverIcon} onClick={onClickExpander} />
         {isOpen && (
           <div className={styles.content}>
             {pattern.propConfig.map(this.renderControl)}

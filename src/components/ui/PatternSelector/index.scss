@@ -1,20 +1,22 @@
 .patternSelector {
-  transition-property: padding, height, font-size, background-color;
+  transition-property: padding, height, font-size, background-color, border;
   transition-duration: 0.2s;
   transition-timing-function: ease;
-  border: 2px solid #ededef;
+  border: 2px solid #8ea2b4;
   border-radius: 5px;
   background-color: rgba(169, 198, 149, 0.3);
   margin: 20px;
-  padding: 25px;
-  text-align: center;
   height: 140px;
+  width: 85%;
   cursor: pointer;
+  font-size: 16px;
 
-  &:hover {
-    padding: 15px;
-    height: 160px;
-    font-size: 20px;
+  &:hover,
+  &:focus {
+    border: 3px solid #ededef;
+    height: 150px;
+    font-size: 24px;
     background-color: rgba(169, 198, 149, 0.6);
+    outline: none;
   }
 }

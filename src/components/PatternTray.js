@@ -21,7 +21,7 @@ export default class PatternTray extends React.Component {
   render() {
     return (
       <Tray side='left' isOpen={this.props.isOpen} >
-        <div className={styles.hoverIcon} onClick={this.props.onClickExpander} />
+        <button className={styles.hoverIcon} onClick={this.props.onClickExpander} />
         {this.props.isOpen && (
           <div className={styles.content}>
             { patternManifest.map(this.renderPatternSelector) }
