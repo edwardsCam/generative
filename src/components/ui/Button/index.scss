@@ -1,4 +1,15 @@
 .container {
-  background-color: red;
+  background-color: transparent;
+  border-radius: 5px;
   cursor: pointer;
+  height: 30px;
+  margin: 20px 10px 0 10px;
+  transition: background-color 0.2s, font-size 0.2s;
+  width: 93%;
+
+  &:hover,
+  &:focus {
+    background-color: rgba(255, 255, 255, 0.4);
+    font-size: 16px;
+  }
 }
