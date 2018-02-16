@@ -6,6 +6,10 @@ const switcher = (prop, trueVal, falseVal) => ({
   prop, trueVal, falseVal, type: 'switcher',
 });
 
+const button = (title, callback) => ({
+  title, callback, type: 'button',
+});
+
 const colorSliders = [
   slider('red', 'Red', 0, 255),
   slider('green', 'Green', 0, 255),
@@ -16,4 +20,5 @@ export {
   slider,
   switcher,
   colorSliders,
+  button,
 }

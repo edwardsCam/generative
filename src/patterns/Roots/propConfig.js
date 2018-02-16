@@ -1,6 +1,7 @@
-import { slider, colorSliders } from 'utils/PropConfig';
+import { slider, colorSliders, button } from 'utils/PropConfig';
 
 const propConfig = [
+  button('Draw', 'reset'),
   slider('resolution', 'Resolution', 20, 300, 10),
   slider('drawTime', 'Draw time', 0.001, 0.04, 0.001),
   slider('startX', 'Starting X', -3, 3, 0.25),

@@ -2,6 +2,7 @@ import React from 'react';
 import { bool, func, object, objectOf } from 'prop-types';
 import Slider from 'components/ui/Slider';
 import Switcher from 'components/ui/Switcher';
+import Button from 'components/ui/Button';
 import Tray from './Tray.js';
 import styles from './Tray.scss';
 
@@ -46,6 +47,8 @@ export default class PropsTray extends React.Component {
         return this.renderSlider(config, value);
       case 'switcher':
         return this.renderSwitcher(config, value);
+      case 'button':
+        return this.renderButton(config);
     }
     return null;
   }
@@ -72,6 +75,15 @@ export default class PropsTray extends React.Component {
         onChange={this.props.onChangeProp}
         isFocused={this.state.focusedControl === config.prop}
         setFocused={this.setFocused}
+      />
+    );
+  }
+
+  renderButton(config) {
+    return (
+      <Button
+        key={config.callback}
+        config={config}
       />
     );
   }
