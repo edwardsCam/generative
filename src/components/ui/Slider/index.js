@@ -19,12 +19,6 @@ export default class Slider extends React.Component {
     this.state = {
       inputValue: `${this.props.value}`,
     };
-    this.startDragging = this.startDragging.bind(this);
-    this.stopDragging = this.stopDragging.bind(this);
-    this.setValue = this.setValue.bind(this);
-    this.changeInput = this.changeInput.bind(this);
-    this.onFocus = this.onFocus.bind(this);
-    this.handleKeypress = this.handleKeypress.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -90,7 +84,7 @@ export default class Slider extends React.Component {
     );
   }
 
-  changeInput(e) {
+  changeInput = e => {
     const inputValue = e.target.value;
     if (inputValue.match(/^\d*\.?\d*$/)) {
       this.tempInputValue = inputValue;
@@ -104,11 +98,9 @@ export default class Slider extends React.Component {
     }
   }
 
-  onFocus() {
-    this.props.setFocused(this.props.config.prop);
-  }
+  onFocus = () => this.props.setFocused(this.props.config.prop);
 
-  startDragging(e) {
+  startDragging = e => {
     if (this.dragdragTargetRectging) return;
     e.stopPropagation();
     document.addEventListener('mousemove', this.setValue);
@@ -118,12 +110,12 @@ export default class Slider extends React.Component {
     this.tempInputValue = null;
   }
 
-  stopDragging() {
+  stopDragging = () => {
     document.removeEventListener('mousemove', this.setValue);
     this.dragTargetRect = null;
   }
 
-  setValue(e) {
+  setValue = e => {
     if (!this.dragTargetRect) return;
     const leftBound = this.dragTargetRect.x;
     const rightBound = this.dragTargetRect.right;
@@ -144,7 +136,7 @@ export default class Slider extends React.Component {
     this.props.setFocused(prop);
   }
 
-  handleKeypress(e) {
+  handleKeypress = e => {
     const { key, shiftKey, ctrlKey } = e;
     let delta = 0;
     if (key === '[' || key === '{') {

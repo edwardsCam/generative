@@ -13,11 +13,6 @@ export default class PatternTray extends React.Component {
     onSelectPattern: func.isRequired,
   };
 
-  constructor(props) {
-    super(props);
-    this.renderPatternSelector = this.renderPatternSelector.bind(this);
-  }
-
   render() {
     return (
       <Tray side='left' isOpen={this.props.isOpen} >
@@ -31,7 +26,7 @@ export default class PatternTray extends React.Component {
     );
   }
 
-  renderPatternSelector(pattern) {
+  renderPatternSelector = pattern => {
     return (
       <PatternSelector
         key={pattern.name}

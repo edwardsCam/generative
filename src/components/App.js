@@ -16,10 +16,6 @@ export default class App extends React.Component {
       activePattern: null,
       pendingActions: [],
     };
-    this.onClickLeftExpander = this.onClickLeftExpander.bind(this);
-    this.onClickRightExpander = this.onClickRightExpander.bind(this);
-    this.setPatternProp = this.setPatternProp.bind(this);
-    this.handleSelectPattern = this.handleSelectPattern.bind(this);
   }
 
   render() {
@@ -49,14 +45,10 @@ export default class App extends React.Component {
     );
   }
 
-  onClickLeftExpander() {
-    this.setState({ patternTrayIsOpen: !this.state.patternTrayIsOpen });
-  }
-  onClickRightExpander() {
-    this.setState({ propsTrayIsOpen: !this.state.propsTrayIsOpen });
-  }
+  onClickLeftExpander = () => this.setState({ patternTrayIsOpen: !this.state.patternTrayIsOpen });
+  onClickRightExpander = () => this.setState({ propsTrayIsOpen: !this.state.propsTrayIsOpen });
 
-  setPatternProp(prop, value) {
+  setPatternProp = (prop, value) => {
     if (!prop) return;
     const { activePattern } = this.state;
     activePattern.props = Object.assign(activePattern.props, { [prop]: value });
@@ -69,9 +61,7 @@ export default class App extends React.Component {
     this.setState({ pendingActions });
   }
 
-  resetPendingActions = () => {
-    this.setState({ pendingActions: [] });
-  }
+  resetPendingActions = () => this.setState({ pendingActions: [] });
 
   handleSelectPattern = pattern => {
     const { name } = pattern;
@@ -110,14 +100,6 @@ export default class App extends React.Component {
     }
   }
 
-  patternDefaultProps(name) {
-    return cloneDeep(
-      require(`patterns/${name}/defaultProps`).default
-    );
-  }
-  patternPropConfig(name) {
-    return cloneDeep(
-      require(`patterns/${name}/propConfig`).default
-    );
-  }
+  patternDefaultProps = name => cloneDeep( require(`patterns/${name}/defaultProps`).default );
+  patternPropConfig = name => cloneDeep( require(`patterns/${name}/propConfig`).default );
 }

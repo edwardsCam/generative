@@ -12,7 +12,6 @@ export default class Generative extends React.Component {
 
   constructor(props) {
     super(props);
-    this.animate = this.animate.bind(this);
     this.controller = new GenerativeController();
     this.controller.render();
     this.localTime = 0;
@@ -36,7 +35,7 @@ export default class Generative extends React.Component {
     }
   }
 
-  animate(now) {
+  animate = now => {
     const nowInSeconds = now / 1000;
     const delta = nowInSeconds - this.globalTime;
     this.globalTime = nowInSeconds;
@@ -53,7 +52,5 @@ export default class Generative extends React.Component {
     requestAnimationFrame(this.animate);
   }
 
-  isCurrentPattern(pattern) {
-    return this.controller.getActivePatternName() === pattern.name;
-  }
+  isCurrentPattern = pattern => this.controller.getActivePatternName() === pattern.name;
 }

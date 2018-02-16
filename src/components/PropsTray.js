@@ -21,8 +21,6 @@ export default class PropsTray extends React.Component {
     this.state = {
       focusedControl: null,
     };
-    this.renderControl = this.renderControl.bind(this);
-    this.setFocused = this.setFocused.bind(this);
   }
 
   render() {
@@ -39,7 +37,7 @@ export default class PropsTray extends React.Component {
     );
   }
 
-  renderControl(config) {
+  renderControl = config => {
     const { pattern } = this.props;
     const value = pattern.props[config.prop];
     const type = config && config.type;
@@ -90,7 +88,5 @@ export default class PropsTray extends React.Component {
     );
   }
 
-  setFocused(focusedControl) {
-    this.setState({ focusedControl });
-  }
+  setFocused = focusedControl => this.setState({ focusedControl });
 }
