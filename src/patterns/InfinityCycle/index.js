@@ -17,7 +17,7 @@ export default function InfinityCycle(scene, initialProps) {
   }));
   scene.add(line);
 
-  return function animate(time, delta, props) {
+  function animate(time, delta, props) {
     const {
       maxPoints,
       vertical,
@@ -54,4 +54,6 @@ export default function InfinityCycle(scene, initialProps) {
     }
     g.attributes.position.needsUpdate = true;
   }
+
+  return { animate };
 }

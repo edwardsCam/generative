@@ -12,7 +12,7 @@ export default function Roots(scene, initialProps) {
   const grid = buildGrid(initialProps.resolution);
   const geoms = createGeoms(initialProps, bound, grid);
 
-  return function animate(time, delta, props) {
+  function animate(time, delta, props) {
     if (complete) return;
 
     timeBuff += delta;
@@ -27,4 +27,6 @@ export default function Roots(scene, initialProps) {
       complete = true;
     }
   }
+
+  return { animate };
 }

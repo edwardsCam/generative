@@ -23,10 +23,10 @@ export default function GenerativeController() {
 
   this.render = render;
   this.animateActivePattern = (time, delta, props) => {
-    if (!activePattern) return;
-
-    activePattern.animate(time, delta, props);
-    render();
+    if (activePattern && activePattern.animate) {
+      activePattern.animate(time, delta, props);
+      render();
+    }
   };
   this.setActivePattern = pattern => {
     this.clearScene();
@@ -34,19 +34,19 @@ export default function GenerativeController() {
       case 'Infinity Cycle':
         activePattern = {
           name: pattern.name,
-          animate: new InfinityCycle(scene, pattern.props),
+          ...(new InfinityCycle(scene, pattern.props))
         };
         break;
       case 'Roots':
         activePattern = {
           name: pattern.name,
-          animate: new Roots(scene, pattern.props),
+          ...(new Roots(scene, pattern.props))
         };
         break;
       case 'Chipboard':
         activePattern = {
           name: pattern.name,
-          animate: new Chipboard(scene, pattern.props),
+          ...(new Chipboard(scene, pattern.props))
         };
         break;
       default:

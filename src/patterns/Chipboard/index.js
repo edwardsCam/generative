@@ -14,7 +14,7 @@ export default function Chipboard(scene, initialProps) {
     lineWidthSub: (initialProps.maxLineWidth - initialProps.minLineWidth) * initialProps.minBlankSpace * 2,
   });
 
-  return function animate(time, delta, props) {
+  function animate(time, delta, props) {
     if (complete) return;
 
     timeBuff += delta;
@@ -36,4 +36,6 @@ export default function Chipboard(scene, initialProps) {
       complete = true;
     }
   }
+
+  return { animate };
 }
