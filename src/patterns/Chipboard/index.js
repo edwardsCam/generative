@@ -42,6 +42,7 @@ export default function Chipboard(scene, initialProps) {
       ...initialProps,
       lineWidthSub: (initialProps.maxLineWidth - initialProps.minLineWidth) * initialProps.minBlankSpace * 2,
     });
+    return { reset: true };
   }
 
   return { animate, reset };

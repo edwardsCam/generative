@@ -31,8 +31,9 @@ export default function GenerativeController() {
   };
   this.callPatternAction = callback => {
     if (activePattern && activePattern[callback]) {
-      activePattern[callback]();
+      return activePattern[callback]();
     }
+    return {};
   };
   this.setActivePattern = pattern => {
     clearScene(scene);

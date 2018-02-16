@@ -4,18 +4,12 @@ import {
   Line, LineBasicMaterial,
 } from 'three';
 import { buildColorFromProps } from 'utils/Color';
+import clearScene from 'utils/ClearScene';
 
 export default function InfinityCycle(scene, initialProps) {
-  let numPoints = 0;
-  let timeBuff = 0;
-  const g = new BufferGeometry();
-  const points = new Float32Array(15000); // max points of 5000, *3 for xyz
-  g.addAttribute('position', new BufferAttribute(points, 3));
 
-  const line = new Line(g, new LineBasicMaterial({
-    color: buildColorFromProps(initialProps)
-  }));
-  scene.add(line);
+  let numPoints, timeBuff, g, points, line;
+  reset();
 
   function animate(time, delta, props) {
     const {
@@ -55,5 +49,20 @@ export default function InfinityCycle(scene, initialProps) {
     g.attributes.position.needsUpdate = true;
   }
 
-  return { animate };
+  function reset() {
+    clearScene(scene);
+    numPoints = 0;
+    timeBuff = 0;
+    g = new BufferGeometry();
+    points = new Float32Array(15000); // max points of 5000, *3 for xyz
+    g.addAttribute('position', new BufferAttribute(points, 3));
+
+    line = new Line(g, new LineBasicMaterial({
+      color: buildColorFromProps(initialProps)
+    }));
+    scene.add(line);
+    return { reset: true };
+  }
+
+  return { animate, reset };
 }

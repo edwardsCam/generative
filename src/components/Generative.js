@@ -43,7 +43,12 @@ export default class Generative extends React.Component {
     const { pattern, pendingActions, resetPendingActions } = this.props;
     if (pattern && this.isCurrentPattern(pattern)) {
       if (pendingActions.length) {
-        pendingActions.forEach(this.controller.callPatternAction);
+        pendingActions.forEach(action => {
+          const result = this.controller.callPatternAction(action);
+          if (result.reset) {
+            this.localTime = 0;
+          }
+        });
         resetPendingActions();
       }
       this.localTime += delta;

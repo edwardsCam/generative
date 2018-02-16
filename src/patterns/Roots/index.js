@@ -33,6 +33,7 @@ export default function Roots(scene, initialProps) {
 
     grid = buildGrid(initialProps.resolution);
     geoms = createGeoms(initialProps, bound, grid);
+    return { reset: true };
   }
 
   return { animate, reset };
