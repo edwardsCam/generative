@@ -13,6 +13,7 @@ export default class PropsTray extends React.Component {
     onClickExpander: func.isRequired,
     pattern: object,
     onChangeProp: func.isRequired,
+    onFireButton: func,
   };
 
   constructor(props) {
@@ -84,6 +85,7 @@ export default class PropsTray extends React.Component {
       <Button
         key={config.callback}
         config={config}
+        onClick={this.props.onFireButton}
       />
     );
   }

@@ -14,6 +14,7 @@ export default class App extends React.Component {
       patternTrayIsOpen: true,
       propsTrayIsOpen: true,
       activePattern: null,
+      pendingActions: [],
     };
     this.onClickLeftExpander = this.onClickLeftExpander.bind(this);
     this.onClickRightExpander = this.onClickRightExpander.bind(this);
@@ -22,10 +23,14 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { activePattern, patternTrayIsOpen, propsTrayIsOpen } = this.state;
+    const { activePattern, patternTrayIsOpen, propsTrayIsOpen, pendingActions } = this.state;
     return (
       <div className={styles.app}>
-        <Generative pattern={activePattern} />
+        <Generative
+          pattern={activePattern}
+          pendingActions={pendingActions}
+          resetPendingActions={this.resetPendingActions}
+        />
         <PatternTray
           isOpen={patternTrayIsOpen}
           onClickExpander={this.onClickLeftExpander}
@@ -37,6 +42,7 @@ export default class App extends React.Component {
             onClickExpander={this.onClickRightExpander}
             pattern={activePattern}
             onChangeProp={this.setPatternProp}
+            onFireButton={this.handleButtonFire}
           />
         )}
       </div>
@@ -51,9 +57,20 @@ export default class App extends React.Component {
   }
 
   setPatternProp(prop, value) {
+    if (!prop) return;
     const { activePattern } = this.state;
     activePattern.props = Object.assign(activePattern.props, { [prop]: value });
     this.setState({ activePattern });
+  }
+
+  handleButtonFire = callbackName => {
+    const pendingActions = this.state.pendingActions.slice();
+    pendingActions.push(callbackName);
+    this.setState({ pendingActions });
+  }
+
+  resetPendingActions = () => {
+    this.setState({ pendingActions: [] });
   }
 
   handleSelectPattern = pattern => {

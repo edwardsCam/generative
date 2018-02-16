@@ -1,11 +1,13 @@
 import React from 'react';
-import { object } from 'prop-types';
+import { object, array, func } from 'prop-types';
 import GenerativeController from 'GenerativeController';
 
 export default class Generative extends React.Component {
 
   static propTypes = {
     pattern: object,
+    pendingActions: array,
+    resetPendingActions: func,
   }
 
   constructor(props) {
@@ -39,8 +41,12 @@ export default class Generative extends React.Component {
     const delta = nowInSeconds - this.globalTime;
     this.globalTime = nowInSeconds;
 
-    const { pattern } = this.props;
+    const { pattern, pendingActions, resetPendingActions } = this.props;
     if (pattern && this.isCurrentPattern(pattern)) {
+      if (pendingActions.length) {
+        pendingActions.forEach(this.controller.callPatternAction);
+        resetPendingActions();
+      }
       this.localTime += delta;
       this.controller.animateActivePattern(this.localTime, delta, pattern.props);
     }

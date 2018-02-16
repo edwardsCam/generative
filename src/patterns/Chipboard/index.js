@@ -2,17 +2,12 @@ import createChipboard from './utils/createChipboard';
 import { makeMeshLine } from 'utils/Draw';
 import { resolution } from 'utils/Misc';
 import { buildColorFromProps } from 'utils/Color';
+import clearScene from 'utils/ClearScene';
 
 export default function Chipboard(scene, initialProps) {
 
-  let timeBuff = 0;
-  let drawCursor = 0;
-  let complete = false;
-  const bound = 4;
-  const lines = createChipboard(bound, {
-    ...initialProps,
-    lineWidthSub: (initialProps.maxLineWidth - initialProps.minLineWidth) * initialProps.minBlankSpace * 2,
-  });
+  let timeBuff, drawCursor, complete, bound, lines;
+  reset();
 
   function animate(time, delta, props) {
     if (complete) return;
@@ -37,5 +32,17 @@ export default function Chipboard(scene, initialProps) {
     }
   }
 
-  return { animate };
+  function reset() {
+    clearScene(scene);
+    timeBuff = 0;
+    drawCursor = 0;
+    complete = false;
+    bound = 4;
+    lines = createChipboard(bound, {
+      ...initialProps,
+      lineWidthSub: (initialProps.maxLineWidth - initialProps.minLineWidth) * initialProps.minBlankSpace * 2,
+    });
+  }
+
+  return { animate, reset };
 }

@@ -1,16 +1,12 @@
 import buildGrid from './utils/buildGrid';
 import createGeoms from './utils/createGeoms';
 import drawOneLine from './utils/drawOneLine';
+import clearScene from 'utils/ClearScene';
 
 export default function Roots(scene, initialProps) {
 
-  let timeBuff = 0;
-  let drawCursor = 0;
-  let complete = false;
-  const bound = 4;
-
-  const grid = buildGrid(initialProps.resolution);
-  const geoms = createGeoms(initialProps, bound, grid);
+  let timeBuff, drawCursor, complete, bound, grid, geoms;
+  reset();
 
   function animate(time, delta, props) {
     if (complete) return;
@@ -28,5 +24,16 @@ export default function Roots(scene, initialProps) {
     }
   }
 
-  return { animate };
+  function reset() {
+    clearScene(scene);
+    timeBuff = 0;
+    drawCursor = 0;
+    complete = false;
+    bound = 4;
+
+    grid = buildGrid(initialProps.resolution);
+    geoms = createGeoms(initialProps, bound, grid);
+  }
+
+  return { animate, reset };
 }
