@@ -1,31 +1,33 @@
+@import '../../../style/color.scss';
+
 .sliderContainer {
   border-radius: 5px;
-  border: 1px solid rgba(169, 198, 149, 0.3);
+  border: 1px solid transparent;
   margin: 20px 10px 0 10px;
   padding: 10px;
   transition: border-color 0.2s;
 
   &Focus {
-    border-color: rgb(169, 198, 149);
+    border-color: $canvas_2;
   }
 
   .slider {
     border-radius: 5px;
-    border: 1px solid #ededef;
+    border: 1px solid $canvas_2;
     cursor: ew-resize;
     margin-top: 5px;
   }
 
   .sliderValue {
-    background-color: #ededef;
+    background-color: $canvas_2;
   }
 
   span {
-    color: white;
+    color: $canvas_2;
   }
 
   input {
-    background-color: rgba(237, 237, 239, 0.5);
+    background-color: $canvas_3;
     border: none;
     margin-left: 5px;
     width: 50px;

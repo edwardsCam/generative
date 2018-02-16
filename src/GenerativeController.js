@@ -1,5 +1,4 @@
 import { Scene, PerspectiveCamera, WebGLRenderer } from 'three';
-import { palette } from 'utils/Color';
 import clearScene from 'utils/ClearScene';
 import { get } from 'lodash';
 
@@ -19,7 +18,7 @@ export default function GenerativeController() {
   let activePattern = null;
 
   renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setClearColor(palette[0], 1);
+  renderer.setClearColor(0xf7f7e2, 1);
   camera.position.set(0, 0, 10);
 
   this.render = render;

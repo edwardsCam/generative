@@ -1,15 +1,20 @@
+@import '../../../style/color.scss';
+
 .container {
-  background-color: transparent;
+  background-color: $light_blue_2;
   border-radius: 5px;
+  color: $canvas_2;
   cursor: pointer;
   height: 30px;
   margin: 20px 10px 0 10px;
-  transition: background-color 0.2s, font-size 0.2s;
+  transition: background-color 0.2s, font-size 0.2s, height 0.2s;
   width: 93%;
 
   &:hover,
   &:focus {
-    background-color: rgba(255, 255, 255, 0.4);
+    color: black;
+    background-color: $canvas_2;
     font-size: 16px;
+    height: 40px;
   }
 }

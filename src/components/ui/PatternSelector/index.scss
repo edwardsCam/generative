@@ -1,7 +1,10 @@
+@import '../../../style/color.scss';
+
 .patternSelector {
-  background-color: rgba(169, 198, 149, 0.3);
+  background-color: $dark_brown_2;
   border-radius: 5px;
-  border: 2px solid #8ea2b4;
+  border: 2px solid $canvas_3;
+  color: $canvas_2;
   cursor: pointer;
   font-size: 16px;
   height: 140px;
@@ -13,8 +16,8 @@
 
   &:hover,
   &:focus {
-    background-color: rgba(169, 198, 149, 0.6);
-    border: 3px solid #ededef;
+    background-color: $light_brown_2;
+    border: 3px solid $canvas_2;
     font-size: 24px;
     height: 150px;
     outline: none;

@@ -4,7 +4,7 @@ import PatternTray from 'components/PatternTray';
 import PropsTray from 'components/PropsTray';
 import { cloneDeep, get } from 'lodash';
 import styles from './App.scss';
-import '../main.scss'
+import '../style/main.scss'
 
 export default class App extends React.Component {
 

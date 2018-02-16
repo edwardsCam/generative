@@ -28,7 +28,7 @@ export default class Switcher extends React.Component {
     });
     return (
       <div className={containerClasses}>
-        {config.falseVal}
+        <span>{config.falseVal}</span>
         <button
           className={styles.switcher}
           onClick={this.handleClick}
@@ -36,7 +36,7 @@ export default class Switcher extends React.Component {
         >
           <span className={knobClasses} />
         </button>
-        {config.trueVal}
+        <span>{config.trueVal}</span>
       </div>
     );
   }

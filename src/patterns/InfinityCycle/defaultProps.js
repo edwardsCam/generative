@@ -7,7 +7,7 @@ const defaultProps = {
   vertical: true,
   likeWhoa: 2.5,
   red: 0,
-  green: 125,
+  green: 0,
   blue: 0,
 };
 

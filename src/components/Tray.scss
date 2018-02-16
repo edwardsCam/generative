@@ -1,5 +1,7 @@
+@import '../style/color.scss';
+
 .tray {
-  background-color: rgba(107, 99, 91, 0.8);
+  background-color: $dark_blue_2;
   display: inline-flex;
   position: absolute;
   top: 0;
@@ -35,7 +37,7 @@
 }
 
 .hoverIcon {
-  background-color: rgba(107, 99, 91, 0.8);
+  background-color: $dark_blue_2;
   border: none;
   cursor: pointer;
   min-height: 50px;
@@ -48,10 +50,14 @@
 
   &:hover,
   &:focus {
-    background-color: rgb(107, 99, 91);
+    background-color: $light_blue_2;
     min-height: 60px;
     min-width: 35px;
     top: 44%;
+  }
+  &:focus {
+    outline: 1px solid black;
+    outline-offset: 5px;
   }
 }
 
