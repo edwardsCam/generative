@@ -1,5 +1,19 @@
+@import './color.scss';
+
 body {
   font-family: Helvetica, sans-serif;
   margin: 0;
   user-select: none;
+}
+
+button {
+  cursor: pointer;
+  background-color: $light_blue_2;
+  border-radius: 5px;
+  color: $canvas_2;
+  transition: background-color 0.2s, font-size 0.2s, height 0.2s;
+}
+
+.floatRight {
+  float: right;
 }

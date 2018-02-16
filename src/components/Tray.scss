@@ -39,7 +39,6 @@
 .hoverIcon {
   background-color: $dark_blue_2;
   border: none;
-  cursor: pointer;
   min-height: 50px;
   min-width: 25px;
   position: absolute;
@@ -65,4 +64,34 @@
   overflow-y: auto;
   padding-bottom: 20px;
   width: 100%;
+}
+
+.infoPanel {
+  background-color: $dark_blue_2;
+  bottom: 0;
+  outline: 1px solid black;
+  padding: 10px;
+  position: absolute;
+  width: 280px;
+
+  & button {
+    height: 20px;
+    font-size: 12px;
+    margin: 3px;
+    transition: height 0.2s, font-size 0.2s;
+
+    &:hover,
+    &:focus {
+      background-color: $canvas_2;
+      color: black;
+      font-size: 16px;
+      height: 30px;
+    }
+  }
+}
+
+.love {
+  font-size: 14px;
+  font-style: italic;
+  margin-top: 10px;
 }

@@ -1,19 +1,14 @@
 @import '../../../style/color.scss';
 
 .container {
-  background-color: $light_blue_2;
-  border-radius: 5px;
-  color: $canvas_2;
-  cursor: pointer;
   height: 30px;
   margin: 20px 10px 0 10px;
-  transition: background-color 0.2s, font-size 0.2s, height 0.2s;
   width: 93%;
 
   &:hover,
   &:focus {
-    color: black;
     background-color: $canvas_2;
+    color: black;
     font-size: 16px;
     height: 40px;
   }

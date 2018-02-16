@@ -8,8 +8,8 @@ const propConfig = [
   slider('rotateSpeed', 'Rotate Speed', 0, 1, 0.01),
   slider('drawTime', 'Draw Time', 0, 0.2, 0.01),
   slider('growthTime', 'Growth Time', 0, 60, 1),
-  switcher('vertical', 'Vertical', 'Horizontal'),
   ...colorSliders,
+  switcher('vertical', 'Vertical', 'Horizontal'),
 ];
 
 export default propConfig;
