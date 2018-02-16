@@ -1,6 +1,5 @@
 import React from 'react';
 import { bool, func, object, objectOf } from 'prop-types';
-import { get } from 'lodash';
 import Slider from 'components/ui/Slider';
 import Switcher from 'components/ui/Switcher';
 import Tray from './Tray.js';
@@ -41,25 +40,40 @@ export default class PropsTray extends React.Component {
   renderControl(config) {
     const { pattern } = this.props;
     const value = pattern.props[config.prop];
-    const type = get(config, 'type');
-    if (type === 'slider') {
-      return (
-        <Slider
-          key={config.prop}
-          config={config}
-          value={value}
-          onChange={this.props.onChangeProp}
-          isFocused={this.state.focusedControl === config.prop}
-          setFocused={this.setFocused}
-        />
-      );
-    } else if (type === 'switcher') {
-      // TODO
-      // return (
-      //   <Switcher />
-      // );
+    const type = config && config.type;
+    switch (type) {
+      case 'slider':
+        return this.renderSlider(config, value);
+      case 'switcher':
+        return this.renderSwitcher(config, value);
     }
     return null;
+  }
+
+  renderSlider(config, value) {
+    return (
+      <Slider
+        key={config.prop}
+        config={config}
+        value={value}
+        onChange={this.props.onChangeProp}
+        isFocused={this.state.focusedControl === config.prop}
+        setFocused={this.setFocused}
+      />
+    );
+  }
+
+  renderSwitcher(config, value) {
+    return (
+      <Switcher
+        key={config.prop}
+        config={config}
+        value={value}
+        onChange={this.props.onChangeProp}
+        isFocused={this.state.focusedControl === config.prop}
+        setFocused={this.setFocused}
+      />
+    );
   }
 
   setFocused(focusedControl) {
