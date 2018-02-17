@@ -20,6 +20,11 @@
   margin-right: 10px;
   padding: 2px;
   vertical-align: middle;
+
+  &:hover ,
+  &:focus {
+    background-color: $canvas_2;
+  }
 }
 
 .knob {
