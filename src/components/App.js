@@ -2,7 +2,7 @@ import React from 'react';
 import Generative from 'components/Generative';
 import PatternTray from 'components/PatternTray';
 import PropsTray from 'components/PropsTray';
-import helpText from 'constants/helpText';
+import HelpModal from 'components/ui/HelpModal';
 import { cloneDeep, get } from 'lodash';
 import styles from './App.scss';
 import '../style/main.scss'
@@ -16,11 +16,12 @@ export default class App extends React.Component {
       propsTrayIsOpen: true,
       activePattern: null,
       pendingActions: [],
+      helpModalIsOpen: false,
     };
   }
 
   render() {
-    const { activePattern, patternTrayIsOpen, propsTrayIsOpen, pendingActions } = this.state;
+    const { helpModalIsOpen, activePattern, pendingActions } = this.state;
     return (
       <div className={styles.app}>
         <Generative
@@ -28,22 +29,39 @@ export default class App extends React.Component {
           pendingActions={pendingActions}
           resetPendingActions={this.resetPendingActions}
         />
-        <PatternTray
-          isOpen={patternTrayIsOpen}
-          onClickExpander={this.onClickLeftExpander}
-          onSelectPattern={this.handleSelectPattern}
-          openHelpModal={this.openHelpModal}
-        />
-        {activePattern && (
-          <PropsTray
-            isOpen={propsTrayIsOpen}
-            onClickExpander={this.onClickRightExpander}
-            pattern={activePattern}
-            onChangeProp={this.setPatternProp}
-            onFireButton={this.handleButtonFire}
-          />
-        )}
+        {this.renderPatternTray()}
+        {activePattern && this.renderPropsTray()}
+        {helpModalIsOpen && this.renderHelpModal()}
       </div>
+    );
+  }
+
+  renderPatternTray() {
+    return (
+      <PatternTray
+        isOpen={this.state.patternTrayIsOpen}
+        onClickExpander={this.onClickLeftExpander}
+        onSelectPattern={this.handleSelectPattern}
+        openHelpModal={this.openHelpModal}
+      />
+    );
+  }
+
+  renderPropsTray() {
+    return (
+      <PropsTray
+        isOpen={this.state.propsTrayIsOpen}
+        onClickExpander={this.onClickRightExpander}
+        pattern={this.state.activePattern}
+        onChangeProp={this.setPatternProp}
+        onFireButton={this.handleButtonFire}
+      />
+    );
+  }
+
+  renderHelpModal() {
+    return (
+      <HelpModal onClose={this.closeHelpModal} />
     );
   }
 
@@ -102,7 +120,8 @@ export default class App extends React.Component {
     }
   }
 
-  openHelpModal = () => alert(helpText);
+  openHelpModal = () => this.setState({ helpModalIsOpen: true });
+  closeHelpModal = () => this.setState({ helpModalIsOpen: false });
 
   patternDefaultProps = name => cloneDeep( require(`patterns/${name}/defaultProps`).default );
   patternPropConfig = name => cloneDeep( require(`patterns/${name}/propConfig`).default );
