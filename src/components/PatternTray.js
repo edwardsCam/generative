@@ -12,6 +12,7 @@ export default class PatternTray extends React.Component {
     isOpen: bool.isRequired,
     onClickExpander: func.isRequired,
     onSelectPattern: func.isRequired,
+    openHelpModal: func.isRequired,
   };
 
   render() {
@@ -44,7 +45,9 @@ export default class PatternTray extends React.Component {
     return (
       <div className={styles.infoPanel}>
         <div>
-          <button>{'? help ?'}</button>
+          <button onClick={this.props.openHelpModal}>
+            {'? help ?'}
+          </button>
           <button
             className={floatRight}
             onClick={() => window.open('https://github.com/edwardsCam/generative')}

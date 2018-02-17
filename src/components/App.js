@@ -2,6 +2,7 @@ import React from 'react';
 import Generative from 'components/Generative';
 import PatternTray from 'components/PatternTray';
 import PropsTray from 'components/PropsTray';
+import helpText from 'constants/helpText';
 import { cloneDeep, get } from 'lodash';
 import styles from './App.scss';
 import '../style/main.scss'
@@ -31,6 +32,7 @@ export default class App extends React.Component {
           isOpen={patternTrayIsOpen}
           onClickExpander={this.onClickLeftExpander}
           onSelectPattern={this.handleSelectPattern}
+          openHelpModal={this.openHelpModal}
         />
         {activePattern && (
           <PropsTray
@@ -99,6 +101,8 @@ export default class App extends React.Component {
         break;
     }
   }
+
+  openHelpModal = () => alert(helpText);
 
   patternDefaultProps = name => cloneDeep( require(`patterns/${name}/defaultProps`).default );
   patternPropConfig = name => cloneDeep( require(`patterns/${name}/propConfig`).default );
