@@ -13,8 +13,8 @@ const propConfig = [
   slider('maxLineWidth', 'Thickest line', 0.05, 0.5, 0.01),
   slider('minAngle', 'Min branching angle', 5, 90),
   slider('maxAngle', 'Max branching angle', 10, 175),
-  slider('decayRate', 'Decay rate', 0, 0.2, 0.01),
-  slider('minimumDecay', 'Min decay', 0, 0.5, 0.05),
+  slider('decayRate', 'Decay rate', 0, 0.2, 0.005),
+  slider('minimumDecay', 'Min decay', 0, 0.5, 0.005),
   ...colorSliders,
 ];
 

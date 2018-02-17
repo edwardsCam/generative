@@ -47,21 +47,22 @@ export default function InfinityCycle(scene, initialProps) {
       points[i * 3 + 1] = height * Math.sin((isVert ? 1 : likeWhoa) * j);
     }
     g.attributes.position.needsUpdate = true;
+    return Promise.resolve();
   }
 
   function reset() {
-    clearScene(scene);
-    numPoints = 0;
-    timeBuff = 0;
-    g = new BufferGeometry();
-    points = new Float32Array(15000); // max points of 5000, *3 for xyz
-    g.addAttribute('position', new BufferAttribute(points, 3));
+    return clearScene(scene).then(() => {
+      numPoints = 0;
+      timeBuff = 0;
+      g = new BufferGeometry();
+      points = new Float32Array(15000); // max points of 5000, *3 for xyz
+      g.addAttribute('position', new BufferAttribute(points, 3));
 
-    line = new Line(g, new LineBasicMaterial({
-      color: buildColorFromProps(initialProps)
-    }));
-    scene.add(line);
-    return { reset: true };
+      line = new Line(g, new LineBasicMaterial({
+        color: buildColorFromProps(initialProps)
+      }));
+      scene.add(line);
+    });
   }
 
   return { animate, reset };

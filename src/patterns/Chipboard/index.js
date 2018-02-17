@@ -3,6 +3,8 @@ import { makeMeshLine } from 'utils/Draw';
 import { resolution } from 'utils/Misc';
 import { buildColorFromProps } from 'utils/Color';
 import clearScene from 'utils/ClearScene';
+import chunkIntoPromises from 'utils/chunkIntoPromises';
+import { BATCH_SIZE } from 'constants/batch';
 
 export default function Chipboard(scene, initialProps) {
 
@@ -10,39 +12,48 @@ export default function Chipboard(scene, initialProps) {
   reset();
 
   function animate(time, delta, props) {
-    if (complete) return;
+    if (complete) return Promise.reject();
 
     timeBuff += delta;
-    if (drawCursor < lines.length) {
-      while (drawCursor < lines.length && timeBuff > props.drawTime) {
-        timeBuff -= props.drawTime;
-        const geom = lines[drawCursor++];
-        const materialProps = {
-          resolution: resolution(),
-          lineWidth: geom.lineWidth,
-          sizeAttenuation: 1,
-          color: buildColorFromProps(props)
-        };
-        scene.add(
-          makeMeshLine(geom, materialProps)
-        );
-      }
-    } else {
+    if (drawCursor >= lines.length) {
       complete = true;
+      return Promise.resolve();
     }
+    return new Promise(resolve => {
+      const { drawTime } = props;
+      const linesToDraw = [];
+      while (drawCursor < lines.length && timeBuff > drawTime) {
+        timeBuff -= drawTime;
+        linesToDraw.push(drawCursor++);
+      }
+      Promise.all(chunkIntoPromises(
+        linesToDraw,
+        BATCH_SIZE,
+        i => {
+          const geom = lines[i];
+          const materialProps = {
+            resolution: resolution(),
+            lineWidth: geom.lineWidth,
+            sizeAttenuation: 1,
+            color: buildColorFromProps(props)
+          };
+          scene.add( makeMeshLine(geom, materialProps) );
+        }
+      )).then(() => resolve());
+    });
   }
 
   function reset() {
-    clearScene(scene);
-    timeBuff = 0;
-    drawCursor = 0;
-    complete = false;
-    bound = 4;
-    lines = createChipboard(bound, {
-      ...initialProps,
-      lineWidthSub: (initialProps.maxLineWidth - initialProps.minLineWidth) * initialProps.minBlankSpace * 2,
+    return clearScene(scene).then(() => {
+      timeBuff = 0;
+      drawCursor = 0;
+      complete = false;
+      bound = 4;
+      lines = createChipboard(bound, {
+        ...initialProps,
+        lineWidthSub: (initialProps.maxLineWidth - initialProps.minLineWidth) * initialProps.minBlankSpace * 2,
+      });
     });
-    return { reset: true };
   }
 
   return { animate, reset };
