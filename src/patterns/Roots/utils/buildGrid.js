@@ -6,5 +6,6 @@ export default function buildGrid(resolution) {
       g[i].push(false);
     }
   }
+  g.count = 0;
   return g;
 }

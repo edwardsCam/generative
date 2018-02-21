@@ -22,8 +22,9 @@ export default function markLine(line, resolution, bound, grid) {
 
   function markPoint(p) {
     const { r, c } = getOrdinalPosition(p, bound, resolution);
-    if (r < resolution && c < resolution) {
+    if (r < resolution && c < resolution && !grid[r][c]) {
       grid[r][c] = true;
+      grid.count++;
     }
   }
 }
