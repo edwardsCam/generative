@@ -11,7 +11,7 @@ export default function createGeoms(props, bound, grid) {
   const geoms = [
     buildLine(q, initPoint, initAngle, 1, props, bound, grid)
   ];
-  while (q.has() && hasEmptySpaces(grid)) {
+  while (q.has() && hasEmptySpaces(grid, props.resolution)) {
     const n = q.pop();
     geoms.push(buildLine(q, n.point, n.angle, n.p, props, bound, grid));
   }
