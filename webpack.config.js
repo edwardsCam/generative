@@ -5,8 +5,8 @@ module.exports = {
   entry: './src/index.js',
   mode: 'development',
   output: {
-    path: path.resolve(__dirname, 'build'),
-    filename: 'main.bundle.js'
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'main.js'
   },
   module: {
     rules: [
@@ -33,5 +33,10 @@ module.exports = {
   devtool: 'eval-source-map',
   stats: {
     colors: true
+  },
+  devServer: {
+    hot: true,
+    inline: true,
+    publicPath: '/dist/'
   },
 };
