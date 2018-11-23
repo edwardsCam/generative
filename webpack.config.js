@@ -34,4 +34,8 @@ module.exports = {
   stats: {
     colors: true
   },
+  devServer: {
+    hot: true,
+    inline: true,
+  },
 };
