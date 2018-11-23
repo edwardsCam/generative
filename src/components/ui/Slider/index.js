@@ -21,11 +21,13 @@ export default class Slider extends React.Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    const inputValue = this.tempInputValue == null ? `${nextProps.value}` : this.tempInputValue;
-    this.setState({ inputValue });
+  componentDidUpdate() {
+    const inputValue = this.tempInputValue == null ? `${this.props.value}` : this.tempInputValue;
+    if (inputValue !== this.state.inputValue) {
+      this.setState({ inputValue });
+    }
 
-    if (nextProps.isFocused) {
+    if (this.props.isFocused) {
       document.addEventListener('keypress', this.handleKeypress);
     } else {
       document.removeEventListener('keypress', this.handleKeypress);

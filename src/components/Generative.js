@@ -24,8 +24,8 @@ export default class Generative extends React.Component {
     this.container.appendChild(this.controller.getDomElement());
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { pattern, pendingActions } = nextProps;
+  componentDidUpdate() {
+    const { pattern, pendingActions } = this.props;
     if (pattern && !this.isCurrentPattern(pattern)) {
       this.controller.setActivePattern(pattern).then(this.startAnimating);
     } else if (pendingActions.length) {
