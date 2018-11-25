@@ -1,4 +1,4 @@
-const BATCH_SIZE = 30;
+const BATCH_SIZE = 30
 
 export {
   BATCH_SIZE,

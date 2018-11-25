@@ -8,6 +8,6 @@ const patternManifest = [
   {
     name: 'Chipboard',
   },
-];
+]
 
-export default patternManifest;
+export default patternManifest

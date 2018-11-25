@@ -1,11 +1,10 @@
-import React from 'react';
-import { func } from 'prop-types';
-import FocusTrap from 'focus-trap-react';
-import helpText from 'constants/helpText';
-import styles from './index.scss';
+import React from 'react'
+import { func } from 'prop-types'
+import FocusTrap from 'focus-trap-react'
+import helpText from 'constants/helpText'
+import styles from './index.scss'
 
 export default class Modal extends React.Component {
-
   static propTypes = {
     onClose: func.isRequired,
   }
@@ -23,6 +22,6 @@ export default class Modal extends React.Component {
           <pre>{helpText}</pre>
         </div>
       </FocusTrap>
-    );
+    )
   }
 }

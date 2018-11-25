@@ -16,6 +16,6 @@ const defaultProps = {
   red: 0,
   green: 0,
   blue: 0,
-};
+}
 
-export default defaultProps;
+export default defaultProps

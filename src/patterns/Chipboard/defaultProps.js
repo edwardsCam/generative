@@ -4,6 +4,6 @@ const defaultProps = {
   maxLineWidth: 0.1,
   drawTime: 0.05,
   randomness: 1,
-};
+}
 
-export default defaultProps;
+export default defaultProps

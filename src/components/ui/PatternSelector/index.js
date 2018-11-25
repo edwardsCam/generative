@@ -1,16 +1,15 @@
-import React from 'react';
-import { object, func } from 'prop-types';
-import styles from './index.scss';
+import React from 'react'
+import { object, func } from 'prop-types'
+import styles from './index.scss'
 
 export default class PatternSelector extends React.Component {
-
   static propTypes = {
     pattern: object.isRequired,
     onSelectPattern: func.isRequired,
   }
 
   render() {
-    const { pattern } = this.props;
+    const { pattern } = this.props
     return (
       <button
         className={styles.patternSelector}
@@ -18,6 +17,6 @@ export default class PatternSelector extends React.Component {
       >
         {pattern.name}
       </button>
-    );
+    )
   }
 }

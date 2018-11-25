@@ -1,4 +1,4 @@
-import { slider, colorSliders, button } from 'utils/PropConfig';
+import { slider, colorSliders, button } from 'utils/PropConfig'
 
 const propConfig = [
   button('Draw', 'reset'),
@@ -16,6 +16,6 @@ const propConfig = [
   slider('decayRate', 'Decay rate', 0, 0.2, 0.005),
   slider('minimumDecay', 'Min decay', 0, 0.5, 0.005),
   ...colorSliders,
-];
+]
 
-export default propConfig;
+export default propConfig

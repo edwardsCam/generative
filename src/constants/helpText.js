@@ -12,6 +12,6 @@ While holding '[' or ']' down, you can speed up the decrement/increment rate by 
          (shift): x5 speed
           (ctrl): x10 speed
   (shift + ctrl): x50 speed
-`;
+`
 
-export default helpText;
+export default helpText

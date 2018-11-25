@@ -1,11 +1,11 @@
 export default function buildGrid(resolution) {
-  const g = [];
+  const g = []
   for (let i = 0; i < resolution; i++) {
-    g.push([]);
+    g.push([])
     for (let j = 0; j < resolution; j++) {
-      g[i].push(false);
+      g[i].push(false)
     }
   }
-  g.count = 0;
-  return g;
+  g.count = 0
+  return g
 }

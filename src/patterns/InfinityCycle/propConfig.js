@@ -1,4 +1,6 @@
-import { button, slider, switcher, colorSliders } from 'utils/PropConfig';
+import {
+  button, slider, switcher, colorSliders,
+} from 'utils/PropConfig'
 
 const propConfig = [
   button('Restart', 'reset'),
@@ -10,6 +12,6 @@ const propConfig = [
   slider('growthTime', 'Growth Time', 0, 60, 1),
   ...colorSliders,
   switcher('vertical', 'Vertical', 'Horizontal'),
-];
+]
 
-export default propConfig;
+export default propConfig
