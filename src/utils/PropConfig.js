@@ -2,6 +2,10 @@ const slider = (prop, title, min, max, step = 1) => ({
   prop, title, min, max, step, type: 'slider',
 })
 
+const input = (prop, title) =>({
+  prop, title, type: 'input',
+})
+
 const switcher = (prop, trueVal, falseVal) => ({
   prop, trueVal, falseVal, type: 'switcher',
 })
@@ -18,6 +22,7 @@ const colorSliders = [
 
 export {
   slider,
+  input,
   switcher,
   colorSliders,
   button,

@@ -7,8 +7,11 @@ import { buildColorFromProps } from 'utils/Color'
 import clearScene from 'utils/ClearScene'
 
 export default function InfinityCycle(scene, initialProps) {
-  let numPoints; let timeBuff; let g; let points; let
-    line
+  let numPoints
+  let timeBuff
+  let g
+  let points
+  let line
   reset()
 
   function animate(time, delta, props) {

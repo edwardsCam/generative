@@ -26,15 +26,15 @@ function makeLine(material, x1, y1, x2, y2) {
   makeSquare:
     Given a top-left and bottom-right corner, and a color, add the square to the scene.
 */
-function makeSquare(x0, y0, x1, y1, c) {
+function makeSquare(x1, y1, x2, y2, c, opacity) {
   if (c == null) c = 0x00ff00
   const geo = new Geometry()
   geo.vertices = [
-    new Vector3(x0, y0, -0.0001),
-    new Vector3(x1, y0, -0.0001),
-    new Vector3(x1, y1, -0.0001),
-    new Vector3(x0, y1, -0.0001),
-    new Vector3(x0, y0, -0.0001),
+    new Vector3(x1, y1),
+    new Vector3(x2, y1),
+    new Vector3(x2, y2),
+    new Vector3(x1, y2),
+    new Vector3(x1, y1),
   ]
   geo.faces = [
     new Face3(0, 1, 2),
@@ -42,9 +42,11 @@ function makeSquare(x0, y0, x1, y1, c) {
   ]
 
   return new Mesh(geo, new MeshBasicMaterial({
-    color: 0xff0000,
+    color: c,
     side: DoubleSide,
     vertexColors: FaceColors,
+    opacity,
+    transparent: opacity != null,
   }))
 }
 
@@ -67,7 +69,7 @@ function makeMeshLine(geometry, materialProps, taperFn = (() => 1)) {
   makeGeometry:
     Returns a geometry of a single line between two points.
 */
-function makeGeometry(x1, y1, x2, y2, w) {
+function makeGeometry(x1, y1, x2, y2, w, color) {
   const geometry = new Geometry()
   geometry.vertices = [
     new Vector3(x1, y1),
@@ -75,6 +77,9 @@ function makeGeometry(x1, y1, x2, y2, w) {
   ]
   if (w != null) {
     geometry.lineWidth = w
+  }
+  if (color) {
+    geometry.color = color
   }
   return geometry
 }

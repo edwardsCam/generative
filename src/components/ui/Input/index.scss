@@ -1,0 +1,20 @@
+@import '../../../style/color.scss';
+
+.container {
+  border-radius: 5px;
+  border: 1px solid transparent;
+  margin: 10px 10px 0 10px;
+  padding: 10px;
+  transition: border-color 0.2s;
+}
+
+input {
+  background-color: $canvas_3;
+  border: none;
+  margin-left: 5px;
+  width: 50px;
+}
+
+.title {
+  color: $canvas_2;
+}

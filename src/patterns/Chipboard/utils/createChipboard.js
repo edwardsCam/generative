@@ -1,32 +1,38 @@
-import { makeGeometry } from 'utils/Draw'
+import { makeGeometry, makeSquare } from 'utils/Draw'
 import { diff, interpolate, randomInRange } from 'utils/Math'
 import createBoundaryLines from './createBoundaryLines'
+import { Color } from 'three'
 
 export default function createChipboard(bound, props) {
   return createBoundaryLines(bound, props).concat(
-    recurse(-bound, -bound, bound, bound, props.maxLineWidth - props.lineWidthSub, props),
+    recurse(-bound, -bound, bound, bound, props, new Color(0, 0, 0)),
   )
 }
 
-function recurse(minX, minY, maxX, maxY, w, props) {
+function recurse(minX, minY, maxX, maxY, props, color) {
   const dx = diff(minX, maxX)
   const dy = diff(minY, maxY)
-  const { minBlankSpace, minLineWidth } = props
+  const { minBlankSpace } = props
   if (dx < minBlankSpace || dy < minBlankSpace) return []
-  if (w < minLineWidth) w = minLineWidth
 
-  const vBound = rir(minX, maxX, props.randomness)
-  const hBound = rir(minY, maxY, props.randomness)
+  const xSplit = rir(minX, maxX, props.randomness)
+  const ySplit = rir(minY, maxY, props.randomness)
 
-  const botLeft = () => recurse(minX, minY, vBound, hBound, w, props)
-  const botRight = () => recurse(vBound, minY, maxX, hBound, w, props)
-  const topRight = () => recurse(vBound, hBound, maxX, maxY, w, props)
-  const topLeft = () => recurse(minX, hBound, vBound, maxY, w, props)
+  const botLeft = () => recurse(minX, minY, xSplit, ySplit, props, new Color(parseInt(props.colorBL, 16)))
+  const botRight = () => recurse(xSplit, minY, maxX, ySplit, props, new Color(parseInt(props.colorBR, 16)))
+  const topRight = () => recurse(xSplit, ySplit, maxX, maxY, props, new Color(parseInt(props.colorTR, 16)))
+  const topLeft = () => recurse(minX, ySplit, xSplit, maxY, props, new Color(parseInt(props.colorTL, 16)))
 
   return [
-    makeGeometry(vBound, minY, vBound, maxY, w),
-    makeGeometry(minX, hBound, maxX, hBound, w),
-  ].concat(botLeft()).concat(botRight()).concat(topRight()).concat(topLeft())
+    makeSquare(minX, minY, xSplit, ySplit, color, 0.25),
+    makeSquare(xSplit, minY, maxX, ySplit, color, 0.25),
+    makeSquare(xSplit, ySplit, maxX, maxY, color, 0.25),
+    makeSquare(minX, ySplit, xSplit, maxY, color, 0.25),
+    ...botLeft(),
+    ...botRight(),
+    ...topRight(),
+    ...topLeft(),
+  ]
 }
 
 function rir(min, max, randomness) {

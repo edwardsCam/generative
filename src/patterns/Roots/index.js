@@ -6,8 +6,12 @@ import createGeoms from './utils/createGeoms'
 import drawOneLine from './utils/drawOneLine'
 
 export default function Roots(scene, initialProps) {
-  let timeBuff; let drawCursor; let complete; let bound; let grid; let
-    geoms
+  let timeBuff
+  let drawCursor
+  let complete
+  let bound
+  let grid
+  let geoms
   reset()
 
   function animate(time, delta, props) {
